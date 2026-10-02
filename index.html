@@ -4,722 +4,575 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SamOS | Creative Developer</title>
+<title>Sam.OS</title>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
     scroll-behavior:smooth;
 }
 
 :root{
-    --bg:#050509;
-    --panel:#0b0b12;
-    --panel2:#11111a;
-    --text:#f8fafc;
-    --muted:#8d93a5;
-    --line:rgba(255,255,255,.09);
-    --cyan:#00f5ff;
-    --purple:#8b5cf6;
-    --pink:#ec4899;
-    --green:#36f59a;
-    --yellow:#ffd84d;
+    --primary:#00ffff;
+    --secondary:#8b5cf6;
+    --background:#050510;
+    --card:rgba(15,15,30,.78);
+    --text:#fff;
+    --muted:#9ca3af;
 }
 
 body{
-    background:var(--bg);
-    color:var(--text);
     font-family:Arial,Helvetica,sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 15% 20%,rgba(0,255,255,.12),transparent 28%),
+        radial-gradient(circle at 85% 70%,rgba(139,92,246,.14),transparent 30%),
+        var(--background);
     overflow-x:hidden;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg-grid{
+body::before{
+    content:"";
     position:fixed;
     inset:0;
-    pointer-events:none;
     z-index:-3;
-    opacity:.35;
-
     background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-
+        linear-gradient(rgba(0,255,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,255,.045) 1px,transparent 1px);
     background-size:55px 55px;
+    animation:gridMove 18s linear infinite;
 }
 
-.glow{
+@keyframes gridMove{
+    from{background-position:0 0}
+    to{background-position:55px 55px}
+}
+
+.orb{
     position:fixed;
-    width:500px;
-    height:500px;
     border-radius:50%;
-    filter:blur(120px);
-    opacity:.12;
-    pointer-events:none;
+    filter:blur(90px);
+    opacity:.16;
     z-index:-2;
+    pointer-events:none;
 }
 
-.glow.one{
-    background:var(--cyan);
-    top:-200px;
-    left:-150px;
+.orb1{
+    width:300px;
+    height:300px;
+    background:var(--primary);
+    left:-120px;
+    top:15%;
 }
 
-.glow.two{
-    background:var(--purple);
-    right:-200px;
-    top:35%;
+.orb2{
+    width:350px;
+    height:350px;
+    background:var(--secondary);
+    right:-140px;
+    bottom:10%;
 }
 
-.glow.three{
-    background:var(--pink);
-    left:25%;
-    bottom:-300px;
-}
-
-/* =========================
-   SCROLL BAR
-========================= */
-
-#scrollProgress{
+.progress{
     position:fixed;
     top:0;
     left:0;
-    width:0%;
-    height:3px;
-    background:linear-gradient(
-        90deg,
-        var(--cyan),
-        var(--purple),
-        var(--pink)
-    );
-    z-index:99999;
+    width:0;
+    height:4px;
+    background:var(--primary);
+    box-shadow:0 0 15px var(--primary);
+    z-index:9999;
 }
 
-/* =========================
-   LOADER
-========================= */
-
-#loader{
+.loader{
     position:fixed;
     inset:0;
-    background:#030305;
-    z-index:999999;
+    background:#020207;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    transition:.7s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader h1{
+    color:var(--primary);
+    font-size:60px;
+    text-shadow:0 0 25px var(--primary);
+    margin-bottom:25px;
+}
+
+.spinner{
+    width:55px;
+    height:55px;
+    border:4px solid #222;
+    border-top-color:var(--primary);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:5000;
+    height:70px;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    transition:.6s;
-}
-
-.loader-logo{
-    font-size:50px;
-    font-weight:900;
-    letter-spacing:-4px;
-}
-
-.loader-logo span{
-    color:var(--cyan);
-}
-
-.loader-text{
-    color:var(--muted);
-    font-family:monospace;
-    margin-top:15px;
-}
-
-.loader-bar{
-    width:230px;
-    height:5px;
-    background:#171720;
-    border-radius:20px;
-    margin-top:22px;
-    overflow:hidden;
-}
-
-.loader-fill{
-    height:100%;
-    width:0%;
-    background:linear-gradient(
-        90deg,
-        var(--cyan),
-        var(--purple)
-    );
-    animation:load 2s forwards;
-}
-
-@keyframes load{
-    to{width:100%}
-}
-
-/* =========================
-   NAV
-========================= */
-
-nav{
-    position:fixed;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-    width:min(1180px,94%);
-    padding:12px 15px;
-    background:rgba(7,7,12,.72);
-    border:1px solid var(--line);
-    border-radius:17px;
-    backdrop-filter:blur(20px);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    z-index:5000;
+    background:rgba(3,3,10,.82);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(0,255,255,.15);
 }
 
 .logo{
-    color:white;
-    text-decoration:none;
-    font-weight:900;
-    font-size:20px;
-}
-
-.logo span{
-    color:var(--cyan);
+    position:absolute;
+    left:28px;
+    color:var(--primary);
+    font-size:25px;
+    font-weight:bold;
+    text-shadow:0 0 15px var(--primary);
 }
 
 .nav-links{
     display:flex;
-    gap:20px;
+    align-items:center;
+    gap:24px;
 }
 
-.nav-links a{
-    color:var(--muted);
+.nav-links a,
+.theme-btn{
+    color:#ddd;
     text-decoration:none;
-    font-size:12px;
+    border:0;
+    background:none;
+    cursor:pointer;
+    font-size:14px;
     transition:.3s;
 }
 
-.nav-links a:hover{
-    color:var(--cyan);
+.nav-links a:hover,
+.theme-btn:hover{
+    color:var(--primary);
+    text-shadow:0 0 12px var(--primary);
 }
 
-.nav-actions{
-    display:flex;
-    gap:7px;
+.menu{
+    display:none;
+    position:absolute;
+    right:20px;
+    background:none;
+    border:0;
+    color:var(--primary);
+    font-size:28px;
 }
-
-.nav-btn{
-    width:35px;
-    height:35px;
-    border:1px solid var(--line);
-    background:var(--panel2);
-    color:white;
-    border-radius:9px;
-    cursor:pointer;
-}
-
-/* =========================
-   HERO
-========================= */
 
 .hero{
-    min-height:100vh;
-    max-width:1250px;
-    margin:auto;
-    padding:160px 30px 100px;
+    min-height:calc(100vh - 70px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:80px 20px;
+}
 
-    display:grid;
-    grid-template-columns:1.15fr .85fr;
-    gap:70px;
+.hero-content{
+    max-width:900px;
+}
+
+.profile-area{
+    width:230px;
+    height:230px;
+    margin:0 auto 35px;
+    position:relative;
+    display:flex;
+    justify-content:center;
     align-items:center;
 }
 
-.system{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    padding:8px 12px;
-    border-radius:8px;
-
-    border:1px solid rgba(54,245,154,.2);
-    background:rgba(54,245,154,.04);
-
-    color:var(--green);
-    font-family:monospace;
-    font-size:11px;
-}
-
-.system-dot{
-    width:7px;
-    height:7px;
+.profile{
+    width:160px;
+    height:160px;
     border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 12px var(--green);
+    object-fit:cover;
+    border:4px solid var(--primary);
+    box-shadow:
+        0 0 25px var(--primary),
+        0 0 70px rgba(0,255,255,.25);
+    position:relative;
+    z-index:3;
+}
+
+.ring{
+    position:absolute;
+    border:1px solid var(--primary);
+    border-radius:50%;
+    opacity:.7;
+}
+
+.ring1{
+    width:210px;
+    height:210px;
+    animation:orbit1 8s linear infinite;
+}
+
+.ring2{
+    width:230px;
+    height:130px;
+    transform:rotate(55deg);
+    border-color:var(--secondary);
+    animation:orbit2 6s linear infinite;
+}
+
+.ring3{
+    width:240px;
+    height:150px;
+    transform:rotate(-55deg);
+    border-color:var(--primary);
+    animation:orbit3 10s linear infinite;
+}
+
+@keyframes orbit1{
+    to{transform:rotate(360deg)}
+}
+
+@keyframes orbit2{
+    to{transform:rotate(415deg)}
+}
+
+@keyframes orbit3{
+    to{transform:rotate(-415deg)}
+}
+
+.float-bubble{
+    position:absolute;
+    padding:8px 13px;
+    border-radius:20px;
+    background:rgba(5,5,15,.9);
+    border:1px solid var(--primary);
+    color:var(--primary);
+    font-size:12px;
+    box-shadow:0 0 15px rgba(0,255,255,.25);
+    z-index:5;
+    animation:floatBubble 3s ease-in-out infinite;
+}
+
+.bubble-gaming{
+    top:5px;
+    right:-15px;
+}
+
+.bubble-coding{
+    bottom:10px;
+    left:-20px;
+    animation-delay:.7s;
+}
+
+.bubble-anime{
+    bottom:0;
+    right:-35px;
+    animation-delay:1.3s;
+}
+
+@keyframes floatBubble{
+    50%{transform:translateY(-10px)}
 }
 
 .hero h1{
-    margin-top:25px;
-    font-size:clamp(60px,9vw,125px);
-    line-height:.82;
-    letter-spacing:-7px;
-}
-
-.gradient{
-    background:linear-gradient(
-        90deg,
-        var(--cyan),
-        var(--purple),
-        var(--pink)
-    );
-    -webkit-background-clip:text;
-    color:transparent;
-}
-
-.outline{
-    color:transparent;
-    -webkit-text-stroke:1px rgba(255,255,255,.45);
-}
-
-.hero-sub{
-    margin-top:30px;
-    color:var(--muted);
-    font-family:monospace;
-    font-size:20px;
-}
-
-.hero-description{
-    max-width:650px;
-    color:var(--muted);
-    line-height:1.8;
-    margin-top:18px;
-}
-
-.hero-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:30px;
-}
-
-.btn{
-    padding:14px 20px;
-    border-radius:10px;
-    text-decoration:none;
-    font-size:13px;
-    font-weight:bold;
-    transition:.3s;
-    border:1px solid var(--line);
-}
-
-.btn:hover{
-    transform:translateY(-4px);
-}
-
-.btn-primary{
-    background:var(--cyan);
-    color:#001014;
-}
-
-.btn-secondary{
-    background:var(--panel);
-    color:white;
-}
-
-/* =========================
-   PROFILE TERMINAL
-========================= */
-
-.profile-terminal{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:22px;
-    overflow:hidden;
-    box-shadow:0 35px 100px rgba(0,0,0,.45);
-}
-
-.terminal-header{
-    padding:12px 15px;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.terminal-dots{
-    display:flex;
-    gap:6px;
-}
-
-.terminal-dots span{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#333;
-}
-
-.terminal-title{
-    color:var(--muted);
-    font:11px monospace;
-}
-
-.profile-image{
-    padding:20px;
-}
-
-.profile-image img{
-    width:100%;
-    aspect-ratio:1;
-    object-fit:cover;
-    border-radius:15px;
-}
-
-.terminal-info{
-    padding:0 20px 22px;
-    font-family:monospace;
-    line-height:2;
-    color:var(--muted);
-    font-size:12px;
-}
-
-.terminal-info strong{
-    color:var(--cyan);
-}
-
-/* =========================
-   GENERAL SECTIONS
-========================= */
-
-section{
-    max-width:1250px;
-    margin:auto;
-    padding:110px 30px;
-}
-
-.label{
-    color:var(--cyan);
-    font:11px monospace;
-    letter-spacing:3px;
-}
-
-.title{
-    margin-top:10px;
-    font-size:clamp(40px,6vw,72px);
-    letter-spacing:-3px;
-}
-
-.description{
-    margin-top:15px;
-    max-width:700px;
-    color:var(--muted);
-    line-height:1.8;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.dashboard{
-    margin-top:45px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.dash-card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:18px;
-    padding:25px;
-    transition:.3s;
-}
-
-.dash-card:hover{
-    transform:translateY(-7px);
-    border-color:rgba(0,245,255,.25);
-}
-
-.dash-icon{
-    font-size:25px;
-}
-
-.dash-number{
-    font-size:40px;
-    font-weight:900;
-    margin:10px 0 4px;
-    color:var(--cyan);
-}
-
-.dash-card p{
-    color:var(--muted);
-    font-size:12px;
-}
-
-/* =========================
-   ABOUT
-========================= */
-
-.about-grid{
-    margin-top:45px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-}
-
-.about-card{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:30px;
-}
-
-.about-card h3{
-    font-size:24px;
+    font-size:62px;
     margin-bottom:15px;
 }
 
-.about-card p{
+.hero h1 span{
+    color:var(--primary);
+    text-shadow:0 0 20px var(--primary);
+}
+
+.typing{
+    min-height:30px;
+    color:var(--primary);
+    font-size:22px;
+}
+
+.hero-description{
+    max-width:700px;
+    margin:18px auto;
     color:var(--muted);
-    line-height:1.8;
+    font-size:18px;
+    line-height:1.7;
 }
 
-/* =========================
-   SKILLS
-========================= */
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 15px;
+    border:1px solid rgba(0,255,255,.2);
+    border-radius:20px;
+    color:#aaa;
+    font-size:13px;
+    background:rgba(0,255,255,.04);
+}
 
-.skills-grid{
-    margin-top:45px;
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 10px #22c55e;
+}
+
+.hero-btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:14px 28px;
+    border-radius:10px;
+    background:var(--primary);
+    color:#001010;
+    text-decoration:none;
+    font-weight:bold;
+    box-shadow:0 0 25px rgba(0,255,255,.3);
+    transition:.3s;
+}
+
+.hero-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 35px var(--primary);
+}
+
+section{
+    max-width:1150px;
+    margin:auto;
+    padding:100px 25px;
+}
+
+.title{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:45px;
+}
+
+.stats{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-top:55px;
 }
 
-.skill-card{
-    padding:23px;
-    background:var(--panel);
-    border:1px solid var(--line);
+.stat{
+    padding:25px;
+    text-align:center;
+    background:var(--card);
+    border:1px solid rgba(0,255,255,.13);
     border-radius:16px;
 }
 
-.skill-top{
+.stat h2{
+    color:var(--primary);
+    font-size:32px;
+}
+
+.stat p{
+    color:#888;
+    margin-top:7px;
+}
+
+.about{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:25px;
+}
+
+.panel{
+    background:var(--card);
+    border:1px solid rgba(0,255,255,.13);
+    border-radius:18px;
+    padding:30px;
+}
+
+.panel p{
+    color:#aaa;
+    line-height:1.7;
+}
+
+.skill{
+    margin:20px 0;
+}
+
+.skill-head{
     display:flex;
     justify-content:space-between;
-    margin-bottom:12px;
+    margin-bottom:7px;
 }
 
-.skill-top span:last-child{
-    color:var(--cyan);
-    font-family:monospace;
+.skill-head span:last-child{
+    color:var(--primary);
 }
 
-.skill-track{
-    height:7px;
-    background:#181820;
+.skill-bar{
+    height:8px;
+    background:#191923;
     border-radius:20px;
     overflow:hidden;
 }
 
-.skill-progress{
+.skill-fill{
     height:100%;
     background:linear-gradient(
         90deg,
-        var(--cyan),
-        var(--purple)
+        var(--primary),
+        var(--secondary)
     );
+    box-shadow:0 0 12px var(--primary);
 }
 
-/* =========================
-   PROJECT FILTER
-========================= */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
 
-.project-tools{
-    margin-top:40px;
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+.card{
+    padding:30px;
+    border-radius:18px;
+    background:var(--card);
+    border:1px solid rgba(0,255,255,.13);
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px rgba(0,255,255,.14);
+    border-color:var(--primary);
+}
+
+.card-icon{
+    font-size:38px;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#999;
+    line-height:1.6;
+    margin-top:10px;
 }
 
 .search{
-    flex:1;
-    min-width:220px;
+    display:block;
+    width:min(500px,100%);
+    margin:0 auto 30px;
     padding:14px;
+    background:#0d0d15;
+    border:1px solid rgba(0,255,255,.2);
     border-radius:10px;
-    border:1px solid var(--line);
-    background:var(--panel);
     color:white;
     outline:none;
 }
 
-.filter{
-    padding:12px 15px;
-    border-radius:9px;
-    border:1px solid var(--line);
-    background:var(--panel);
-    color:var(--muted);
-    cursor:pointer;
-}
-
-.filter.active,
-.filter:hover{
-    color:#001014;
-    background:var(--cyan);
-}
-
-/* =========================
-   PROJECTS
-========================= */
-
-.project-grid{
-    margin-top:20px;
+.projects{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:16px;
+    gap:22px;
 }
 
 .project{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:27px;
+    padding:28px;
+    border-radius:18px;
+    background:var(--card);
+    border:1px solid rgba(0,255,255,.13);
     transition:.35s;
 }
 
 .project:hover{
-    transform:translateY(-8px);
-}
-
-.project.hide{
-    display:none;
-}
-
-.project-number{
-    color:var(--cyan);
-    font:11px monospace;
+    transform:translateY(-7px);
+    box-shadow:0 0 25px rgba(0,255,255,.13);
 }
 
 .project-icon{
-    font-size:45px;
-    margin:22px 0 15px;
-}
-
-.project h3{
-    font-size:23px;
+    font-size:38px;
 }
 
 .project p{
-    color:var(--muted);
-    line-height:1.7;
-    margin-top:10px;
+    color:#999;
+    line-height:1.6;
+    margin:14px 0;
 }
 
 .tags{
     display:flex;
     flex-wrap:wrap;
-    gap:6px;
-    margin-top:18px;
+    gap:7px;
 }
 
-.tags span{
-    padding:6px 8px;
-    background:rgba(0,245,255,.05);
-    color:var(--cyan);
-    border-radius:6px;
-    font:10px monospace;
+.tag{
+    padding:5px 9px;
+    border-radius:15px;
+    background:rgba(0,255,255,.07);
+    color:var(--primary);
+    font-size:11px;
 }
 
-/* =========================
-   TIMELINE
-========================= */
-
-.timeline{
-    margin-top:45px;
-    border-left:1px solid var(--line);
-    padding-left:30px;
+.project button{
+    margin-top:17px;
+    padding:10px 17px;
+    border-radius:8px;
+    border:1px solid var(--primary);
+    background:none;
+    color:var(--primary);
+    cursor:pointer;
 }
 
-.timeline-item{
-    position:relative;
-    margin-bottom:35px;
+.gallery-filters{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:30px;
 }
 
-.timeline-item::before{
-    content:"";
-    position:absolute;
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:var(--cyan);
-    left:-36px;
-    top:4px;
-    box-shadow:0 0 15px var(--cyan);
+.gallery-filter{
+    padding:10px 17px;
+    border-radius:20px;
+    border:1px solid rgba(0,255,255,.3);
+    background:transparent;
+    color:white;
+    cursor:pointer;
 }
 
-.timeline-date{
-    color:var(--cyan);
-    font:11px monospace;
+.gallery-filter.active,
+.gallery-filter:hover{
+    background:var(--primary);
+    color:#001010;
 }
-
-.timeline-item h3{
-    margin:7px 0;
-}
-
-.timeline-item p{
-    color:var(--muted);
-    line-height:1.7;
-}
-
-/* =========================
-   ACHIEVEMENTS
-========================= */
-
-.achievement-grid{
-    margin-top:45px;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.achievement{
-    padding:27px;
-    border:1px solid var(--line);
-    border-radius:18px;
-    background:var(--panel);
-}
-
-.achievement-icon{
-    font-size:40px;
-}
-
-.achievement h3{
-    margin:15px 0 8px;
-}
-
-.achievement p{
-    color:var(--muted);
-    line-height:1.6;
-}
-
-/* =========================
-   GALLERY
-========================= */
 
 .gallery{
-    margin-top:45px;
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:12px;
+    gap:20px;
 }
 
 .gallery-item{
+    position:relative;
     height:260px;
-    border-radius:16px;
     overflow:hidden;
-    border:1px solid var(--line);
+    border-radius:16px;
     cursor:pointer;
 }
 
@@ -734,374 +587,391 @@ section{
     transform:scale(1.08);
 }
 
-/* =========================
-   MUSIC VISUALIZER
-========================= */
+.gallery-info{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    padding:45px 15px 15px;
+    background:linear-gradient(transparent,rgba(0,0,0,.95));
+}
 
-.music-card{
-    margin-top:45px;
-    padding:30px;
+.gallery-info p{
+    color:#aaa;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.96);
+    z-index:9998;
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.lightbox.show{
+    display:flex;
+}
+
+.lightbox img{
+    max-width:85%;
+    max-height:82vh;
+    border-radius:15px;
+    box-shadow:0 0 45px rgba(0,255,255,.45);
+}
+
+.close-lightbox{
+    position:absolute;
+    top:18px;
+    right:30px;
+    font-size:50px;
+    color:white;
+    background:none;
+    border:0;
+    cursor:pointer;
+}
+
+.lightbox-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    border:1px solid var(--primary);
+    background:rgba(0,255,255,.1);
+    color:white;
+    cursor:pointer;
+    font-size:22px;
+}
+
+.prev{left:25px}
+.next{right:25px}
+
+.timeline{
+    max-width:800px;
+    margin:auto;
+    position:relative;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:50%;
+    width:2px;
+    background:rgba(0,255,255,.25);
+}
+
+.timeline-item{
+    width:50%;
+    padding:20px;
+    position:relative;
+}
+
+.timeline-item:nth-child(even){
+    margin-left:50%;
+}
+
+.timeline-item:nth-child(odd){
+    text-align:right;
+}
+
+.timeline-dot{
+    position:absolute;
+    top:27px;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:var(--primary);
+    box-shadow:0 0 15px var(--primary);
+}
+
+.timeline-item:nth-child(odd) .timeline-dot{
+    right:-7px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot{
+    left:-6px;
+}
+
+.timeline-content{
+    background:var(--card);
+    padding:20px;
+    border-radius:15px;
+    border:1px solid rgba(0,255,255,.13);
+}
+
+.timeline-content p{
+    color:#999;
+    margin-top:7px;
+    line-height:1.5;
+}
+
+.achievements{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.achievement{
+    text-align:center;
+    padding:25px;
+    border-radius:17px;
+    background:var(--card);
+    border:1px solid rgba(139,92,246,.2);
+}
+
+.achievement span{
+    font-size:40px;
+}
+
+.achievement p{
+    color:#999;
+    margin-top:8px;
+}
+
+.creative{
+    text-align:center;
+    background:var(--card);
+    border:1px solid rgba(0,255,255,.13);
     border-radius:20px;
-    background:var(--panel);
-    border:1px solid var(--line);
+    padding:35px;
 }
 
 .visualizer{
-    height:110px;
+    height:100px;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:5px;
+    gap:7px;
 }
 
 .bar{
-    width:7px;
-    height:20px;
-    border-radius:5px;
-    background:var(--cyan);
-    animation:wave .8s ease-in-out infinite alternate;
+    width:8px;
+    height:30px;
+    border-radius:10px;
+    background:var(--primary);
+    box-shadow:0 0 12px var(--primary);
+    animation:bars .8s infinite alternate;
 }
 
 .bar:nth-child(2){animation-delay:.1s}
 .bar:nth-child(3){animation-delay:.2s}
 .bar:nth-child(4){animation-delay:.3s}
 .bar:nth-child(5){animation-delay:.4s}
-.bar:nth-child(6){animation-delay:.2s}
-.bar:nth-child(7){animation-delay:.1s}
-.bar:nth-child(8){animation-delay:.3s}
-.bar:nth-child(9){animation-delay:.4s}
+.bar:nth-child(6){animation-delay:.5s}
+.bar:nth-child(7){animation-delay:.6s}
 
-@keyframes wave{
-    from{height:15px}
-    to{height:90px}
+@keyframes bars{
+    to{height:80px}
 }
 
-.music-info{
+.terminal{
+    background:#050509;
+    border:1px solid rgba(0,255,255,.2);
+    border-radius:15px;
+    overflow:hidden;
+    font-family:Consolas,monospace;
+}
+
+.terminal-head{
+    background:#101016;
+    padding:12px 15px;
+    color:#888;
+}
+
+.terminal-body{
+    padding:20px;
+    min-height:210px;
+    color:#00ff9d;
+    line-height:1.7;
+}
+
+.terminal-input{
+    width:80%;
+    background:none;
+    border:0;
+    outline:none;
+    color:#00ff9d;
+    font-family:inherit;
+}
+
+.social{
     text-align:center;
 }
 
-.music-info h3{
-    margin-bottom:6px;
-}
-
-.music-info p{
-    color:var(--muted);
-    font-size:12px;
-}
-
-/* =========================
-   SOCIAL
-========================= */
-
-.social-card{
-    margin-top:45px;
-    padding:55px 30px;
-    text-align:center;
-    border:1px solid var(--line);
-    border-radius:25px;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(0,245,255,.07),
-            transparent 60%
-        ),
-        var(--panel);
-}
-
-.social-card h2{
-    font-size:40px;
-}
-
-.social-card p{
-    color:var(--muted);
-    margin:12px 0 25px;
-}
-
-.social-link{
+.social-button{
     display:inline-block;
-    padding:14px 22px;
-    background:white;
-    color:#050505;
-    text-decoration:none;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-/* =========================
-   CONTACT
-========================= */
-
-.contact{
-    max-width:700px;
-    margin-top:40px;
-}
-
-.contact input,
-.contact textarea{
-    width:100%;
-    padding:15px;
-    margin-bottom:12px;
-    border:1px solid var(--line);
-    background:var(--panel);
+    padding:14px 24px;
     color:white;
+    text-decoration:none;
+    border:1px solid var(--primary);
     border-radius:10px;
+    transition:.3s;
+}
+
+.social-button:hover{
+    background:var(--primary);
+    color:#001010;
+    box-shadow:0 0 25px var(--primary);
+}
+
+.form{
+    max-width:550px;
+    margin:auto;
+}
+
+.form input,
+.form textarea{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid rgba(0,255,255,.13);
+    background:#0d0d15;
+    color:white;
     outline:none;
 }
 
-.contact textarea{
-    min-height:150px;
-    resize:vertical;
-}
-
-.contact button{
-    width:100%;
-    padding:15px;
+.form button{
+    margin-top:8px;
+    padding:13px 25px;
     border:0;
-    border-radius:10px;
-    background:var(--cyan);
-    cursor:pointer;
+    border-radius:9px;
+    background:var(--primary);
+    color:#001010;
     font-weight:bold;
+    cursor:pointer;
 }
-
-/* =========================
-   FOOTER
-========================= */
 
 footer{
-    border-top:1px solid var(--line);
     text-align:center;
-    padding:50px 20px;
-    color:var(--muted);
+    padding:35px;
+    border-top:1px solid rgba(0,255,255,.1);
+    color:#666;
 }
 
-footer strong{
-    color:var(--cyan);
-}
-
-/* =========================
-   COMMAND PALETTE
-========================= */
-
-#command{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    backdrop-filter:blur(8px);
-    z-index:9000;
-    display:none;
-    align-items:flex-start;
-    justify-content:center;
-    padding-top:15vh;
-}
-
-.command-box{
-    width:min(600px,90%);
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 30px 100px rgba(0,0,0,.6);
-}
-
-.command-input{
-    width:100%;
-    padding:20px;
-    background:transparent;
-    border:0;
-    border-bottom:1px solid var(--line);
-    color:white;
-    outline:none;
-    font-size:16px;
-}
-
-.command-list button{
-    width:100%;
-    padding:15px 20px;
-    border:0;
-    border-bottom:1px solid var(--line);
-    background:transparent;
-    color:var(--text);
-    text-align:left;
-    cursor:pointer;
-}
-
-.command-list button:hover{
-    background:var(--panel2);
-    color:var(--cyan);
-}
-
-/* =========================
-   SETTINGS
-========================= */
-
-#settings{
-    position:fixed;
-    right:-330px;
-    top:0;
-    width:310px;
-    height:100vh;
-    background:var(--panel);
-    border-left:1px solid var(--line);
-    z-index:8000;
-    padding:80px 25px;
-    transition:.35s;
-}
-
-#settings.open{
-    right:0;
-}
-
-.settings-close{
-    position:absolute;
-    right:20px;
-    top:20px;
-    font-size:28px;
-    cursor:pointer;
-}
-
-.setting{
-    padding:20px 0;
-    border-bottom:1px solid var(--line);
-}
-
-.setting h3{
-    margin-bottom:7px;
-}
-
-.setting p{
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.6;
-}
-
-/* =========================
-   LIGHTBOX
-========================= */
-
-#lightbox{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.96);
-    z-index:9990;
-    display:none;
-    align-items:center;
-    justify-content:center;
-}
-
-#lightbox img{
-    max-width:90%;
-    max-height:85vh;
-    border-radius:15px;
-}
-
-.lightbox-close{
-    position:absolute;
-    top:15px;
-    right:25px;
-    color:white;
-    font-size:45px;
-    cursor:pointer;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-#toast{
+.toast{
     position:fixed;
     right:20px;
     bottom:20px;
     padding:15px 20px;
-    background:var(--panel2);
-    border:1px solid var(--line);
-    border-radius:12px;
-    color:white;
+    background:#101016;
+    border:1px solid var(--primary);
+    border-radius:10px;
     transform:translateY(100px);
     opacity:0;
-    transition:.3s;
-    z-index:99999;
+    transition:.4s;
+    z-index:10000;
 }
 
-#toast.show{
+.toast.show{
     transform:translateY(0);
     opacity:1;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:900px){
-
-    .hero{
-        grid-template-columns:1fr;
-        text-align:center;
-    }
-
-    .hero-description{
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    .hero-actions{
-        justify-content:center;
-    }
-
-    .dashboard{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .about-grid,
-    .skills-grid{
-        grid-template-columns:1fr;
-    }
-
-    .project-grid{
-        grid-template-columns:1fr;
-    }
-
-    .achievement-grid{
-        grid-template-columns:1fr;
-    }
-
-    .gallery{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .profile-terminal{
-        max-width:400px;
-        margin:auto;
-    }
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:.8s;
 }
 
-@media(max-width:600px){
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-    nav{
-        width:95%;
-    }
+@media(max-width:850px){
 
     .nav-links{
         display:none;
+        position:absolute;
+        top:70px;
+        left:0;
+        right:0;
+        background:rgba(3,3,10,.98);
+        padding:20px;
+        flex-direction:column;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .menu{
+        display:block;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .about{
+        grid-template-columns:1fr;
+    }
+
+    .cards,
+    .projects,
+    .achievements{
+        grid-template-columns:1fr;
+    }
+
+    .gallery{
+        grid-template-columns:repeat(2,1fr);
     }
 
     .hero h1{
-        letter-spacing:-4px;
+        font-size:45px;
     }
 
+    .timeline::before{
+        left:8px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even){
+        width:100%;
+        margin-left:0;
+        text-align:left;
+        padding-left:32px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot{
+        left:2px;
+        right:auto;
+    }
+}
+
+@media(max-width:550px){
+
     section{
-        padding:80px 20px;
+        padding:75px 18px;
+    }
+
+    .hero h1{
+        font-size:37px;
+    }
+
+    .profile-area{
+        transform:scale(.85);
     }
 
     .gallery{
         grid-template-columns:1fr;
     }
 
-    .dashboard{
-        grid-template-columns:1fr 1fr;
+    .gallery-item{
+        height:280px;
     }
 
-    .dash-number{
-        font-size:30px;
+    .title{
+        font-size:34px;
     }
 }
 </style>
@@ -1109,1577 +979,1095 @@ footer strong{
 
 <body>
 
-<div id="scrollProgress"></div>
+<div class="progress" id="progress"></div>
 
-<div class="bg-grid"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
 
-<div class="glow one"></div>
-<div class="glow two"></div>
-<div class="glow three"></div>
-
-
-<!-- LOADER -->
-
-<div id="loader">
-
-<div class="loader-logo">
-SAM<span>.OS</span>
+<div class="loader" id="loader">
+    <h1>Sam.OS</h1>
+    <div class="spinner"></div>
 </div>
-
-<div class="loader-text">
-initializing portfolio...
-</div>
-
-<div class="loader-bar">
-<div class="loader-fill"></div>
-</div>
-
-</div>
-
-
-<!-- NAV -->
 
 <nav>
 
-<a href="#home" class="logo">
-SAM<span>.OS</span>
-</a>
+    <div class="logo">Sam.OS</div>
 
-<div class="nav-links">
+    <button class="menu" onclick="toggleMenu()">☰</button>
 
-<a href="#about">About</a>
-<a href="#skills">Skills</a>
-<a href="#projects">Projects</a>
-<a href="#journey">Journey</a>
-<a href="#gallery">Gallery</a>
+    <div class="nav-links" id="navLinks">
 
-</div>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#terminal">Terminal</a>
+        <a href="#contact">Contact</a>
 
-<div class="nav-actions">
+        <button class="theme-btn" onclick="changeTheme()">
+            🌌 Theme
+        </button>
 
-<button class="nav-btn" onclick="openCommand()">
-⌘
-</button>
-
-<button class="nav-btn" onclick="toggleSettings()">
-⚙
-</button>
-
-</div>
+    </div>
 
 </nav>
 
+<section class="hero" id="home">
 
-<!-- HERO -->
+    <div class="hero-content">
 
-<header class="hero" id="home">
+        <div class="profile-area">
 
-<div>
+            <div class="ring ring1"></div>
+            <div class="ring ring2"></div>
+            <div class="ring ring3"></div>
 
-<div class="system">
+            <img
+                class="profile"
+                src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
+                alt="Sam"
+            >
 
-<span class="system-dot"></span>
+            <div class="float-bubble bubble-gaming">
+                🎮 Gaming
+            </div>
 
-SYSTEM ONLINE
+            <div class="float-bubble bubble-coding">
+                💻 Coding
+            </div>
 
-</div>
+            <div class="float-bubble bubble-anime">
+                🔥 Anime
+            </div>
 
+        </div>
 
-<h1>
+        <h1>
+            Hey, I'm <span>Sam</span> 👋
+        </h1>
 
-BUILD.<br>
+        <p class="typing" id="typing"></p>
 
-<span class="gradient">
-CREATE.
-</span><br>
+        <p class="hero-description">
+            Anime, gaming, coding and creativity.
+            This is my little corner of the internet where
+            I'm learning and building cool things.
+        </p>
 
-<span class="outline">
-EVOLVE.
-</span>
+        <div class="status">
+            <span class="status-dot"></span>
+            Currently learning & building
+        </div>
 
-</h1>
+        <br>
 
+        <a href="#about" class="hero-btn">
+            Explore
+        </a>
 
-<div class="hero-sub">
+        <div class="stats">
 
-> <span id="typing"></span><span class="gradient">_</span>
+            <div class="stat">
+                <h2 class="counter" data-target="1">0</h2>
+                <p>Website</p>
+            </div>
 
-</div>
+            <div class="stat">
+                <h2 class="counter" data-target="4">0</h2>
+                <p>Skills</p>
+            </div>
 
+            <div class="stat">
+                <h2 class="counter" data-target="6">0</h2>
+                <p>Photos</p>
+            </div>
 
-<p class="hero-description">
+            <div class="stat">
+                <h2 class="counter" data-target="1">0</h2>
+                <p>Creator</p>
+            </div>
 
-I'm Sam — learning web development, programming and
-creative technology by building real projects instead
-of just watching tutorials.
+        </div>
 
-</p>
-
-
-<div class="hero-actions">
-
-<a href="#projects" class="btn btn-primary">
-EXPLORE PROJECTS
-</a>
-
-<a
-href="https://www.tiktok.com/@mikedevon"
-target="_blank"
-class="btn btn-secondary">
-@MIKEDEVON
-</a>
-
-</div>
-
-</div>
-
-
-<div class="profile-terminal">
-
-<div class="terminal-header">
-
-<div class="terminal-dots">
-
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-<div class="terminal-title">
-sam@portfolio:~
-</div>
-
-</div>
-
-
-<div class="profile-image">
-
-<img
-src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
-alt="Sam">
-
-</div>
-
-
-<div class="terminal-info">
-
-<div>
-name: <strong>Sam</strong>
-</div>
-
-<div>
-role: <strong>future software engineer</strong>
-</div>
-
-<div>
-status: <strong>learning + building</strong>
-</div>
-
-<div>
-social: <strong>@mikedevon</strong>
-</div>
-
-</div>
-
-</div>
-
-</header>
-
-
-<!-- DASHBOARD -->
-
-<section>
-
-<div class="label">
-00 / DASHBOARD
-</div>
-
-<h2 class="title">
-SYSTEM <span class="gradient">STATS.</span>
-</h2>
-
-<p class="description">
-A quick snapshot of the current portfolio.
-</p>
-
-
-<div class="dashboard">
-
-<div class="dash-card">
-
-<div class="dash-icon">
-🌐
-</div>
-
-<div class="dash-number">
-01
-</div>
-
-<p>
-Active Website
-</p>
-
-</div>
-
-
-<div class="dash-card">
-
-<div class="dash-icon">
-💻
-</div>
-
-<div class="dash-number">
-04
-</div>
-
-<p>
-Skills Learning
-</p>
-
-</div>
-
-
-<div class="dash-card">
-
-<div class="dash-icon">
-🖼️
-</div>
-
-<div class="dash-number">
-06
-</div>
-
-<p>
-Gallery Items
-</p>
-
-</div>
-
-
-<div class="dash-card">
-
-<div class="dash-icon">
-🚀
-</div>
-
-<div class="dash-number">
-∞
-</div>
-
-<p>
-Future Ideas
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
+<section id="about" class="reveal">
 
-<!-- ABOUT -->
+    <h2 class="title">A Little About Me</h2>
 
-<section id="about">
+    <p class="subtitle">
+        Learning, creating and building things.
+    </p>
 
-<div class="label">
-01 / ABOUT
-</div>
+    <div class="about">
 
-<h2 class="title">
-WHO IS <span class="gradient">SAM?</span>
-</h2>
+        <div class="panel">
 
-<p class="description">
-A learner building his way into technology through practical projects.
-</p>
+            <h2>Hey, I'm Sam 👋</h2>
 
+            <br>
 
-<div class="about-grid">
+            <p>
+                I'm learning coding and building cool things.
+                I enjoy anime, gaming, creative editing and
+                experimenting with new ideas.
+            </p>
 
-<div class="about-card">
+            <br>
 
-<h3>
-The Mission
-</h3>
+            <p>
+                This website is one of the projects I'm building
+                while learning HTML, CSS, JavaScript and Python.
+            </p>
 
-<p>
-Learn useful technology skills, build projects,
-experiment with ideas and keep improving.
-</p>
+        </div>
 
-</div>
+        <div class="panel">
 
+            <h2>My Skills</h2>
 
-<div class="about-card">
+            <div class="skill">
+                <div class="skill-head">
+                    <span>HTML</span>
+                    <span>85%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill" style="width:85%"></div>
+                </div>
+            </div>
 
-<h3>
-The Interests
-</h3>
+            <div class="skill">
+                <div class="skill-head">
+                    <span>CSS</span>
+                    <span>75%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill" style="width:75%"></div>
+                </div>
+            </div>
 
-<p>
-Web development, Python, gaming, anime,
-video editing, social media and creative technology.
-</p>
+            <div class="skill">
+                <div class="skill-head">
+                    <span>JavaScript</span>
+                    <span>45%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill" style="width:45%"></div>
+                </div>
+            </div>
 
-</div>
+            <div class="skill">
+                <div class="skill-head">
+                    <span>Python</span>
+                    <span>30%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill" style="width:30%"></div>
+                </div>
+            </div>
 
-</div>
+        </div>
 
-</section>
-
-
-<!-- SKILLS -->
-
-<section id="skills">
-
-<div class="label">
-02 / SKILLS
-</div>
-
-<h2 class="title">
-CURRENT <span class="gradient">SKILLS.</span>
-</h2>
-
-<p class="description">
-These represent my current learning progress.
-</p>
-
-
-<div class="skills-grid">
-
-<div class="skill-card">
-
-<div class="skill-top">
-
-<span>HTML</span>
-<span>85%</span>
-
-</div>
-
-<div class="skill-track">
-<div
-class="skill-progress"
-style="width:85%">
-</div>
-</div>
-
-</div>
-
-
-<div class="skill-card">
-
-<div class="skill-top">
-
-<span>CSS</span>
-<span>75%</span>
-
-</div>
-
-<div class="skill-track">
-<div
-class="skill-progress"
-style="width:75%">
-</div>
-</div>
-
-</div>
-
-
-<div class="skill-card">
-
-<div class="skill-top">
-
-<span>JavaScript</span>
-<span>50%</span>
-
-</div>
-
-<div class="skill-track">
-<div
-class="skill-progress"
-style="width:50%">
-</div>
-</div>
-
-</div>
-
-
-<div class="skill-card">
-
-<div class="skill-top">
-
-<span>Python</span>
-<span>30%</span>
-
-</div>
-
-<div class="skill-track">
-<div
-class="skill-progress"
-style="width:30%">
-</div>
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
-
-<!-- PROJECTS -->
-
-<section id="projects">
-
-<div class="label">
-03 / PROJECTS
-</div>
-
-<h2 class="title">
-PROJECT <span class="gradient">LAB.</span>
-</h2>
-
-<p class="description">
-Search through the projects and filter them by category.
-</p>
-
-
-<div class="project-tools">
-
-<input
-class="search"
-id="search"
-placeholder="Search projects..."
-oninput="searchProjects()">
-
-
-<button
-class="filter active"
-onclick="filterProjects('all',this)">
-All
-</button>
-
-<button
-class="filter"
-onclick="filterProjects('web',this)">
-Web
-</button>
-
-<button
-class="filter"
-onclick="filterProjects('creative',this)">
-Creative
-</button>
-
-<button
-class="filter"
-onclick="filterProjects('coding',this)">
-Coding
-</button>
-
-</div>
-
-
-<div class="project-grid" id="projectGrid">
-
-
-<div
-class="project"
-data-category="web"
-data-name="portfolio website">
-
-<div class="project-number">
-PROJECT_001
-</div>
-
-<div class="project-icon">
-🌐
-</div>
-
-<h3>
-Portfolio Website
-</h3>
-
-<p>
-A personal portfolio built while learning
-HTML, CSS and JavaScript.
-</p>
-
-<div class="tags">
-<span>HTML</span>
-<span>CSS</span>
-<span>JS</span>
-</div>
-
-</div>
-
-
-<div
-class="project"
-data-category="creative"
-data-name="anime gaming content">
-
-<div class="project-number">
-PROJECT_002
-</div>
-
-<div class="project-icon">
-🎬
-</div>
-
-<h3>
-Creative Content
-</h3>
-
-<p>
-Anime and gaming edits created for social media.
-</p>
-
-<div class="tags">
-<span>CAPCUT</span>
-<span>TIKTOK</span>
-</div>
-
-</div>
-
-
-<div
-class="project"
-data-category="coding"
-data-name="python learning">
-
-<div class="project-number">
-PROJECT_003
-</div>
-
-<div class="project-icon">
-🐍
-</div>
-
-<h3>
-Python Journey
-</h3>
-
-<p>
-Learning programming fundamentals and building
-small Python programs.
-</p>
-
-<div class="tags">
-<span>PYTHON</span>
-<span>CODING</span>
-</div>
-
-</div>
-
-
-<div
-class="project"
-data-category="web"
-data-name="future web app">
-
-<div class="project-number">
-PROJECT_004
-</div>
-
-<div class="project-icon">
-⚡
-</div>
-
-<h3>
-Future Web App
-</h3>
-
-<p>
-A future project for turning ideas into
-interactive web experiences.
-</p>
-
-<div class="tags">
-<span>WEB</span>
-<span>IDEA</span>
-</div>
-
-</div>
-
-
-<div
-class="project"
-data-category="creative"
-data-name="social media brand">
-
-<div class="project-number">
-PROJECT_005
-</div>
-
-<div class="project-icon">
-📱
-</div>
-
-<h3>
-Social Brand
-</h3>
-
-<p>
-Building a personal creative identity across
-social platforms.
-</p>
-
-<div class="tags">
-<span>BRANDING</span>
-<span>SOCIAL</span>
-</div>
-
-</div>
-
-
-<div
-class="project"
-data-category="coding"
-data-name="coding experiments">
-
-<div class="project-number">
-PROJECT_006
-</div>
-
-<div class="project-icon">
-🧪
-</div>
-
-<h3>
-Coding Experiments
-</h3>
-
-<p>
-Small experiments created while learning how
-software works.
-</p>
-
-<div class="tags">
-<span>CODE</span>
-<span>EXPERIMENTS</span>
-</div>
-
-</div>
-
-</div>
+<section class="reveal">
+
+    <h2 class="title">Things I Like</h2>
+
+    <p class="subtitle">
+        A few things that make up my world.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-icon">🎮</div>
+            <h2>Gaming</h2>
+            <p>Gaming and entertainment.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔥</div>
+            <h2>Anime</h2>
+            <p>Anime edits, characters and discussions.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">💻</div>
+            <h2>Coding</h2>
+            <p>Learning to build websites and projects.</p>
+        </div>
+
+    </div>
 
 </section>
 
+<section id="projects" class="reveal">
 
-<!-- JOURNEY -->
+    <h2 class="title">Things I've Built</h2>
 
-<section id="journey">
+    <p class="subtitle">
+        Projects I'm working on and experimenting with.
+    </p>
 
-<div class="label">
-04 / JOURNEY
-</div>
+    <input
+        class="search"
+        id="projectSearch"
+        placeholder="Search projects..."
+        oninput="searchProjects()"
+    >
 
-<h2 class="title">
-THE <span class="gradient">JOURNEY.</span>
-</h2>
+    <div class="projects">
 
-<p class="description">
-Progress happens one project at a time.
-</p>
+        <div class="project" data-project="website">
+            <div class="project-icon">🌐</div>
+            <h2>My Website</h2>
+            <p>
+                My personal website built with HTML,
+                CSS and JavaScript.
+            </p>
+            <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+            </div>
+            <button onclick="showToast('You are already viewing this project!')">
+                View Project
+            </button>
+        </div>
 
+        <div class="project" data-project="anime">
+            <div class="project-icon">🎬</div>
+            <h2>Anime Edits</h2>
+            <p>Creative anime editing projects.</p>
+            <div class="tags">
+                <span class="tag">CapCut</span>
+                <span class="tag">Editing</span>
+            </div>
+            <button onclick="showToast('Anime project coming soon!')">
+                View Project
+            </button>
+        </div>
 
-<div class="timeline">
+        <div class="project" data-project="coding">
+            <div class="project-icon">💻</div>
+            <h2>Coding</h2>
+            <p>
+                Programming projects I'm building while learning.
+            </p>
+            <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">Web</span>
+            </div>
+            <button onclick="showToast('More coding projects coming soon!')">
+                View Project
+            </button>
+        </div>
 
-<div class="timeline-item">
-
-<div class="timeline-date">
-PHASE 01
-</div>
-
-<h3>
-Discovering Technology
-</h3>
-
-<p>
-Exploring websites, editing, gaming and
-different areas of technology.
-</p>
-
-</div>
-
-
-<div class="timeline-item">
-
-<div class="timeline-date">
-PHASE 02
-</div>
-
-<h3>
-Learning Python
-</h3>
-
-<p>
-Starting programming fundamentals and
-learning how code actually works.
-</p>
-
-</div>
-
-
-<div class="timeline-item">
-
-<div class="timeline-date">
-PHASE 03
-</div>
-
-<h3>
-Building Websites
-</h3>
-
-<p>
-Turning ideas into real websites using
-HTML, CSS and JavaScript.
-</p>
-
-</div>
-
-
-<div class="timeline-item">
-
-<div class="timeline-date">
-PHASE 04
-</div>
-
-<h3>
-What's Next?
-</h3>
-
-<p>
-Bigger projects, better coding and
-more ambitious ideas.
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
+<section class="reveal">
 
-<!-- ACHIEVEMENTS -->
+    <h2 class="title">My Coding Journey</h2>
 
-<section>
+    <p class="subtitle">
+        From the first line of code to bigger projects.
+    </p>
 
-<div class="label">
-05 / ACHIEVEMENTS
-</div>
+    <div class="timeline">
 
-<h2 class="title">
-UNLOCKED <span class="gradient">LEVELS.</span>
-</h2>
+        <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+                <h3>Started Coding</h3>
+                <p>
+                    Started learning Python and programming basics.
+                </p>
+            </div>
+        </div>
 
+        <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+                <h3>Built My First Website</h3>
+                <p>
+                    Started learning HTML and created my first webpage.
+                </p>
+            </div>
+        </div>
 
-<div class="achievement-grid">
+        <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+                <h3>Learning JavaScript</h3>
+                <p>
+                    Started making websites interactive.
+                </p>
+            </div>
+        </div>
 
-<div class="achievement">
+        <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+                <h3>More Projects</h3>
+                <p>
+                    Building bigger and more interactive projects.
+                </p>
+            </div>
+        </div>
 
-<div class="achievement-icon">
-🏗️
-</div>
-
-<h3>
-First Website
-</h3>
-
-<p>
-Built a personal website from scratch.
-</p>
-
-</div>
-
-
-<div class="achievement">
-
-<div class="achievement-icon">
-🐍
-</div>
-
-<h3>
-Started Python
-</h3>
-
-<p>
-Began learning real programming concepts.
-</p>
-
-</div>
-
-
-<div class="achievement">
-
-<div class="achievement-icon">
-🎨
-</div>
-
-<h3>
-Creative Builder
-</h3>
-
-<p>
-Combining design, editing and technology.
-</p>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
+<section class="reveal">
 
-<!-- GALLERY -->
+    <h2 class="title">Achievements</h2>
 
-<section id="gallery">
+    <p class="subtitle">
+        Small milestones that keep me moving.
+    </p>
 
-<div class="label">
-06 / GALLERY
-</div>
+    <div class="achievements">
 
-<h2 class="title">
-VISUAL <span class="gradient">ARCHIVE.</span>
-</h2>
+        <div class="achievement">
+            <span>🌐</span>
+            <h3>Built A Website</h3>
+            <p>Created my own website.</p>
+        </div>
 
+        <div class="achievement">
+            <span>🐍</span>
+            <h3>Started Python</h3>
+            <p>Began learning programming.</p>
+        </div>
 
-<div class="gallery">
+        <div class="achievement">
+            <span>🎨</span>
+            <h3>Creative Projects</h3>
+            <p>Working on creative ideas.</p>
+        </div>
 
-<div class="gallery-item">
-<img
-src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
-onclick="openImage(this.src)">
-</div>
-
-<div class="gallery-item">
-<img
-src="Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp"
-onclick="openImage(this.src)">
-</div>
-
-<div class="gallery-item">
-<img
-src="Images/567c0a6538e6d9e803a86eb3f76f9e01.webp"
-onclick="openImage(this.src)">
-</div>
-
-<div class="gallery-item">
-<img
-src="Images/765c809a7d1f74a923fa2bdaba239340.webp"
-onclick="openImage(this.src)">
-</div>
-
-<div class="gallery-item">
-<img
-src="Images/823a8aaef9bbe559ed29e27efa7c873d.webp"
-onclick="openImage(this.src)">
-</div>
-
-<div class="gallery-item">
-<img
-src="Images/01398c7404dbbdd9b3f78540ca744470.webp"
-onclick="openImage(this.src)">
-</div>
-
-</div>
+    </div>
 
 </section>
 
+<section id="gallery" class="reveal">
 
-<!-- MUSIC -->
+    <h2 class="title">My Gallery</h2>
 
-<section>
+    <p class="subtitle">
+        My photos, anime, gaming and coding.
+    </p>
 
-<div class="label">
-07 / CREATIVE MODE
-</div>
+    <div class="gallery-filters">
 
-<h2 class="title">
-VIBE <span class="gradient">MODE.</span>
-</h2>
+        <button class="gallery-filter active"
+            onclick="filterGallery('all',this)">
+            All
+        </button>
 
+        <button class="gallery-filter"
+            onclick="filterGallery('photos',this)">
+            📸 My Photos
+        </button>
 
-<div class="music-card">
+        <button class="gallery-filter"
+            onclick="filterGallery('anime',this)">
+            🔥 Anime
+        </button>
 
-<div class="visualizer">
+        <button class="gallery-filter"
+            onclick="filterGallery('gaming',this)">
+            🎮 Gaming
+        </button>
 
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
-<div class="bar"></div>
+        <button class="gallery-filter"
+            onclick="filterGallery('coding',this)">
+            💻 Coding
+        </button>
 
-</div>
+    </div>
 
+    <div class="gallery">
 
-<div class="music-info">
+        <div class="gallery-item"
+            data-category="photos"
+            onclick="openImage(0)">
+            <img src="Images/0ade78ee923bea5adbacb213aace47a9.webp">
+            <div class="gallery-info">
+                <h3>My Photo</h3>
+                <p>📸 Personal</p>
+            </div>
+        </div>
 
-<h3>
-CREATIVE MODE
-</h3>
+        <div class="gallery-item"
+            data-category="photos"
+            onclick="openImage(1)">
+            <img src="Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp">
+            <div class="gallery-info">
+                <h3>Personal</h3>
+                <p>📸 My Photos</p>
+            </div>
+        </div>
 
-<p>
-Building • Editing • Coding • Creating
-</p>
+        <div class="gallery-item"
+            data-category="photos"
+            onclick="openImage(2)">
+            <img src="Images/567c0a6538e6d9e803a86eb3f76f9e01.webp">
+            <div class="gallery-info">
+                <h3>Personal</h3>
+                <p>📸 My Photos</p>
+            </div>
+        </div>
 
-</div>
+        <div class="gallery-item"
+            data-category="photos"
+            onclick="openImage(3)">
+            <img src="Images/765c809a7d1f74a923fa2bdaba239340.webp">
+            <div class="gallery-info">
+                <h3>Personal</h3>
+                <p>📸 My Photos</p>
+            </div>
+        </div>
 
-</div>
+        <div class="gallery-item"
+            data-category="photos"
+            onclick="openImage(4)">
+            <img src="Images/823a8aaef9bbe559ed29e27efa7c873d.webp">
+            <div class="gallery-info">
+                <h3>Personal</h3>
+                <p>📸 My Photos</p>
+            </div>
+        </div>
+
+        <div class="gallery-item"
+            data-category="photos"
+            onclick="openImage(5)">
+            <img src="Images/01398c7404dbbdd9b3f78540ca744470.webp">
+            <div class="gallery-info">
+                <h3>Personal</h3>
+                <p>📸 My Photos</p>
+            </div>
+        </div>
+
+        <!-- Add your future images here -->
+        <div class="gallery-item"
+            data-category="anime"
+            onclick="openImage(6)">
+            <img src="Images/Anime/anime1.webp" alt="Anime">
+            <div class="gallery-info">
+                <h3>Anime</h3>
+                <p>🔥 Anime collection</p>
+            </div>
+        </div>
+
+        <div class="gallery-item"
+            data-category="gaming"
+            onclick="openImage(7)">
+            <img src="Images/Gaming/gaming1.webp" alt="Gaming">
+            <div class="gallery-info">
+                <h3>Gaming</h3>
+                <p>🎮 Gaming collection</p>
+            </div>
+        </div>
+
+        <div class="gallery-item"
+            data-category="coding"
+            onclick="openImage(8)">
+            <img src="Images/Coding/coding1.webp" alt="Coding">
+            <div class="gallery-info">
+                <h3>Coding</h3>
+                <p>💻 Coding projects</p>
+            </div>
+        </div>
+
+    </div>
 
 </section>
 
+<div class="lightbox" id="lightbox">
 
-<!-- SOCIAL -->
+    <button class="close-lightbox" onclick="closeImage()">
+        ×
+    </button>
 
-<section>
+    <button class="lightbox-arrow prev"
+        onclick="previousImage()">
+        ❮
+    </button>
 
-<div class="social-card">
+    <img id="bigImage">
 
-<h2>
-FOLLOW THE JOURNEY
-</h2>
-
-<p>
-Anime • Gaming • Creativity • More
-</p>
-
-<a
-class="social-link"
-href="https://www.tiktok.com/@mikedevon"
-target="_blank">
-
-🎵 @mikedevon
-
-</a>
+    <button class="lightbox-arrow next"
+        onclick="nextImage()">
+        ❯
+    </button>
 
 </div>
 
-</section>
+<section class="reveal">
 
+    <h2 class="title">Creative Mode</h2>
 
-<!-- CONTACT -->
+    <p class="subtitle">
+        A little interactive space.
+    </p>
 
-<section id="contact">
+    <div class="creative">
 
-<div class="label">
-08 / CONTACT
-</div>
+        <h2>🎵 Creative Mode</h2>
 
-<h2 class="title">
-SEND A <span class="gradient">MESSAGE.</span>
-</h2>
+        <div class="visualizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
 
-<p class="description">
-This is currently a front-end demonstration form.
-</p>
+        <button class="hero-btn"
+            onclick="showToast('Creative mode activated!')">
+            Activate
+        </button>
 
-
-<form
-class="contact"
-onsubmit="submitContact(event)">
-
-<input
-id="contactName"
-placeholder="Your name"
-required>
-
-<input
-id="contactEmail"
-type="email"
-placeholder="Your email"
-required>
-
-<textarea
-id="contactMessage"
-placeholder="Write your message..."
-required></textarea>
-
-<button>
-SEND MESSAGE 🚀
-</button>
-
-</form>
+    </div>
 
 </section>
 
+<section id="terminal" class="reveal">
+
+    <h2 class="title">Interactive Terminal</h2>
+
+    <p class="subtitle">
+        Try typing a command.
+    </p>
+
+    <div class="terminal">
+
+        <div class="terminal-head">
+            Sam.OS Terminal
+        </div>
+
+        <div class="terminal-body" id="terminalOutput">
+
+            Welcome to Sam.OS Terminal.<br>
+            Type <b>help</b> to see commands.<br><br>
+
+            &gt;
+            <input
+                class="terminal-input"
+                id="terminalInput"
+                onkeydown="terminalCommand(event)"
+                autocomplete="off"
+            >
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="reveal">
+
+    <h2 class="title">Find Me</h2>
+
+    <p class="subtitle">
+        Anime, gaming and creative content.
+    </p>
+
+    <div class="social">
+
+        <a
+            class="social-button"
+            href="https://www.tiktok.com/@mikedevon"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            🎵 TikTok @mikedevon
+        </a>
+
+    </div>
+
+</section>
+
+<section id="contact" class="reveal">
+
+    <h2 class="title">Contact Me</h2>
+
+    <p class="subtitle">
+        Send me a message.
+    </p>
+
+    <form class="form" onsubmit="sendMessage(event)">
+
+        <input
+            id="name"
+            type="text"
+            placeholder="Your Name"
+            required
+        >
+
+        <input
+            id="email"
+            type="email"
+            placeholder="Your Email"
+            required
+        >
+
+        <textarea
+            id="message"
+            rows="6"
+            placeholder="Your Message"
+            required
+        ></textarea>
+
+        <button type="submit">
+            Send Message
+        </button>
+
+    </form>
+
+</section>
 
 <footer>
-
-<p>
-Built by <strong>Sam</strong>
-</p>
-
-<p style="margin-top:10px">
-SAM.OS • 2026
-</p>
-
+    © 2026 Sam.OS — Built with HTML, CSS & JavaScript.
 </footer>
 
-
-<!-- COMMAND PALETTE -->
-
-<div id="command" onclick="closeCommand(event)">
-
-<div class="command-box">
-
-<input
-class="command-input"
-id="commandInput"
-placeholder="Search command..."
-oninput="filterCommands()">
-
-<div class="command-list" id="commandList">
-
-<button onclick="goTo('home')">
-⌂ Go Home
-</button>
-
-<button onclick="goTo('projects')">
-▣ Open Projects
-</button>
-
-<button onclick="goTo('skills')">
-⚡ View Skills
-</button>
-
-<button onclick="goTo('gallery')">
-▧ Open Gallery
-</button>
-
-<button onclick="goTo('contact')">
-✉ Contact
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- SETTINGS -->
-
-<div id="settings">
-
-<div
-class="settings-close"
-onclick="toggleSettings()">
-×
-</div>
-
-<h2>
-Settings
-</h2>
-
-<div class="setting">
-
-<h3>
-Website
-</h3>
-
-<p>
-SAM.OS personal portfolio interface.
-</p>
-
-</div>
-
-<div class="setting">
-
-<h3>
-Theme
-</h3>
-
-<p>
-Dark futuristic interface.
-</p>
-
-</div>
-
-<div class="setting">
-
-<h3>
-Keyboard
-</h3>
-
-<p>
-Press Ctrl + K to open the command palette.
-</p>
-
-</div>
-
-<div class="setting">
-
-<h3>
-Social
-</h3>
-
-<p>
-TikTok: @mikedevon
-</p>
-
-</div>
-
-</div>
-
-
-<!-- LIGHTBOX -->
-
-<div
-id="lightbox"
-onclick="closeImage()">
-
-<div
-class="lightbox-close">
-×
-</div>
-
-<img id="lightboxImg">
-
-</div>
-
-
-<!-- TOAST -->
-
-<div id="toast"></div>
-
+<div class="toast" id="toast"></div>
 
 <script>
 
-/* =========================
-   LOADER
-========================= */
+window.addEventListener("load",function(){
+    setTimeout(function(){
+        document.getElementById("loader").classList.add("hide");
+    },900);
+});
 
-window.addEventListener("load",()=>{
+function toggleMenu(){
+    document.getElementById("navLinks").classList.toggle("active");
+}
 
-setTimeout(()=>{
+function closeMenu(){
+    document.getElementById("navLinks").classList.remove("active");
+}
 
-document
-.getElementById("loader")
-.style.opacity="0";
+window.addEventListener("scroll",function(){
 
-setTimeout(()=>{
+    const top=document.documentElement.scrollTop;
 
-document
-.getElementById("loader")
-.style.display="none";
+    const height=
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
 
-},600);
-
-},2100);
+    document.getElementById("progress").style.width=
+        (top / height * 100) + "%";
 
 });
 
-
-/* =========================
-   TYPING
-========================= */
-
 const words=[
-"creative developer",
-"future software engineer",
-"content creator",
-"anime + gaming enthusiast",
-"always learning"
+    "Anime lover.",
+    "Gamer.",
+    "Future developer.",
+    "Creative mind."
 ];
 
 let wordIndex=0;
-let charIndex=0;
+let letterIndex=0;
 let deleting=false;
 
-function typeText(){
+function typing(){
 
-const element=
-document.getElementById("typing");
+    const element=document.getElementById("typing");
+    const word=words[wordIndex];
 
-const word=
-words[wordIndex];
+    if(!deleting){
 
-if(!deleting){
+        element.textContent=
+            word.substring(0,letterIndex+1);
 
-element.textContent=
-word.substring(0,charIndex+1);
+        letterIndex++;
 
-charIndex++;
+        if(letterIndex===word.length){
 
-if(charIndex===word.length){
+            deleting=true;
 
-deleting=true;
+            setTimeout(typing,1000);
+            return;
+        }
 
-setTimeout(typeText,1200);
+    }else{
 
-return;
+        element.textContent=
+            word.substring(0,letterIndex-1);
 
+        letterIndex--;
+
+        if(letterIndex===0){
+
+            deleting=false;
+            wordIndex++;
+
+            if(wordIndex>=words.length){
+                wordIndex=0;
+            }
+
+        }
+
+    }
+
+    setTimeout(
+        typing,
+        deleting ? 45 : 80
+    );
 }
 
-}else{
+typing();
 
-element.textContent=
-word.substring(0,charIndex-1);
+const counters=document.querySelectorAll(".counter");
+let counterStarted=false;
 
-charIndex--;
+function startCounters(){
 
-if(charIndex===0){
+    if(counterStarted)return;
 
-deleting=false;
+    counterStarted=true;
 
-wordIndex++;
+    counters.forEach(counter=>{
 
-if(wordIndex>=words.length){
-wordIndex=0;
+        const target=Number(counter.dataset.target);
+        let value=0;
+
+        const timer=setInterval(function(){
+
+            value++;
+            counter.textContent=value;
+
+            if(value>=target){
+                clearInterval(timer);
+            }
+
+        },100);
+
+    });
 }
 
-}
+window.addEventListener("scroll",function(){
 
-}
+    const stats=document.querySelector(".stats");
 
-setTimeout(
-typeText,
-deleting ? 45 : 80
+    if(
+        stats &&
+        stats.getBoundingClientRect().top <
+        window.innerHeight
+    ){
+        startCounters();
+    }
+
+});
+
+const reveal=document.querySelectorAll(".reveal");
+
+const observer=new IntersectionObserver(
+    entries=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+                entry.target.classList.add("show");
+            }
+
+        });
+
+    },
+    {threshold:.12}
 );
 
+reveal.forEach(item=>observer.observe(item));
+
+let theme=0;
+
+function changeTheme(){
+
+    theme++;
+
+    if(theme===1){
+
+        document.documentElement
+            .style
+            .setProperty("--primary","#a855f7");
+
+        document.documentElement
+            .style
+            .setProperty("--secondary","#00ffff");
+
+        showToast("💜 Purple theme");
+
+    }
+
+    else if(theme===2){
+
+        document.documentElement
+            .style
+            .setProperty("--primary","#ff2bd6");
+
+        document.documentElement
+            .style
+            .setProperty("--secondary","#ff7a00");
+
+        showToast("🌈 Neon theme");
+
+    }
+
+    else{
+
+        document.documentElement
+            .style
+            .setProperty("--primary","#00ffff");
+
+        document.documentElement
+            .style
+            .setProperty("--secondary","#8b5cf6");
+
+        theme=0;
+
+        showToast("💎 Cyan theme");
+
+    }
+
 }
-
-typeText();
-
-
-/* =========================
-   SCROLL PROGRESS
-========================= */
-
-window.addEventListener("scroll",()=>{
-
-const scroll=
-document.documentElement.scrollTop;
-
-const height=
-document.documentElement.scrollHeight-
-document.documentElement.clientHeight;
-
-document
-.getElementById("scrollProgress")
-.style.width=
-(scroll/height*100)+"%";
-
-});
-
-
-/* =========================
-   PROJECT FILTER
-========================= */
-
-let currentFilter="all";
-
-function filterProjects(category,button){
-
-currentFilter=category;
-
-document
-.querySelectorAll(".filter")
-.forEach(btn=>{
-btn.classList.remove("active");
-});
-
-button.classList.add("active");
-
-searchProjects();
-
-}
-
 
 function searchProjects(){
 
-const search=
-document
-.getElementById("search")
-.value
-.toLowerCase();
+    const query=
+        document
+        .getElementById("projectSearch")
+        .value
+        .toLowerCase();
 
-document
-.querySelectorAll(".project")
-.forEach(project=>{
+    document
+        .querySelectorAll(".project")
+        .forEach(project=>{
 
-const category=
-project.dataset.category;
+            project.style.display=
+                project.dataset.project.includes(query)
+                ? ""
+                : "none";
 
-const name=
-project.dataset.name;
-
-const categoryMatch=
-currentFilter==="all" ||
-category===currentFilter;
-
-const searchMatch=
-name.includes(search);
-
-if(categoryMatch && searchMatch){
-
-project.classList.remove("hide");
-
-}else{
-
-project.classList.add("hide");
+        });
 
 }
 
-});
+function showToast(message){
+
+    const toast=document.getElementById("toast");
+
+    toast.textContent=message;
+    toast.classList.add("show");
+
+    setTimeout(function(){
+        toast.classList.remove("show");
+    },2300);
 
 }
 
+function filterGallery(category,button){
 
-/* =========================
-   LIGHTBOX
-========================= */
+    document
+        .querySelectorAll(".gallery-filter")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
 
-function openImage(src){
+    button.classList.add("active");
 
-document
-.getElementById("lightboxImg")
-.src=src;
+    document
+        .querySelectorAll(".gallery-item")
+        .forEach(item=>{
 
-document
-.getElementById("lightbox")
-.style.display="flex";
+            item.style.display=
+                category==="all" ||
+                item.dataset.category===category
+                ? ""
+                : "none";
+
+        });
+
+}
+
+const galleryImages=[
+
+    "Images/0ade78ee923bea5adbacb213aace47a9.webp",
+    "Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp",
+    "Images/567c0a6538e6d9e803a86eb3f76f9e01.webp",
+    "Images/765c809a7d1f74a923fa2bdaba239340.webp",
+    "Images/823a8aaef9bbe559ed29e27efa7c873d.webp",
+    "Images/01398c7404dbbdd9b3f78540ca744470.webp",
+    "Images/Anime/anime1.webp",
+    "Images/Gaming/gaming1.webp",
+    "Images/Coding/coding1.webp"
+
+];
+
+let currentImage=0;
+
+function openImage(index){
+
+    currentImage=index;
+
+    document.getElementById("bigImage").src=
+        galleryImages[index];
+
+    document.getElementById("lightbox")
+        .classList.add("show");
 
 }
 
 function closeImage(){
 
-document
-.getElementById("lightbox")
-.style.display="none";
+    document.getElementById("lightbox")
+        .classList.remove("show");
 
 }
 
+function nextImage(){
 
-/* =========================
-   CONTACT
-========================= */
+    currentImage++;
 
-function submitContact(event){
+    if(currentImage>=galleryImages.length){
+        currentImage=0;
+    }
 
-event.preventDefault();
-
-showToast(
-"Message submitted successfully 🚀"
-);
-
-event.target.reset();
+    document.getElementById("bigImage").src=
+        galleryImages[currentImage];
 
 }
 
+function previousImage(){
 
-/* =========================
-   TOAST
-========================= */
+    currentImage--;
 
-let toastTimer;
+    if(currentImage<0){
+        currentImage=galleryImages.length-1;
+    }
 
-function showToast(message){
-
-const toast=
-document.getElementById("toast");
-
-toast.textContent=message;
-
-toast.classList.add("show");
-
-clearTimeout(toastTimer);
-
-toastTimer=setTimeout(()=>{
-
-toast.classList.remove("show");
-
-},2000);
+    document.getElementById("bigImage").src=
+        galleryImages[currentImage];
 
 }
 
+document.addEventListener("keydown",function(event){
 
-/* =========================
-   SETTINGS
-========================= */
+    const box=document.getElementById("lightbox");
 
-function toggleSettings(){
+    if(!box.classList.contains("show")){
+        return;
+    }
 
-document
-.getElementById("settings")
-.classList.toggle("open");
+    if(event.key==="Escape"){
+        closeImage();
+    }
 
-}
+    if(event.key==="ArrowRight"){
+        nextImage();
+    }
 
-
-/* =========================
-   COMMAND PALETTE
-========================= */
-
-function openCommand(){
-
-document
-.getElementById("command")
-.style.display="flex";
-
-setTimeout(()=>{
-
-document
-.getElementById("commandInput")
-.focus();
-
-},50);
-
-}
-
-
-function closeCommand(event){
-
-if(event.target.id==="command"){
-
-document
-.getElementById("command")
-.style.display="none";
-
-}
-
-}
-
-
-function goTo(id){
-
-document
-.getElementById("command")
-.style.display="none";
-
-document
-.getElementById(id)
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-function filterCommands(){
-
-const search=
-document
-.getElementById("commandInput")
-.value
-.toLowerCase();
-
-document
-.querySelectorAll(".command-list button")
-.forEach(button=>{
-
-button.style.display=
-button.textContent
-.toLowerCase()
-.includes(search)
-?
-"block"
-:
-"none";
+    if(event.key==="ArrowLeft"){
+        previousImage();
+    }
 
 });
 
-}
+function terminalCommand(event){
 
+    if(event.key!=="Enter"){
+        return;
+    }
 
-/* =========================
-   KEYBOARD SHORTCUT
-========================= */
+    const input=document.getElementById("terminalInput");
 
-document.addEventListener("keydown",event=>{
+    const command=input.value.trim().toLowerCase();
 
-if(
-(event.ctrlKey || event.metaKey)
-&&
-event.key.toLowerCase()==="k"
-){
+    const output=document.getElementById("terminalOutput");
 
-event.preventDefault();
+    let response="";
 
-openCommand();
+    if(command==="help"){
+        response="Commands: about, skills, projects, gallery, hello, clear";
+    }
 
-}
+    else if(command==="about"){
+        response="I'm Sam — learning coding and building cool things.";
+    }
 
-if(event.key==="Escape"){
+    else if(command==="skills"){
+        response="HTML • CSS • JavaScript • Python";
+    }
 
-document
-.getElementById("command")
-.style.display="none";
+    else if(command==="projects"){
+        response="Website • Anime Edits • Coding";
+    }
 
-document
-.getElementById("settings")
-.classList.remove("open");
+    else if(command==="gallery"){
 
-closeImage();
+        document.getElementById("gallery").scrollIntoView();
 
-}
+        response="Opening gallery...";
 
-});
+    }
 
+    else if(command==="hello"){
+        response="Yo 👋 Welcome to Sam.OS!";
+    }
 
-/* =========================
-   COUNTER ANIMATION
-========================= */
+    else if(command==="clear"){
 
-const counters=
-document.querySelectorAll(".dash-number");
+        output.innerHTML=
+            "Terminal cleared.<br><br>&gt; " +
+            '<input class="terminal-input" id="terminalInput" onkeydown="terminalCommand(event)">';
 
-const observer=
-new IntersectionObserver(entries=>{
+        document.getElementById("terminalInput").focus();
 
-entries.forEach(entry=>{
+        return;
+    }
 
-if(entry.isIntersecting){
+    else if(command===""){
+        response="";
+    }
 
-const element=entry.target;
+    else{
+        response="Command not found. Type 'help'.";
+    }
 
-const finalValue=
-element.textContent;
+    output.innerHTML+=
+        "<br>&gt; "+command+
+        "<br>"+response+
+        "<br><br>&gt; "+
+        '<input class="terminal-input" id="terminalInput" onkeydown="terminalCommand(event)">';
 
-if(!isNaN(finalValue)){
-
-let number=0;
-
-const target=
-parseInt(finalValue);
-
-const interval=
-setInterval(()=>{
-
-number++;
-
-element.textContent=
-String(number)
-.padStart(2,"0");
-
-if(number>=target){
-
-clearInterval(interval);
+    document.getElementById("terminalInput").focus();
 
 }
 
-},80);
+function sendMessage(event){
+
+    event.preventDefault();
+
+    showToast("✅ Message sent successfully!");
+
+    document.getElementById("name").value="";
+    document.getElementById("email").value="";
+    document.getElementById("message").value="";
 
 }
-
-observer.unobserve(element);
-
-}
-
-});
-
-});
-
-counters.forEach(counter=>{
-observer.observe(counter);
-});
 
 </script>
 
