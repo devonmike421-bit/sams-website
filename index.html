@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Sam.OS | Creative Command Center</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sam.OS | Anime • Gaming • Creative Lab</title>
 
 <style>
 *{
@@ -15,25 +14,24 @@
 }
 
 :root{
-    --bg:#050507;
-    --panel:#0b0b10;
-    --panel2:#111118;
-    --panel3:#171720;
-    --line:rgba(255,255,255,.09);
-    --text:#f7f7f7;
-    --muted:#858592;
-    --lime:#b8ff32;
-    --cyan:#55eaff;
-    --purple:#9d6cff;
-    --pink:#ff4fc3;
-    --danger:#ff5555;
-    --shadow:0 25px 80px rgba(0,0,0,.45);
+    --bg:#050609;
+    --bg2:#090c11;
+    --card:#10141b;
+    --card2:#151a22;
+    --line:rgba(255,255,255,.08);
+    --text:#f4f7fb;
+    --muted:#8b95a7;
+    --lime:#b8ff3d;
+    --cyan:#39e7ff;
+    --purple:#9d70ff;
+    --pink:#ff4fd8;
+    --red:#ff5878;
 }
 
 body{
     background:
-        radial-gradient(circle at 15% 10%,rgba(184,255,50,.07),transparent 25%),
-        radial-gradient(circle at 85% 20%,rgba(85,234,255,.06),transparent 25%),
+        radial-gradient(circle at 10% 10%,rgba(184,255,61,.06),transparent 25%),
+        radial-gradient(circle at 90% 10%,rgba(57,231,255,.06),transparent 25%),
         var(--bg);
     color:var(--text);
     font-family:Arial,Helvetica,sans-serif;
@@ -41,7 +39,17 @@ body{
     overflow-x:hidden;
 }
 
-button,input,select,textarea{
+body.light{
+    --bg:#edf0f4;
+    --bg2:#fff;
+    --card:#fff;
+    --card2:#f4f6f8;
+    --line:rgba(0,0,0,.09);
+    --text:#10131a;
+    --muted:#667080;
+}
+
+button,input,textarea,select{
     font:inherit;
 }
 
@@ -50,26 +58,17 @@ button{
 }
 
 a{
-    color:inherit;
     text-decoration:none;
+    color:inherit;
 }
 
 ::-webkit-scrollbar{
-    width:7px;
-}
-
-::-webkit-scrollbar-track{
-    background:#050507;
+    width:8px;
 }
 
 ::-webkit-scrollbar-thumb{
-    background:#292933;
+    background:linear-gradient(var(--lime),var(--cyan));
     border-radius:20px;
-}
-
-::selection{
-    background:var(--lime);
-    color:#000;
 }
 
 /* LOADER */
@@ -77,8 +76,8 @@ a{
 .loader{
     position:fixed;
     inset:0;
-    background:#050507;
     z-index:99999;
+    background:#030405;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -90,39 +89,30 @@ a{
     pointer-events:none;
 }
 
-.loader-box{
-    width:min(420px,85%);
-}
-
-.loader-title{
-    font-size:34px;
+.loader-logo{
+    font-size:48px;
     font-weight:900;
-    margin-bottom:15px;
+    letter-spacing:-3px;
 }
 
-.loader-title span{
+.loader-logo span{
     color:var(--lime);
 }
 
 .loader-bar{
-    height:5px;
-    background:#1b1b22;
-    border-radius:10px;
+    width:230px;
+    height:4px;
+    background:#171a1f;
+    margin:25px auto 12px;
+    border-radius:20px;
     overflow:hidden;
 }
 
 .loader-progress{
-    width:0%;
+    width:0;
     height:100%;
     background:linear-gradient(90deg,var(--lime),var(--cyan));
-    animation:load 1.7s forwards;
-}
-
-.loader-status{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:10px;
-    letter-spacing:1px;
+    animation:load 1.6s forwards;
 }
 
 @keyframes load{
@@ -136,41 +126,28 @@ a{
     top:0;
     left:0;
     right:0;
-    height:70px;
-    background:rgba(5,5,7,.78);
-    backdrop-filter:blur(20px);
-    border-bottom:1px solid var(--line);
+    height:68px;
+    z-index:9000;
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 25px;
-    z-index:900;
+    background:rgba(5,6,9,.78);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--line);
+}
+
+body.light .topbar{
+    background:rgba(255,255,255,.8);
 }
 
 .logo{
-    font-size:21px;
+    font-size:24px;
     font-weight:900;
-    letter-spacing:-1px;
 }
 
 .logo span{
     color:var(--lime);
-}
-
-.status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:11px;
-    color:var(--muted);
-}
-
-.status-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--lime);
-    box-shadow:0 0 15px var(--lime);
 }
 
 .top-actions{
@@ -179,150 +156,159 @@ a{
 }
 
 .icon-btn{
-    width:38px;
-    height:38px;
+    width:42px;
+    height:42px;
     border:1px solid var(--line);
-    background:#0d0d13;
-    color:white;
-    border-radius:11px;
+    border-radius:12px;
+    background:var(--card);
+    color:var(--text);
 }
 
 .icon-btn:hover{
     border-color:var(--lime);
-    color:var(--lime);
 }
 
 /* SIDEBAR */
 
 .sidebar{
     position:fixed;
+    top:68px;
     left:0;
-    top:70px;
     bottom:0;
-    width:220px;
+    width:230px;
+    z-index:8000;
+    padding:20px 14px;
+    background:rgba(5,6,9,.7);
+    backdrop-filter:blur(20px);
     border-right:1px solid var(--line);
-    background:rgba(8,8,11,.78);
-    backdrop-filter:blur(18px);
-    padding:22px 14px;
-    z-index:800;
 }
 
-.side-label{
-    color:#555562;
-    font-size:9px;
+body.light .sidebar{
+    background:rgba(255,255,255,.7);
+}
+
+.nav-title{
+    padding:10px;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:900;
     letter-spacing:2px;
-    margin:10px 10px 12px;
-    text-transform:uppercase;
 }
 
 .nav-item{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    width:100%;
+    display:block;
     padding:12px;
-    margin-bottom:5px;
-    color:#8f8f99;
-    border-radius:10px;
+    margin:3px 0;
+    border-radius:11px;
+    color:var(--muted);
     font-size:13px;
     transition:.2s;
 }
 
 .nav-item:hover,
 .nav-item.active{
-    background:#15151c;
-    color:white;
+    color:var(--text);
+    background:rgba(184,255,61,.08);
 }
 
 .nav-item.active{
-    box-shadow:inset 3px 0 var(--lime);
+    border-left:3px solid var(--lime);
 }
 
-.nav-icon{
-    width:23px;
-    text-align:center;
+.side-status{
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:20px;
+    padding:14px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:var(--card);
+    font-size:12px;
+}
+
+.status-dot{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--lime);
+    box-shadow:0 0 12px var(--lime);
+    margin-right:6px;
 }
 
 /* MAIN */
 
 main{
-    margin-left:220px;
-    padding-top:70px;
+    margin-left:230px;
+    padding-top:68px;
 }
 
 section{
-    padding:80px 6%;
-    position:relative;
-}
-
-.container{
-    max-width:1400px;
+    max-width:1500px;
     margin:auto;
+    padding:75px 5%;
 }
 
 .section-head{
     display:flex;
-    align-items:end;
     justify-content:space-between;
+    align-items:end;
     gap:20px;
-    margin-bottom:30px;
-}
-
-.section-kicker{
-    color:var(--lime);
-    font-size:10px;
-    font-weight:bold;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    margin-bottom:8px;
+    margin-bottom:28px;
 }
 
 .section-title{
-    font-size:clamp(28px,4vw,48px);
-    letter-spacing:-2px;
+    font-size:36px;
+    font-weight:900;
+    letter-spacing:-1.5px;
+    margin-top:8px;
+}
+
+.section-title span{
+    color:var(--lime);
 }
 
 .section-sub{
     color:var(--muted);
-    max-width:600px;
-    line-height:1.7;
+    margin-top:7px;
     font-size:13px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 11px;
+    border-radius:999px;
+    color:var(--lime);
+    border:1px solid rgba(184,255,61,.2);
+    background:rgba(184,255,61,.06);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1px;
 }
 
 /* HERO */
 
 .hero{
-    min-height:calc(100vh - 70px);
-    display:flex;
-    align-items:center;
-}
-
-.hero-grid{
+    min-height:calc(100vh - 68px);
     display:grid;
     grid-template-columns:1.2fr .8fr;
-    gap:50px;
     align-items:center;
+    gap:40px;
 }
 
 .hero-kicker{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:8px 12px;
-    border:1px solid rgba(184,255,50,.2);
-    background:rgba(184,255,50,.04);
     color:var(--lime);
-    border-radius:30px;
-    font-size:10px;
-    letter-spacing:2px;
-    margin-bottom:22px;
+    font-size:12px;
+    letter-spacing:3px;
+    font-weight:900;
+    margin-bottom:18px;
 }
 
 .hero h1{
-    font-size:clamp(55px,8vw,110px);
-    line-height:.85;
-    letter-spacing:-7px;
-    margin-bottom:25px;
+    font-size:clamp(60px,8vw,105px);
+    line-height:.86;
+    letter-spacing:-6px;
 }
 
 .hero h1 span{
@@ -334,149 +320,141 @@ section{
     color:var(--muted);
     max-width:650px;
     line-height:1.8;
-    font-size:15px;
+    margin-top:25px;
 }
 
 .hero-buttons{
     display:flex;
-    flex-wrap:wrap;
     gap:10px;
-    margin-top:28px;
+    flex-wrap:wrap;
+    margin-top:25px;
 }
 
 .btn{
-    border:1px solid var(--line);
-    background:#111118;
-    color:white;
+    border:0;
+    border-radius:11px;
     padding:12px 17px;
-    border-radius:10px;
+    background:var(--lime);
+    color:#050609;
+    font-weight:900;
+    font-size:12px;
     transition:.2s;
 }
 
 .btn:hover{
     transform:translateY(-2px);
-    border-color:var(--lime);
-}
-
-.btn.primary{
-    background:var(--lime);
-    color:#000;
-    border-color:var(--lime);
-    font-weight:800;
 }
 
 .btn.secondary{
-    border-color:rgba(85,234,255,.3);
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--line);
 }
 
-/* PROFILE */
-
-.profile-wrap{
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.btn.cyan{
+    background:var(--cyan);
 }
 
-.profile-orbit{
-    width:min(380px,80vw);
-    aspect-ratio:1;
-    border:1px solid rgba(184,255,50,.25);
-    border-radius:50%;
+.btn.purple{
+    background:var(--purple);
+    color:white;
+}
+
+.profile-system{
+    width:330px;
+    height:330px;
     position:relative;
-    animation:orbitSpin 16s linear infinite;
-    box-shadow:
-        0 0 80px rgba(184,255,50,.06),
-        inset 0 0 80px rgba(184,255,50,.04);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
 }
 
-.profile-orbit:before,
-.profile-orbit:after{
+.profile-ring{
+    position:absolute;
+    inset:0;
+    border:2px dashed var(--lime);
+    border-radius:50%;
+    animation:spin 16s linear infinite;
+}
+
+.profile-ring:before,
+.profile-ring:after{
     content:"";
     position:absolute;
+    width:11px;
+    height:11px;
     border-radius:50%;
-}
-
-.profile-orbit:before{
-    width:14px;
-    height:14px;
     background:var(--lime);
-    top:8%;
-    left:20%;
-    box-shadow:0 0 25px var(--lime);
+    box-shadow:0 0 18px var(--lime);
 }
 
-.profile-orbit:after{
-    width:9px;
-    height:9px;
-    background:var(--cyan);
-    right:12%;
-    bottom:25%;
-    box-shadow:0 0 25px var(--cyan);
+.profile-ring:before{
+    top:8px;
+    left:50%;
+}
+
+.profile-ring:after{
+    right:15px;
+    bottom:35px;
 }
 
 .profile-image{
-    position:absolute;
-    inset:45px;
+    width:245px;
+    height:245px;
     border-radius:50%;
-    overflow:hidden;
-    border:2px solid rgba(255,255,255,.12);
-    animation:orbitSpinReverse 16s linear infinite;
-}
-
-.profile-image img{
-    width:100%;
-    height:100%;
     object-fit:cover;
+    border:5px solid var(--card);
+    animation:counterSpin 16s linear infinite;
 }
 
-.profile-tag{
-    position:absolute;
-    bottom:15%;
-    left:-30px;
-    padding:11px 15px;
-    background:#111118;
-    border:1px solid var(--line);
-    border-radius:12px;
-    font-size:11px;
-    color:var(--lime);
-    box-shadow:var(--shadow);
-    animation:float 3s ease-in-out infinite;
-}
-
-@keyframes orbitSpin{
+@keyframes spin{
     to{transform:rotate(360deg)}
 }
 
-@keyframes orbitSpinReverse{
+@keyframes counterSpin{
     to{transform:rotate(-360deg)}
 }
 
-@keyframes float{
-    50%{transform:translateY(-8px)}
+.hero-card{
+    position:absolute;
+    right:-20px;
+    bottom:10px;
+    padding:12px 15px;
+    background:rgba(15,18,24,.92);
+    border:1px solid var(--line);
+    border-radius:13px;
+    font-size:11px;
+}
+
+.hero-card strong{
+    display:block;
+    color:var(--lime);
+    margin-bottom:3px;
 }
 
 /* MARQUEE */
 
 .marquee{
-    overflow:hidden;
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
-    padding:16px 0;
+    overflow:hidden;
     white-space:nowrap;
-    background:#09090d;
+    padding:14px 0;
 }
 
 .marquee-track{
     display:inline-block;
-    animation:marquee 22s linear infinite;
-    color:#777783;
-    font-size:12px;
-    letter-spacing:3px;
+    animation:marquee 25s linear infinite;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:2px;
 }
 
 .marquee-track span{
     color:var(--lime);
-    margin:0 30px;
+    margin:0 25px;
 }
 
 @keyframes marquee{
@@ -488,364 +466,408 @@ section{
 .dashboard-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:14px;
-}
-
-.stat-card{
-    padding:20px;
-    border:1px solid var(--line);
-    background:linear-gradient(145deg,#111118,#0a0a0f);
-    border-radius:15px;
-    min-height:135px;
-}
-
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    color:#666672;
-    font-size:11px;
-}
-
-.stat-icon{
-    color:var(--lime);
-}
-
-.stat-value{
-    font-size:30px;
-    font-weight:800;
-    margin-top:22px;
-}
-
-.stat-small{
-    color:var(--muted);
-    font-size:10px;
-    margin-top:5px;
-}
-
-/* CARDS */
-
-.card{
-    border:1px solid var(--line);
-    background:linear-gradient(145deg,rgba(20,20,28,.9),rgba(8,8,12,.95));
-    border-radius:16px;
-    box-shadow:var(--shadow);
-}
-
-.card-pad{
-    padding:22px;
-}
-
-/* PROJECTS */
-
-.projects{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
     gap:15px;
 }
 
-.project{
-    min-height:230px;
-    padding:23px;
-    position:relative;
-    overflow:hidden;
+.stat-card{
+    padding:22px;
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:linear-gradient(145deg,var(--card),var(--card2));
 }
 
-.project:before{
-    content:"";
-    position:absolute;
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    background:var(--lime);
-    filter:blur(80px);
-    opacity:.06;
-    right:-40px;
-    bottom:-40px;
-}
-
-.project-num{
-    color:var(--lime);
+.stat-label{
+    color:var(--muted);
     font-size:10px;
-    letter-spacing:2px;
+    font-weight:900;
+    letter-spacing:1px;
 }
 
-.project h3{
-    font-size:23px;
-    margin:45px 0 10px;
+.stat-value{
+    font-size:27px;
+    font-weight:900;
+    margin-top:10px;
 }
 
-.project p{
+/* GENERAL CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
+}
+
+.card{
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:linear-gradient(145deg,var(--card),var(--card2));
+    overflow:hidden;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(184,255,61,.25);
+}
+
+.card-body{
+    padding:20px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
     color:var(--muted);
     font-size:12px;
     line-height:1.7;
 }
 
-/* ANIME */
-
-.anime-section{
-    background:
-        radial-gradient(circle at 80% 20%,rgba(157,108,255,.06),transparent 30%);
-}
-
-.anime-toolbar{
-    display:grid;
-    grid-template-columns:1fr auto auto;
-    gap:10px;
-    margin-bottom:15px;
-}
-
-.search-box{
-    position:relative;
-}
-
-.search-box input{
-    width:100%;
-    height:48px;
-    background:#0d0d13;
-    border:1px solid var(--line);
-    color:white;
-    outline:none;
-    border-radius:11px;
-    padding:0 45px 0 15px;
-}
-
-.search-box input:focus{
-    border-color:var(--lime);
-}
-
-.search-icon{
-    position:absolute;
-    right:15px;
-    top:15px;
-    color:#777;
-}
-
-.anime-actions{
-    display:flex;
-    gap:8px;
-}
-
-.anime-tabs{
+.card-actions{
     display:flex;
     gap:8px;
     flex-wrap:wrap;
-    margin-bottom:15px;
+    margin-top:15px;
+}
+
+/* ================= ANIME ================= */
+
+.anime-top{
+    padding:25px;
+    border:1px solid rgba(184,255,61,.12);
+    border-radius:20px;
+    background:
+        radial-gradient(circle at 90% 0%,rgba(184,255,61,.1),transparent 35%),
+        linear-gradient(145deg,var(--card),var(--card2));
+    margin-bottom:20px;
+}
+
+.anime-search-row{
+    display:flex;
+    gap:8px;
+    width:100%;
+}
+
+.anime-search{
+    flex:1;
+    min-width:0;
+    padding:14px 16px;
+    border-radius:12px;
+    background:var(--bg);
+    color:var(--text);
+    border:1px solid var(--line);
+    outline:none;
+}
+
+.anime-search:focus{
+    border-color:var(--lime);
+}
+
+.tabs{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:15px;
 }
 
 .tab{
     border:1px solid var(--line);
-    background:#0c0c11;
-    color:#888895;
-    padding:9px 13px;
+    background:var(--card);
+    color:var(--muted);
+    padding:10px 13px;
     border-radius:9px;
     font-size:11px;
+    font-weight:900;
 }
 
-.tab.active,
-.tab:hover{
-    color:#000;
+.tab.active{
     background:var(--lime);
-    border-color:var(--lime);
+    color:#050609;
 }
 
-.search-suggestions{
-    position:absolute;
-    top:55px;
-    left:0;
-    right:0;
-    z-index:100;
-    background:#101017;
+.anime-status{
+    margin-top:12px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.anime-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.anime-card{
     border:1px solid var(--line);
-    border-radius:12px;
+    border-radius:16px;
     overflow:hidden;
-    display:none;
-    box-shadow:var(--shadow);
+    background:var(--card);
+    transition:.25s;
 }
 
-.search-suggestions.show{
+.anime-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(184,255,61,.28);
+}
+
+.anime-poster{
+    height:285px;
+    position:relative;
+    background:
+        radial-gradient(circle at 30% 20%,rgba(184,255,61,.2),transparent 25%),
+        linear-gradient(145deg,#171c25,#050609);
+}
+
+.anime-poster img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
     display:block;
 }
 
-.suggestion{
-    padding:11px 13px;
+.anime-poster.no-image{
     display:flex;
     align-items:center;
-    gap:10px;
-    cursor:pointer;
-    border-bottom:1px solid rgba(255,255,255,.05);
+    justify-content:center;
+    padding:25px;
+    text-align:center;
 }
 
-.suggestion:hover{
-    background:#191922;
+.poster-title{
+    font-size:24px;
+    font-weight:900;
+    line-height:1.05;
 }
 
-.suggestion img{
-    width:35px;
-    height:45px;
-    object-fit:cover;
-    border-radius:5px;
+.anime-gradient{
+    position:absolute;
+    inset:auto 0 0;
+    height:90px;
+    background:linear-gradient(transparent,rgba(0,0,0,.9));
+    pointer-events:none;
 }
 
-.suggestion-info{
-    min-width:0;
+.score{
+    position:absolute;
+    left:11px;
+    bottom:10px;
+    z-index:2;
+    color:var(--lime);
+    font-size:11px;
+    font-weight:900;
 }
 
-.suggestion-title{
-    font-size:12px;
+.anime-info{
+    padding:13px;
+}
+
+.anime-title{
+    font-size:14px;
+    font-weight:900;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
-.suggestion-meta{
-    font-size:9px;
-    color:#777;
-    margin-top:3px;
+.anime-meta{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:5px;
 }
 
-.recent-searches{
+.anime-btn{
+    width:100%;
+    padding:9px;
+    margin-top:8px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text);
+    font-size:10px;
+    font-weight:900;
+}
+
+.anime-btn:hover{
+    background:var(--lime);
+    color:#000;
+}
+
+.empty-anime{
+    grid-column:1/-1;
+    padding:60px 20px;
+    text-align:center;
+    border:1px solid var(--line);
+    border-radius:18px;
+    color:var(--muted);
+}
+
+.loading-anime{
+    grid-column:1/-1;
+    padding:60px;
+    text-align:center;
+    color:var(--muted);
+}
+
+/* ================= GAMES ================= */
+
+.games-hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:28px;
+    border:1px solid rgba(57,231,255,.14);
+    border-radius:22px;
+    background:
+        radial-gradient(circle at 90% 0%,rgba(57,231,255,.12),transparent 30%),
+        linear-gradient(145deg,var(--card),var(--card2));
+    margin-bottom:20px;
+}
+
+.games-hero h3{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.games-hero p{
+    max-width:650px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:13px;
+}
+
+.game-filters{
     display:flex;
     gap:7px;
     flex-wrap:wrap;
     margin-bottom:18px;
 }
 
-.recent-chip{
+.game-filter{
+    padding:9px 12px;
+    border-radius:9px;
     border:1px solid var(--line);
-    background:#0b0b10;
-    color:#888;
-    padding:6px 10px;
-    border-radius:20px;
-    font-size:9px;
-    cursor:pointer;
-}
-
-.recent-chip:hover{
-    color:var(--lime);
-    border-color:var(--lime);
-}
-
-.anime-info-bar{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    color:#70707a;
+    background:var(--card);
+    color:var(--muted);
     font-size:10px;
-    margin-bottom:18px;
+    font-weight:900;
 }
 
-.anime-grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:13px;
-}
-
-.anime-card{
-    background:#0d0d13;
-    border:1px solid var(--line);
-    border-radius:13px;
-    overflow:hidden;
-    position:relative;
-    cursor:pointer;
-    transition:.25s;
-}
-
-.anime-card:hover{
-    transform:translateY(-6px);
-    border-color:rgba(184,255,50,.5);
-    box-shadow:0 15px 45px rgba(0,0,0,.35);
-}
-
-.anime-poster{
-    width:100%;
-    aspect-ratio:3/4;
-    object-fit:cover;
-    display:block;
-    background:#15151c;
-}
-
-.anime-card-body{
-    padding:11px;
-}
-
-.anime-title{
-    font-size:12px;
-    font-weight:700;
-    line-height:1.35;
-    height:33px;
-    overflow:hidden;
-}
-
-.anime-meta{
-    display:flex;
-    justify-content:space-between;
-    color:#666673;
-    font-size:9px;
-    margin-top:8px;
-}
-
-.anime-score{
-    color:var(--lime);
-}
-
-.watch-btn{
-    position:absolute;
-    top:8px;
-    right:8px;
-    width:29px;
-    height:29px;
-    border:1px solid rgba(255,255,255,.18);
-    background:rgba(0,0,0,.7);
-    color:white;
-    border-radius:8px;
-    z-index:3;
-}
-
-.watch-btn.saved{
-    background:var(--lime);
+.game-filter.active{
+    background:var(--cyan);
     color:#000;
 }
 
-.anime-loading{
-    grid-column:1/-1;
-    min-height:300px;
+.games-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.game-card{
+    padding:20px;
+    min-height:220px;
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:
+        radial-gradient(circle at 100% 0%,var(--game-glow),transparent 45%),
+        linear-gradient(145deg,var(--card),var(--card2));
+    transition:.25s;
+}
+
+.game-card:hover{
+    transform:translateY(-5px);
+}
+
+.game-icon{
+    width:48px;
+    height:48px;
+    border-radius:13px;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    gap:12px;
-    color:#777;
+    background:rgba(255,255,255,.05);
+    font-size:23px;
+    margin-bottom:15px;
 }
 
-.spinner{
-    width:34px;
-    height:34px;
-    border:3px solid #25252e;
-    border-top-color:var(--lime);
-    border-radius:50%;
-    animation:spin .8s linear infinite;
+.game-card h3{
+    font-size:15px;
 }
 
-@keyframes spin{
-    to{transform:rotate(360deg)}
+.game-card p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+    margin-top:7px;
+    min-height:34px;
 }
 
-.skeleton{
-    background:linear-gradient(90deg,#111118,#1b1b23,#111118);
-    background-size:200% 100%;
-    animation:skeleton 1.2s infinite;
+.game-tag{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 7px;
+    border-radius:6px;
+    background:rgba(255,255,255,.05);
+    color:var(--muted);
+    font-size:8px;
 }
 
-@keyframes skeleton{
-    to{background-position:-200% 0}
+.game-launch{
+    display:block;
+    text-align:center;
+    margin-top:14px;
+    padding:9px;
+    border-radius:9px;
+    background:var(--cyan);
+    color:#000;
+    font-size:10px;
+    font-weight:900;
+}
+
+/* ARCADE */
+
+.arcade-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
+}
+
+.arcade-card{
+    padding:18px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:var(--card);
+}
+
+.arcade-card p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+    margin:7px 0 12px;
+}
+
+canvas{
+    width:100%;
+    background:#030406;
+    border-radius:11px;
+    border:1px solid var(--line);
 }
 
 /* SENSITIVITY */
 
-.sensitivity-grid{
+.lab{
     display:grid;
-    grid-template-columns:.8fr 1.2fr;
+    grid-template-columns:1fr 1fr;
     gap:18px;
+}
+
+.panel{
+    padding:23px;
+    border:1px solid var(--line);
+    border-radius:19px;
+    background:linear-gradient(145deg,var(--card),var(--card2));
 }
 
 .form-grid{
@@ -857,7 +879,7 @@ section{
 .field{
     display:flex;
     flex-direction:column;
-    gap:7px;
+    gap:6px;
 }
 
 .field.full{
@@ -865,125 +887,92 @@ section{
 }
 
 .field label{
-    color:#7f7f89;
-    font-size:10px;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:900;
     text-transform:uppercase;
-    letter-spacing:1px;
 }
 
 .field input,
-.field select{
-    width:100%;
-    height:43px;
-    background:#09090e;
+.field select,
+.field textarea{
+    background:var(--bg);
+    color:var(--text);
     border:1px solid var(--line);
-    color:white;
     border-radius:9px;
-    padding:0 12px;
+    padding:11px;
     outline:none;
 }
 
-.field input:focus,
-.field select:focus{
-    border-color:var(--lime);
-}
-
-.sensitivity-output{
+.sensitivity-result{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
 }
 
-.sens-value{
-    padding:17px;
+.sense-box{
+    padding:15px;
+    border-radius:11px;
+    background:rgba(255,255,255,.03);
     border:1px solid var(--line);
-    background:#0b0b10;
-    border-radius:12px;
 }
 
-.sens-name{
-    color:#777;
-    font-size:10px;
+.sense-box span{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-bottom:5px;
 }
 
-.sens-number{
-    font-size:29px;
+.sense-box strong{
     color:var(--lime);
-    font-weight:800;
-    margin-top:7px;
+    font-size:24px;
 }
 
-/* SYSTEM */
+/* TOOLS */
 
-.system-grid{
+.tools-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:12px;
+    gap:15px;
 }
 
-.system-card{
-    padding:18px;
+.tool-card{
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:var(--card);
 }
 
-.system-card h4{
+.tool-icon{
+    font-size:27px;
+    margin-bottom:13px;
+}
+
+.tool-card p{
+    color:var(--muted);
     font-size:11px;
-    color:#777;
-    font-weight:normal;
-}
-
-.system-card strong{
-    display:block;
-    margin-top:13px;
-    font-size:20px;
+    line-height:1.6;
 }
 
 /* NOTES */
 
 .notes-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+    grid-template-columns:1fr 280px;
+    gap:18px;
 }
 
-textarea{
+.notes-area{
     width:100%;
-    min-height:180px;
+    min-height:300px;
     resize:vertical;
-    background:#09090e;
-    color:white;
+    padding:20px;
+    background:var(--card);
+    color:var(--text);
     border:1px solid var(--line);
-    border-radius:12px;
-    padding:15px;
+    border-radius:17px;
     outline:none;
-}
-
-textarea:focus{
-    border-color:var(--lime);
-}
-
-.notes-list{
-    max-height:300px;
-    overflow:auto;
-}
-
-.note{
-    padding:13px;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-}
-
-.note-text{
-    font-size:12px;
-    line-height:1.5;
-    color:#bbb;
-}
-
-.note-time{
-    font-size:8px;
-    color:#555;
-    margin-top:5px;
 }
 
 /* GALLERY */
@@ -991,61 +980,26 @@ textarea:focus{
 .gallery-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:13px;
+    gap:15px;
 }
 
 .gallery-item{
-    aspect-ratio:16/10;
+    height:220px;
     overflow:hidden;
-    border-radius:13px;
     border:1px solid var(--line);
+    border-radius:17px;
     cursor:pointer;
-    background:#111;
 }
 
 .gallery-item img{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:.4s;
+    transition:.5s;
 }
 
 .gallery-item:hover img{
     transform:scale(1.08);
-}
-
-/* CONTACT */
-
-.contact-box{
-    padding:35px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    background:
-        radial-gradient(circle at 90% 50%,rgba(184,255,50,.08),transparent 35%),
-        #0d0d13;
-}
-
-.contact-box h2{
-    font-size:clamp(28px,5vw,60px);
-    letter-spacing:-3px;
-}
-
-.contact-box p{
-    color:var(--muted);
-    margin-top:8px;
-}
-
-/* FOOTER */
-
-footer{
-    padding:35px 6%;
-    border-top:1px solid var(--line);
-    color:#555;
-    font-size:10px;
-    display:flex;
-    justify-content:space-between;
 }
 
 /* MODALS */
@@ -1053,13 +1007,13 @@ footer{
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.8);
-    backdrop-filter:blur(14px);
-    z-index:5000;
+    z-index:20000;
     display:none;
     align-items:center;
     justify-content:center;
     padding:20px;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(10px);
 }
 
 .modal.show{
@@ -1067,114 +1021,53 @@ footer{
 }
 
 .modal-box{
+    position:relative;
     width:min(850px,100%);
     max-height:90vh;
     overflow:auto;
-    background:#0c0c12;
+    padding:25px;
     border:1px solid var(--line);
-    border-radius:18px;
-    box-shadow:0 30px 100px rgba(0,0,0,.7);
-    position:relative;
+    border-radius:20px;
+    background:var(--card);
 }
 
-.modal-close{
+.close{
     position:absolute;
-    top:14px;
-    right:14px;
-    width:35px;
-    height:35px;
-    border-radius:9px;
+    right:15px;
+    top:15px;
+    width:37px;
+    height:37px;
+    border-radius:50%;
     border:1px solid var(--line);
-    background:#111118;
-    color:white;
-    z-index:5;
+    background:var(--card2);
+    color:var(--text);
+    font-size:20px;
 }
 
 .anime-detail{
     display:grid;
-    grid-template-columns:240px 1fr;
+    grid-template-columns:210px 1fr;
+    gap:22px;
 }
 
-.detail-poster{
-    width:100%;
-    height:100%;
-    min-height:350px;
+.anime-detail-poster{
+    width:210px;
+    height:300px;
     object-fit:cover;
+    border-radius:13px;
+    background:var(--card2);
 }
 
-.detail-content{
-    padding:32px;
+.detail-text h2{
+    font-size:27px;
+    margin-top:12px;
 }
 
-.detail-content h2{
-    font-size:34px;
-    line-height:1.05;
-    margin-bottom:12px;
-}
-
-.detail-meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px;
-    margin:15px 0;
-}
-
-.badge{
-    padding:6px 9px;
-    border-radius:7px;
-    border:1px solid var(--line);
-    color:#999;
-    font-size:9px;
-}
-
-.badge.score{
-    color:var(--lime);
-    border-color:rgba(184,255,50,.25);
-}
-
-.detail-description{
-    color:#92929d;
-    font-size:12px;
-    line-height:1.8;
-    margin:18px 0;
-}
-
-.detail-actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-}
-
-.command-box{
-    width:min(650px,100%);
-    padding:20px;
-}
-
-.command-input{
-    width:100%;
-    height:50px;
-    background:#07070b;
-    border:1px solid var(--line);
-    color:white;
-    border-radius:11px;
-    padding:0 15px;
-    outline:none;
-}
-
-.command-list{
-    margin-top:10px;
-}
-
-.command-item{
-    padding:13px;
-    border-radius:9px;
-    color:#aaa;
-    cursor:pointer;
-}
-
-.command-item:hover{
-    background:#17171f;
-    color:white;
+.detail-text p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+    margin-top:12px;
 }
 
 /* TOAST */
@@ -1183,15 +1076,15 @@ footer{
     position:fixed;
     right:20px;
     bottom:20px;
-    background:#15151c;
-    border:1px solid var(--line);
+    z-index:50000;
     padding:13px 17px;
-    border-radius:11px;
-    font-size:11px;
+    border-radius:12px;
+    background:#11151b;
+    border:1px solid var(--lime);
+    color:white;
     transform:translateY(100px);
     opacity:0;
-    transition:.3s;
-    z-index:9999;
+    transition:.25s;
 }
 
 .toast.show{
@@ -1199,97 +1092,84 @@ footer{
     opacity:1;
 }
 
-/* RESPONSIVE */
+/* FOOTER */
 
-@media(max-width:1150px){
+footer{
+    border-top:1px solid var(--line);
+    padding:35px 5%;
+}
+
+.footer-inner{
+    max-width:1500px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* MOBILE */
+
+.mobile-nav{
+    display:none;
+}
+
+@media(max-width:1100px){
+
     .anime-grid{
-        grid-template-columns:repeat(4,1fr);
+        grid-template-columns:repeat(3,1fr);
     }
 
-    .dashboard-grid,
-    .system-grid{
+    .games-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .tools-grid{
         grid-template-columns:repeat(2,1fr);
-    }
-
-    .projects{
-        grid-template-columns:1fr 1fr;
     }
 }
 
-@media(max-width:850px){
+@media(max-width:800px){
+
     .sidebar{
         display:none;
     }
 
     main{
         margin-left:0;
-    }
-
-    .hero-grid,
-    .sensitivity-grid{
-        grid-template-columns:1fr;
+        padding-bottom:70px;
     }
 
     .hero{
-        padding-top:50px;
-    }
-
-    .profile-wrap{
-        order:-1;
-    }
-
-    .profile-orbit{
-        width:260px;
-    }
-
-    .anime-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-    .anime-toolbar{
         grid-template-columns:1fr;
+        text-align:center;
     }
 
-    .anime-actions{
-        width:100%;
+    .hero p{
+        margin-left:auto;
+        margin-right:auto;
     }
 
-    .anime-actions .btn{
-        flex:1;
+    .hero-buttons{
+        justify-content:center;
     }
 
-    .anime-detail{
-        grid-template-columns:1fr;
+    .profile-system{
+        width:270px;
+        height:270px;
     }
 
-    .detail-poster{
-        height:320px;
-    }
-}
-
-@media(max-width:560px){
-    section{
-        padding:60px 5%;
+    .profile-image{
+        width:200px;
+        height:200px;
     }
 
-    .topbar{
-        padding:0 15px;
+    .dashboard-grid{
+        grid-template-columns:1fr 1fr;
     }
 
-    .status{
-        display:none;
-    }
-
-    .hero h1{
-        font-size:58px;
-        letter-spacing:-4px;
-    }
-
-    .dashboard-grid,
-    .system-grid,
-    .projects,
-    .notes-grid,
-    .gallery-grid{
+    .grid{
         grid-template-columns:1fr;
     }
 
@@ -1297,8 +1177,72 @@ footer{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .sensitivity-output{
+    .games-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .arcade-grid,
+    .lab{
+        grid-template-columns:1fr;
+    }
+
+    .tools-grid{
         grid-template-columns:1fr 1fr;
+    }
+
+    .notes-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .mobile-nav{
+        display:flex;
+        position:fixed;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        z-index:10000;
+        justify-content:space-around;
+        padding:7px;
+        background:rgba(12,15,20,.93);
+        backdrop-filter:blur(20px);
+        border:1px solid var(--line);
+        border-radius:17px;
+    }
+
+    .mobile-nav a{
+        padding:10px;
+        color:var(--muted);
+    }
+
+    .games-hero{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:520px){
+
+    section{
+        padding:55px 17px;
+    }
+
+    .hero h1{
+        font-size:58px;
+    }
+
+    .anime-grid,
+    .games-grid,
+    .tools-grid,
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+
+    .anime-poster{
+        height:350px;
     }
 
     .form-grid{
@@ -1309,14 +1253,21 @@ footer{
         grid-column:auto;
     }
 
-    .contact-box{
-        flex-direction:column;
-        align-items:flex-start;
+    .anime-detail{
+        grid-template-columns:1fr;
     }
 
-    footer{
+    .anime-detail-poster{
+        width:170px;
+        height:245px;
+    }
+
+    .footer-inner{
         flex-direction:column;
-        gap:10px;
+    }
+
+    .anime-search-row{
+        flex-direction:column;
     }
 }
 </style>
@@ -1325,134 +1276,111 @@ footer{
 <body>
 
 <!-- LOADER -->
+
 <div class="loader" id="loader">
-    <div class="loader-box">
-        <div class="loader-title">SAM<span>.OS</span></div>
+    <div>
+        <div class="loader-logo">SAM<span>.OS</span></div>
         <div class="loader-bar">
             <div class="loader-progress"></div>
         </div>
-        <div class="loader-status" id="loaderStatus">INITIALIZING SYSTEM...</div>
+        <div style="text-align:center;color:#8992a3;font-size:10px">
+            INITIALIZING...
+        </div>
     </div>
 </div>
 
 <!-- TOPBAR -->
-<header class="topbar">
-    <div class="logo">SAM<span>.OS</span></div>
 
-    <div class="status">
-        <span class="status-dot"></span>
-        SYSTEM ONLINE
+<header class="topbar">
+
+    <div class="logo">
+        SAM<span>.OS</span>
     </div>
 
     <div class="top-actions">
         <button class="icon-btn" onclick="openCommand()">⌘</button>
-        <button class="icon-btn" onclick="toggleTheme()">◐</button>
+        <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">☾</button>
     </div>
+
 </header>
 
 <!-- SIDEBAR -->
+
 <aside class="sidebar">
 
-    <div class="side-label">Workspace</div>
+    <div class="nav-title">SYSTEM</div>
 
-    <a class="nav-item active" href="#home">
-        <span class="nav-icon">⌂</span>
-        Home
-    </a>
+    <a class="nav-item active" href="#home">⌂ Dashboard</a>
+    <a class="nav-item" href="#anime">◈ Anime Center</a>
+    <a class="nav-item" href="#games">🎮 Games Arcade</a>
+    <a class="nav-item" href="#arcade">◉ Playable Games</a>
+    <a class="nav-item" href="#sensitivity">⚡ Sensitivity</a>
 
-    <a class="nav-item" href="#dashboard">
-        <span class="nav-icon">▦</span>
-        Dashboard
-    </a>
+    <div class="nav-title">CREATIVE</div>
 
-    <a class="nav-item" href="#projects">
-        <span class="nav-icon">◈</span>
-        Projects
-    </a>
+    <a class="nav-item" href="#projects">◆ Projects</a>
+    <a class="nav-item" href="#tools">◇ Tools</a>
+    <a class="nav-item" href="#notes">✎ Notes</a>
+    <a class="nav-item" href="#gallery">▧ Gallery</a>
 
-    <div class="side-label">Entertainment</div>
-
-    <a class="nav-item" href="#anime">
-        <span class="nav-icon">✦</span>
-        Anime Center
-    </a>
-
-    <a class="nav-item" href="#gaming">
-        <span class="nav-icon">⌁</span>
-        Gaming Lab
-    </a>
-
-    <div class="side-label">Tools</div>
-
-    <a class="nav-item" href="#system">
-        <span class="nav-icon">◉</span>
-        System
-    </a>
-
-    <a class="nav-item" href="#notes">
-        <span class="nav-icon">✎</span>
-        Notes
-    </a>
-
-    <a class="nav-item" href="#gallery">
-        <span class="nav-icon">▧</span>
-        Gallery
-    </a>
+    <div class="side-status">
+        <span class="status-dot"></span>
+        System Online
+        <div style="color:var(--muted);font-size:9px;margin-top:7px">
+            Sam.OS v5.0
+        </div>
+    </div>
 
 </aside>
 
 <main>
 
 <!-- HERO -->
+
 <section class="hero" id="home">
 
-    <div class="container hero-grid">
+    <div>
 
-        <div>
-            <div class="hero-kicker">
-                ● CREATIVE SYSTEM / ONLINE
-            </div>
-
-            <h1>
-                SAM<br>
-                <span>.OS</span>
-            </h1>
-
-            <p>
-                A personal digital command center for gaming, anime,
-                coding, experiments and creative projects.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#anime" class="btn primary">
-                    Explore Anime
-                </a>
-
-                <a href="#gaming" class="btn secondary">
-                    Gaming Lab
-                </a>
-
-                <button class="btn" onclick="openCommand()">
-                    Command Center
-                </button>
-            </div>
+        <div class="hero-kicker">
+            PERSONAL DIGITAL OPERATING SYSTEM
         </div>
 
-        <div class="profile-wrap">
-            <div class="profile-orbit">
+        <h1>
+            SAM<span>.OS</span>
+        </h1>
 
-                <div class="profile-image">
-                    <img
-                        src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
-                        alt="Sam"
-                    >
-                </div>
+        <p>
+            Anime. Gaming. Coding. Creativity.
+            Everything inside one personal digital space.
+        </p>
 
-                <div class="profile-tag">
-                    gaming + coding
-                </div>
+        <div class="hero-buttons">
+            <a class="btn" href="#anime">Anime Center</a>
+            <a class="btn secondary" href="#games">Gaming Hub</a>
+            <button class="btn cyan" onclick="openCommand()">
+                Command Center
+            </button>
+        </div>
 
+    </div>
+
+    <div>
+
+        <div class="profile-system">
+
+            <div class="profile-ring"></div>
+
+            <img
+                class="profile-image"
+                src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
+                alt="Sam"
+            >
+
+            <div class="hero-card">
+                <strong>SYSTEM ACTIVE</strong>
+                gaming + coding
             </div>
+
         </div>
 
     </div>
@@ -1460,73 +1388,62 @@ footer{
 </section>
 
 <!-- MARQUEE -->
+
 <div class="marquee">
     <div class="marquee-track">
-        SAM.OS <span>✦</span>
-        ANIME <span>✦</span>
-        GAMING <span>✦</span>
-        CODING <span>✦</span>
-        CREATIVE LAB <span>✦</span>
-        SYSTEM ONLINE <span>✦</span>
-        SAM.OS <span>✦</span>
-        ANIME <span>✦</span>
-        GAMING <span>✦</span>
-        CODING <span>✦</span>
-        CREATIVE LAB <span>✦</span>
-        SYSTEM ONLINE <span>✦</span>
+        SAM.OS <span>●</span>
+        ANIME <span>●</span>
+        GAMING <span>●</span>
+        CODING <span>●</span>
+        FREE FIRE <span>●</span>
+        CREATIVE LAB <span>●</span>
+        SAM.OS <span>●</span>
+        ANIME <span>●</span>
+        GAMING <span>●</span>
+        CODING <span>●</span>
+        FREE FIRE <span>●</span>
+        CREATIVE LAB
     </div>
 </div>
 
 <!-- DASHBOARD -->
-<section id="dashboard">
 
-    <div class="container">
+<section>
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Live workspace</div>
-                <h2 class="section-title">System Dashboard</h2>
-            </div>
+    <div class="section-head">
+
+        <div>
+            <div class="badge">LIVE SYSTEM</div>
+            <h2 class="section-title">
+                System <span>Dashboard</span>
+            </h2>
+            <p class="section-sub">
+                Live browser information.
+            </p>
         </div>
 
-        <div class="dashboard-grid">
+    </div>
 
-            <div class="stat-card">
-                <div class="stat-top">
-                    <span>LOCAL TIME</span>
-                    <span class="stat-icon">◷</span>
-                </div>
-                <div class="stat-value" id="clock">--:--</div>
-                <div class="stat-small" id="date">Loading...</div>
-            </div>
+    <div class="dashboard-grid">
 
-            <div class="stat-card">
-                <div class="stat-top">
-                    <span>SESSION</span>
-                    <span class="stat-icon">◉</span>
-                </div>
-                <div class="stat-value" id="session">00:00</div>
-                <div class="stat-small">Current session</div>
-            </div>
+        <div class="stat-card">
+            <div class="stat-label">TIME</div>
+            <div class="stat-value" id="clock">--:--</div>
+        </div>
 
-            <div class="stat-card">
-                <div class="stat-top">
-                    <span>SCREEN</span>
-                    <span class="stat-icon">▣</span>
-                </div>
-                <div class="stat-value" id="screenSize">--</div>
-                <div class="stat-small">Display resolution</div>
-            </div>
+        <div class="stat-card">
+            <div class="stat-label">SESSION</div>
+            <div class="stat-value" id="session">0m</div>
+        </div>
 
-            <div class="stat-card">
-                <div class="stat-top">
-                    <span>NETWORK</span>
-                    <span class="stat-icon">⌁</span>
-                </div>
-                <div class="stat-value" id="network">ONLINE</div>
-                <div class="stat-small">Connection state</div>
-            </div>
+        <div class="stat-card">
+            <div class="stat-label">SCREEN</div>
+            <div class="stat-value" id="screenSize">---</div>
+        </div>
 
+        <div class="stat-card">
+            <div class="stat-label">NETWORK</div>
+            <div class="stat-value" id="network">---</div>
         </div>
 
     </div>
@@ -1534,360 +1451,546 @@ footer{
 </section>
 
 <!-- PROJECTS -->
+
 <section id="projects">
 
-    <div class="container">
+    <div class="section-head">
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Build log</div>
-                <h2 class="section-title">Projects</h2>
+        <div>
+            <div class="badge">CREATIVE LAB</div>
+            <h2 class="section-title">
+                My <span>Projects</span>
+            </h2>
+        </div>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="card-body">
+                <h3>Sam.OS</h3>
+                <p>
+                    Personal digital operating system combining
+                    gaming, anime, tools and creativity.
+                </p>
+                <div class="card-actions">
+                    <a class="btn" href="#home">Open</a>
+                </div>
             </div>
         </div>
 
-        <div class="projects">
-
-            <div class="card project">
-                <div class="project-num">01 / WEB</div>
-                <h3>Sam.OS</h3>
+        <div class="card">
+            <div class="card-body">
+                <h3>Anime Hub</h3>
                 <p>
-                    Personal command center combining coding,
-                    gaming, anime and creative experiments.
+                    Search anime, view information and maintain
+                    a personal watchlist.
                 </p>
+                <div class="card-actions">
+                    <a class="btn cyan" href="#anime">Launch</a>
+                </div>
             </div>
+        </div>
 
-            <div class="card project">
-                <div class="project-num">02 / GAMING</div>
+        <div class="card">
+            <div class="card-body">
                 <h3>Gaming Lab</h3>
                 <p>
-                    Device-independent sensitivity generation,
-                    performance tools and saved gaming profiles.
+                    Game launcher, browser games, sensitivity tools
+                    and gaming utilities.
                 </p>
+                <div class="card-actions">
+                    <a class="btn purple" href="#games">Launch</a>
+                </div>
             </div>
-
-            <div class="card project">
-                <div class="project-num">03 / MEDIA</div>
-                <h3>Anime Center</h3>
-                <p>
-                    Search anime databases, explore titles,
-                    save watchlists and inspect anime details.
-                </p>
-            </div>
-
         </div>
 
     </div>
 
 </section>
 
-<!-- ANIME -->
-<section id="anime" class="anime-section">
+<!-- ========================= -->
+<!-- ANIME CENTER -->
+<!-- ========================= -->
 
-    <div class="container">
+<section id="anime">
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Anime database</div>
-                <h2 class="section-title">Anime Center 2.0</h2>
-                <p class="section-sub">
-                    Search anime across multiple databases instead of being
-                    restricted to a small list of preloaded titles.
-                </p>
-            </div>
+    <div class="section-head">
+
+        <div>
+            <div class="badge">ANIME DATABASE</div>
+
+            <h2 class="section-title">
+                Anime <span>Center</span>
+            </h2>
+
+            <p class="section-sub">
+                Search anime, discover shows and save your favorites.
+            </p>
         </div>
 
-        <div class="anime-toolbar">
+        <div class="badge" id="animeStatus">
+            READY
+        </div>
 
-            <div class="search-box">
+    </div>
 
-                <input
-                    id="animeSearch"
-                    type="text"
-                    autocomplete="off"
-                    placeholder="Search any anime..."
-                >
+    <div class="anime-top">
 
-                <span class="search-icon">⌕</span>
+        <div class="anime-search-row">
 
-                <div
-                    class="search-suggestions"
-                    id="searchSuggestions"
-                ></div>
-
-            </div>
-
-            <div class="anime-actions">
-
-                <button
-                    class="btn"
-                    onclick="surpriseAnime()"
-                >
-                    Surprise Me
-                </button>
-
-                <button
-                    class="btn"
-                    onclick="showWatchlist()"
-                >
-                    Watchlist
-                </button>
-
-            </div>
-
-            <button
-                class="btn primary"
-                onclick="searchAnime(true)"
+            <input
+                class="anime-search"
+                id="animeSearch"
+                type="text"
+                autocomplete="off"
+                placeholder="Search any anime..."
             >
-                Search
+
+            <button class="btn" onclick="searchAnime()">
+                SEARCH
             </button>
 
         </div>
 
-        <div class="anime-tabs">
+        <div class="tabs">
 
             <button
                 class="tab active"
-                data-tab="popular"
-                onclick="loadAnimeTab('popular',this)"
+                onclick="changeAnimeTab('popular',this)"
             >
                 Popular
             </button>
 
             <button
                 class="tab"
-                data-tab="top"
-                onclick="loadAnimeTab('top',this)"
+                onclick="changeAnimeTab('top',this)"
             >
                 Top Rated
             </button>
 
             <button
                 class="tab"
-                data-tab="airing"
-                onclick="loadAnimeTab('airing',this)"
+                onclick="changeAnimeTab('airing',this)"
             >
                 Airing
             </button>
 
             <button
                 class="tab"
-                data-tab="watchlist"
-                onclick="loadAnimeTab('watchlist',this)"
+                onclick="changeAnimeTab('watchlist',this)"
             >
                 Watchlist
             </button>
 
         </div>
 
-        <div
-            class="recent-searches"
-            id="recentSearches"
-        ></div>
-
-        <div class="anime-info-bar">
-            <span id="animeStatus">
-                Ready
-            </span>
-
-            <span id="animeCount">
-                0 results
-            </span>
+        <div class="anime-status" id="animeMessage">
+            Loading anime...
         </div>
 
-        <div
-            class="anime-grid"
-            id="animeGrid"
-        ></div>
+    </div>
+
+    <div class="anime-grid" id="animeGrid"></div>
+
+</section>
+
+<!-- ========================= -->
+<!-- GAMES -->
+<!-- ========================= -->
+
+<section id="games">
+
+    <div class="section-head">
+
+        <div>
+            <div class="badge">GAME TERMINAL</div>
+
+            <h2 class="section-title">
+                Games <span>Arcade</span>
+            </h2>
+
+            <p class="section-sub">
+                Real games and legitimate launch pages.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="games-hero">
+
+        <div>
+
+            <h3>🎮 Gaming Hub</h3>
+
+            <p>
+                Launch popular games from one place or jump into
+                the built-in Sam.OS arcade.
+            </p>
+
+        </div>
+
+        <a
+            class="btn cyan"
+            href="https://subwaysurfers.com/"
+            target="_blank"
+        >
+            PLAY SUBWAY SURFERS
+        </a>
+
+    </div>
+
+    <div class="game-filters">
+
+        <button
+            class="game-filter active"
+            onclick="filterGames('all',this)"
+        >
+            All
+        </button>
+
+        <button
+            class="game-filter"
+            onclick="filterGames('action',this)"
+        >
+            Action
+        </button>
+
+        <button
+            class="game-filter"
+            onclick="filterGames('arcade',this)"
+        >
+            Arcade
+        </button>
+
+        <button
+            class="game-filter"
+            onclick="filterGames('casual',this)"
+        >
+            Casual
+        </button>
+
+        <button
+            class="game-filter"
+            onclick="filterGames('multiplayer',this)"
+        >
+            Multiplayer
+        </button>
+
+    </div>
+
+    <div class="games-grid" id="gamesGrid"></div>
+
+</section>
+
+<!-- PLAYABLE -->
+
+<section id="arcade">
+
+    <div class="section-head">
+
+        <div>
+            <div class="badge">BUILT-IN</div>
+
+            <h2 class="section-title">
+                Playable <span>Arcade</span>
+            </h2>
+
+            <p class="section-sub">
+                Games built directly into Sam.OS.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="arcade-grid">
+
+        <div class="arcade-card">
+
+            <h3>🐍 Snake</h3>
+
+            <p>
+                Use the arrow keys.
+            </p>
+
+            <canvas
+                id="snakeCanvas"
+                width="320"
+                height="240"
+            ></canvas>
+
+            <div class="card-actions">
+
+                <button class="btn" onclick="startSnake()">
+                    Start
+                </button>
+
+                <button
+                    class="btn secondary"
+                    onclick="resetSnake()"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+            <div style="
+                margin-top:10px;
+                color:var(--muted);
+                font-size:10px
+            ">
+                Score:
+                <span id="snakeScore">0</span>
+            </div>
+
+        </div>
+
+        <div class="arcade-card">
+
+            <h3>⚡ Reaction Test</h3>
+
+            <p>
+                Wait for the signal and click.
+            </p>
+
+            <div
+                id="reactionBox"
+                onclick="reactionClick()"
+                style="
+                    height:240px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    border-radius:11px;
+                    background:#080a0f;
+                    border:1px solid var(--line);
+                    color:var(--muted);
+                    font-weight:900;
+                    text-align:center;
+                "
+            >
+                CLICK START
+            </div>
+
+            <div class="card-actions">
+                <button class="btn" onclick="startReaction()">
+                    Start
+                </button>
+            </div>
+
+            <div style="
+                margin-top:10px;
+                color:var(--muted);
+                font-size:10px
+            ">
+                Best:
+                <span id="reactionBest">---</span>
+            </div>
+
+        </div>
+
+        <div class="arcade-card">
+
+            <h3>🖱 CPS Test</h3>
+
+            <p>
+                Click for five seconds.
+            </p>
+
+            <div
+                id="cpsBox"
+                onclick="cpsClick()"
+                style="
+                    height:240px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    border-radius:11px;
+                    background:#080a0f;
+                    border:1px solid var(--line);
+                    color:var(--muted);
+                    font-weight:900;
+                    user-select:none;
+                "
+            >
+                START
+            </div>
+
+            <div class="card-actions">
+                <button class="btn" onclick="startCPS()">
+                    Start
+                </button>
+            </div>
+
+            <div style="
+                margin-top:10px;
+                color:var(--muted);
+                font-size:10px
+            ">
+                CPS:
+                <span id="cpsValue">0</span>
+            </div>
+
+        </div>
 
     </div>
 
 </section>
 
-<!-- GAMING -->
-<section id="gaming">
+<!-- SENSITIVITY -->
 
-    <div class="container">
+<section id="sensitivity">
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Gaming system</div>
-                <h2 class="section-title">Sensitivity Lab</h2>
-                <p class="section-sub">
-                    Generate a starting sensitivity profile for practically
-                    any device instead of selecting from a fixed phone list.
-                </p>
-            </div>
+    <div class="section-head">
+
+        <div>
+            <div class="badge">FREE FIRE LAB</div>
+
+            <h2 class="section-title">
+                Sensitivity <span>Lab</span>
+            </h2>
+
+            <p class="section-sub">
+                Generate a starting sensitivity profile.
+            </p>
         </div>
 
-        <div class="sensitivity-grid">
+    </div>
 
-            <div class="card card-pad">
+    <div class="lab">
 
-                <div class="form-grid">
+        <div class="panel">
 
-                    <div class="field full">
-                        <label>Device</label>
-                        <input
-                            id="device"
-                            type="text"
-                            placeholder="Any device e.g. Samsung A07, iPhone 15..."
-                            value="Samsung Galaxy A07"
-                        >
-                    </div>
+            <div class="form-grid">
 
-                    <div class="field">
-                        <label>RAM / GB</label>
-                        <input
-                            id="ram"
-                            type="number"
-                            min="1"
-                            max="64"
-                            value="4"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>DPI</label>
-                        <input
-                            id="dpi"
-                            type="number"
-                            min="100"
-                            max="1000"
-                            value="411"
-                        >
-                    </div>
-
-                    <div class="field">
-                        <label>Playstyle</label>
-
-                        <select id="style">
-                            <option value="balanced">
-                                Balanced
-                            </option>
-
-                            <option value="rush">
-                                Rush
-                            </option>
-
-                            <option value="drag">
-                                Drag Headshots
-                            </option>
-
-                            <option value="precision">
-                                Precision
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label>Finger Setup</label>
-
-                        <select id="fingers">
-                            <option value="2">2 Finger</option>
-                            <option value="3">3 Finger</option>
-                            <option value="4">4 Finger</option>
-                        </select>
-                    </div>
-
+                <div class="field full">
+                    <label>Device</label>
+                    <input
+                        id="device"
+                        placeholder="Example: Samsung Galaxy A07"
+                    >
                 </div>
 
-                <div
-                    style="
-                    display:flex;
-                    gap:8px;
+                <div class="field">
+                    <label>RAM</label>
+
+                    <select id="ram">
+                        <option>2 GB</option>
+                        <option selected>4 GB</option>
+                        <option>6 GB</option>
+                        <option>8 GB</option>
+                        <option>12 GB+</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>DPI</label>
+
+                    <input
+                        id="dpi"
+                        type="number"
+                        value="411"
+                    >
+                </div>
+
+                <div class="field">
+                    <label>Playstyle</label>
+
+                    <select id="style">
+                        <option>Balanced</option>
+                        <option>Rush</option>
+                        <option>Headshot</option>
+                        <option>Sniper</option>
+                        <option>Drag</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Finger Setup</label>
+
+                    <select id="fingers">
+                        <option>2 Finger</option>
+                        <option>3 Finger</option>
+                        <option>4 Finger</option>
+                        <option>5 Finger</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="card-actions">
+
+                <button
+                    class="btn"
+                    onclick="generateSensitivity()"
+                >
+                    Generate
+                </button>
+
+                <button
+                    class="btn cyan"
+                    onclick="copySensitivity()"
+                >
+                    Copy
+                </button>
+
+                <button
+                    class="btn secondary"
+                    onclick="saveSensitivity()"
+                >
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="sensitivity-result">
+
+                <div class="sense-box">
+                    <span>GENERAL</span>
+                    <strong id="general">--</strong>
+                </div>
+
+                <div class="sense-box">
+                    <span>RED DOT</span>
+                    <strong id="redDot">--</strong>
+                </div>
+
+                <div class="sense-box">
+                    <span>2X</span>
+                    <strong id="scope2">--</strong>
+                </div>
+
+                <div class="sense-box">
+                    <span>4X</span>
+                    <strong id="scope4">--</strong>
+                </div>
+
+                <div class="sense-box">
+                    <span>SNIPER</span>
+                    <strong id="sniper">--</strong>
+                </div>
+
+                <div class="sense-box">
+                    <span>FREE LOOK</span>
+                    <strong id="freeLook">--</strong>
+                </div>
+
+            </div>
+
+            <div
+                id="savedProfiles"
+                style="
                     margin-top:15px;
-                    flex-wrap:wrap;
-                    "
-                >
-
-                    <button
-                        class="btn primary"
-                        onclick="generateSensitivity()"
-                    >
-                        Generate
-                    </button>
-
-                    <button
-                        class="btn"
-                        onclick="copySensitivity()"
-                    >
-                        Copy
-                    </button>
-
-                    <button
-                        class="btn"
-                        onclick="generateSensitivity()"
-                    >
-                        Regenerate
-                    </button>
-
-                    <button
-                        class="btn"
-                        onclick="saveSensitivityProfile()"
-                    >
-                        Save Profile
-                    </button>
-
-                </div>
-
-                <div
-                    id="savedProfileStatus"
-                    style="
-                    margin-top:12px;
-                    color:#666;
-                    font-size:10px;
-                    "
-                ></div>
-
-            </div>
-
-            <div class="card card-pad">
-
-                <div
-                    style="
-                    display:flex;
-                    justify-content:space-between;
-                    margin-bottom:18px;
-                    "
-                >
-                    <div>
-                        <div
-                            style="
-                            color:#777;
-                            font-size:9px;
-                            letter-spacing:2px;
-                            "
-                        >
-                            GENERATED PROFILE
-                        </div>
-
-                        <div
-                            id="sensDevice"
-                            style="
-                            margin-top:6px;
-                            font-weight:bold;
-                            "
-                        >
-                            Samsung Galaxy A07
-                        </div>
-                    </div>
-
-                    <div
-                        id="sensDpi"
-                        style="
-                        color:var(--lime);
-                        font-size:11px;
-                        "
-                    >
-                        DPI 411
-                    </div>
-                </div>
-
-                <div
-                    class="sensitivity-output"
-                    id="sensitivityOutput"
-                ></div>
-
+                    color:var(--muted);
+                    font-size:10px
+                "
+            >
+                No saved profiles.
             </div>
 
         </div>
@@ -1896,39 +1999,102 @@ footer{
 
 </section>
 
-<!-- SYSTEM -->
-<section id="system">
+<!-- TOOLS -->
 
-    <div class="container">
+<section id="tools">
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Live telemetry</div>
-                <h2 class="section-title">System Monitor</h2>
-            </div>
+    <div class="section-head">
+
+        <div>
+            <div class="badge">UTILITY HUB</div>
+
+            <h2 class="section-title">
+                Sam <span>Tools</span>
+            </h2>
+
         </div>
 
-        <div class="system-grid">
+    </div>
 
-            <div class="card system-card">
-                <h4>BROWSER</h4>
-                <strong id="browser">Detecting...</strong>
-            </div>
+    <div class="tools-grid">
 
-            <div class="card system-card">
-                <h4>LANGUAGE</h4>
-                <strong id="language">Detecting...</strong>
-            </div>
+        <div class="tool-card">
 
-            <div class="card system-card">
-                <h4>CORES</h4>
-                <strong id="cores">Detecting...</strong>
-            </div>
+            <div class="tool-icon">📱</div>
 
-            <div class="card system-card">
-                <h4>MEMORY</h4>
-                <strong id="memory">Detecting...</strong>
-            </div>
+            <h3>DPI Helper</h3>
+
+            <p>
+                Get a small testing range around your current DPI.
+            </p>
+
+            <button
+                class="btn"
+                style="margin-top:15px"
+                onclick="dpiHelper()"
+            >
+                Calculate
+            </button>
+
+        </div>
+
+        <div class="tool-card">
+
+            <div class="tool-icon">⏱️</div>
+
+            <h3>Focus Timer</h3>
+
+            <p>
+                Start a simple 25-minute focus session.
+            </p>
+
+            <button
+                class="btn"
+                style="margin-top:15px"
+                onclick="focusTimer()"
+            >
+                Start
+            </button>
+
+        </div>
+
+        <div class="tool-card">
+
+            <div class="tool-icon">🧠</div>
+
+            <h3>Storage</h3>
+
+            <p>
+                Check saved notes, profiles and anime watchlist.
+            </p>
+
+            <button
+                class="btn"
+                style="margin-top:15px"
+                onclick="showStorage()"
+            >
+                Check
+            </button>
+
+        </div>
+
+        <div class="tool-card">
+
+            <div class="tool-icon">⌘</div>
+
+            <h3>Command Center</h3>
+
+            <p>
+                Quickly jump anywhere in Sam.OS.
+            </p>
+
+            <button
+                class="btn"
+                style="margin-top:15px"
+                onclick="openCommand()"
+            >
+                Open
+            </button>
 
         </div>
 
@@ -1937,57 +2103,50 @@ footer{
 </section>
 
 <!-- NOTES -->
+
 <section id="notes">
 
-    <div class="container">
+    <div class="section-head">
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Local storage</div>
-                <h2 class="section-title">Sam Notes</h2>
-                <p class="section-sub">
-                    Quick notes saved directly in your browser.
-                </p>
-            </div>
+        <div>
+            <div class="badge">LOCAL STORAGE</div>
+
+            <h2 class="section-title">
+                Sam <span>Notes</span>
+            </h2>
+
         </div>
 
-        <div class="notes-grid">
+    </div>
 
-            <div class="card card-pad">
+    <div class="notes-grid">
 
-                <textarea
-                    id="noteInput"
-                    placeholder="Write something..."
-                ></textarea>
+        <textarea
+            id="notesArea"
+            class="notes-area"
+            placeholder="Write something..."
+        ></textarea>
 
-                <button
-                    class="btn primary"
-                    style="margin-top:10px"
-                    onclick="saveNote()"
-                >
-                    Save Note
-                </button>
+        <div class="panel">
 
-            </div>
+            <h3>Autosave</h3>
 
-            <div class="card card-pad">
+            <p style="
+                color:var(--muted);
+                font-size:11px;
+                line-height:1.7;
+                margin-top:10px
+            ">
+                Notes automatically save in this browser.
+            </p>
 
-                <div
-                    style="
-                    font-size:10px;
-                    color:#777;
-                    margin-bottom:10px;
-                    "
-                >
-                    SAVED NOTES
-                </div>
-
-                <div
-                    class="notes-list"
-                    id="notesList"
-                ></div>
-
-            </div>
+            <button
+                class="btn"
+                style="margin-top:20px"
+                onclick="clearNotes()"
+            >
+                Clear
+            </button>
 
         </div>
 
@@ -1996,2261 +2155,712 @@ footer{
 </section>
 
 <!-- GALLERY -->
+
 <section id="gallery">
 
-    <div class="container">
+    <div class="section-head">
 
-        <div class="section-head">
-            <div>
-                <div class="section-kicker">Visual archive</div>
-                <h2 class="section-title">Gallery</h2>
-            </div>
-        </div>
+        <div>
+            <div class="badge">MEDIA</div>
 
-        <div class="gallery-grid">
-
-            <div class="gallery-item">
-                <img src="Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp" alt="">
-            </div>
-
-            <div class="gallery-item">
-                <img src="Images/567c0a6538e6d9e803a86eb3f76f9e01.webp" alt="">
-            </div>
-
-            <div class="gallery-item">
-                <img src="Images/765c809a7d1f74a923fa2bdaba239340.webp" alt="">
-            </div>
-
-            <div class="gallery-item">
-                <img src="Images/823a8aaef9bbe559ed29e27efa7c873d.webp" alt="">
-            </div>
-
-            <div class="gallery-item">
-                <img src="Images/01398c7404dbbdd9b3f78540ca744470.webp" alt="">
-            </div>
-
-            <div class="gallery-item">
-                <img src="Images/0ade78ee923bea5adbacb213aace47a9.webp" alt="">
-            </div>
+            <h2 class="section-title">
+                Sam <span>Gallery</span>
+            </h2>
 
         </div>
 
     </div>
 
-</section>
+    <div class="gallery-grid">
 
-<!-- CONTACT -->
-<section>
+        <div class="gallery-item" onclick="openImage(this)">
+            <img src="Images/0ade78ee923bea5adbacb213aace47a9.webp">
+        </div>
 
-    <div class="container">
+        <div class="gallery-item" onclick="openImage(this)">
+            <img src="Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp">
+        </div>
 
-        <div class="card contact-box">
+        <div class="gallery-item" onclick="openImage(this)">
+            <img src="Images/567c0a6538e6d9e803a86eb3f76f9e01.webp">
+        </div>
 
-            <div>
-                <h2>Let's build.</h2>
-                <p>
-                    Gaming, coding, anime and creative experiments.
-                </p>
-            </div>
+        <div class="gallery-item" onclick="openImage(this)">
+            <img src="Images/765c809a7d1f74a923fa2bdaba239340.webp">
+        </div>
 
-            <a
-                class="btn primary"
-                href="https://www.tiktok.com/@mikedevon"
-                target="_blank"
-            >
-                TikTok ↗
-            </a>
+        <div class="gallery-item" onclick="openImage(this)">
+            <img src="Images/823a8aaef9bbe559ed29e27efa7c873d.webp">
+        </div>
 
+        <div class="gallery-item" onclick="openImage(this)">
+            <img src="Images/01398c7404dbbdd9b3f78540ca744470.webp">
         </div>
 
     </div>
 
 </section>
-
-<footer>
-    <span>© 2026 SAM.OS</span>
-    <span>CREATIVE SYSTEM // ONLINE</span>
-</footer>
 
 </main>
 
-<!-- ANIME DETAIL MODAL -->
+<!-- MOBILE NAV -->
+
+<nav class="mobile-nav">
+    <a href="#home">⌂</a>
+    <a href="#anime">◈</a>
+    <a href="#games">🎮</a>
+    <a href="#sensitivity">⚡</a>
+    <a href="#tools">◇</a>
+</nav>
+
+<!-- ANIME MODAL -->
+
 <div class="modal" id="animeModal">
 
     <div class="modal-box">
 
         <button
-            class="modal-close"
+            class="close"
             onclick="closeModal('animeModal')"
         >
             ×
         </button>
 
+        <div id="animeDetail"></div>
+
+    </div>
+
+</div>
+
+<!-- IMAGE MODAL -->
+
+<div class="modal" id="imageModal">
+
+    <div
+        class="modal-box"
+        style="text-align:center"
+    >
+
+        <button
+            class="close"
+            onclick="closeModal('imageModal')"
+        >
+            ×
+        </button>
+
+        <img
+            id="largeImage"
+            style="
+                max-width:100%;
+                max-height:75vh;
+                border-radius:14px;
+                object-fit:contain
+            "
+        >
+
+    </div>
+
+</div>
+
+<!-- COMMAND -->
+
+<div class="modal" id="commandModal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeModal('commandModal')"
+        >
+            ×
+        </button>
+
+        <div class="badge">
+            SAM COMMAND
+        </div>
+
+        <h2 style="margin:15px 0">
+            Command Center
+        </h2>
+
+        <input
+            id="commandInput"
+            class="anime-search"
+            placeholder="Search Sam.OS..."
+            oninput="commandSearch()"
+        >
+
         <div
-            class="anime-detail"
-            id="animeDetail"
+            id="commandResults"
+            style="
+                display:grid;
+                gap:8px;
+                margin-top:15px
+            "
         ></div>
 
     </div>
 
 </div>
 
-<!-- COMMAND MODAL -->
-<div class="modal" id="commandModal">
+<!-- TOAST -->
 
-    <div class="modal-box command-box">
+<div class="toast" id="toast"></div>
 
-        <button
-            class="modal-close"
-            onclick="closeModal('commandModal')"
-        >
-            ×
-        </button>
+<!-- FOOTER -->
 
-        <div
-            style="
-            color:var(--lime);
-            font-size:10px;
-            letter-spacing:2px;
-            margin-bottom:10px;
-            "
-        >
-            SAM.OS COMMAND CENTER
+<footer>
+
+    <div class="footer-inner">
+
+        <div>
+            <strong style="color:var(--text)">
+                SAM<span style="color:var(--lime)">.OS</span>
+            </strong>
+
+            <div style="margin-top:6px">
+                Anime • Gaming • Coding • Creativity
+            </div>
         </div>
 
-        <input
-            class="command-input"
-            id="commandInput"
-            placeholder="Type a command..."
+        <a
+            href="https://www.tiktok.com/@mikedevon"
+            target="_blank"
+            style="color:var(--cyan)"
         >
+            TikTok @mikedevon
+        </a>
 
-        <div class="command-list">
-
-            <div
-                class="command-item"
-                onclick="goTo('anime')"
-            >
-                ✦ Open Anime Center
-            </div>
-
-            <div
-                class="command-item"
-                onclick="goTo('gaming')"
-            >
-                ⌁ Open Gaming Lab
-            </div>
-
-            <div
-                class="command-item"
-                onclick="goTo('system')"
-            >
-                ◉ Open System Monitor
-            </div>
-
-            <div
-                class="command-item"
-                onclick="goTo('notes')"
-            >
-                ✎ Open Notes
-            </div>
-
-            <div
-                class="command-item"
-                onclick="randomAnimeCommand()"
-            >
-                🎲 Surprise Me With Anime
-            </div>
-
+        <div>
+            © 2026 Sam.OS
         </div>
 
     </div>
 
-</div>
-
-<div class="toast" id="toast"></div>
+</footer>
 
 <script>
 
-/* =========================================================
-   BASIC SYSTEM
-========================================================= */
+/* =========================
+   SYSTEM
+========================= */
 
-const $ = id => document.getElementById(id);
+const sessionStart=Date.now();
 
-function toast(message){
-
-    const box = $("toast");
-
-    box.textContent = message;
-    box.classList.add("show");
-
-    clearTimeout(window.toastTimer);
-
-    window.toastTimer = setTimeout(()=>{
-        box.classList.remove("show");
-    },2500);
-}
-
-function closeModal(id){
-    $(id).classList.remove("show");
-}
-
-function goTo(id){
-
-    closeModal("commandModal");
-
-    document.getElementById(id)?.scrollIntoView({
-        behavior:"smooth"
-    });
-}
-
-function openCommand(){
-
-    $("commandModal").classList.add("show");
+window.addEventListener("load",()=>{
 
     setTimeout(()=>{
-        $("commandInput").focus();
-    },100);
-}
+        document.getElementById("loader").classList.add("hide");
+    },1700);
 
-function toggleTheme(){
+    updateClock();
+    setInterval(updateClock,1000);
 
-    const root = document.documentElement;
+    updateScreen();
+    updateNetwork();
 
-    const current = root.dataset.theme;
+    loadNotes();
+    loadProfiles();
 
-    if(current === "light"){
+    /*
+       IMPORTANT:
+       Anime is rendered locally FIRST.
+       This means the anime section is never blank
+       while waiting for the API.
+    */
+    renderAnime(getLocalAnime());
 
-        root.dataset.theme = "dark";
+    /*
+       Then the API quietly refreshes the list.
+    */
+    loadAnime("popular");
 
-        document.body.style.background = "";
+    renderGames();
 
-        toast("Dark mode enabled");
+    resetSnake();
 
-    }else{
+});
 
-        root.dataset.theme = "light";
+function updateClock(){
 
-        document.body.style.background =
-            "#ececf1";
+    const d=new Date();
 
-        toast("Light mode enabled");
-    }
-}
-
-
-/* =========================================================
-   CLOCK / SYSTEM
-========================================================= */
-
-const sessionStart = Date.now();
-
-function updateSystem(){
-
-    const now = new Date();
-
-    $("clock").textContent =
-        now.toLocaleTimeString([],{
+    document.getElementById("clock").textContent=
+        d.toLocaleTimeString([],{
             hour:"2-digit",
             minute:"2-digit"
         });
 
-    $("date").textContent =
-        now.toLocaleDateString([],{
-            weekday:"long",
-            month:"short",
-            day:"numeric"
-        });
-
-    const seconds =
-        Math.floor((Date.now()-sessionStart)/1000);
-
-    const mins =
-        Math.floor(seconds/60)
-        .toString()
-        .padStart(2,"0");
-
-    const secs =
-        (seconds%60)
-        .toString()
-        .padStart(2,"0");
-
-    $("session").textContent =
-        `${mins}:${secs}`;
-
-    $("screenSize").textContent =
-        `${window.innerWidth}×${window.innerHeight}`;
-
-    $("network").textContent =
-        navigator.onLine ? "ONLINE" : "OFFLINE";
-
-    $("browser").textContent =
-        detectBrowser();
-
-    $("language").textContent =
-        navigator.language || "Unknown";
-
-    $("cores").textContent =
-        navigator.hardwareConcurrency
-        ? navigator.hardwareConcurrency + " cores"
-        : "Unknown";
-
-    $("memory").textContent =
-        navigator.deviceMemory
-        ? navigator.deviceMemory + " GB"
-        : "Unavailable";
+    document.getElementById("session").textContent=
+        Math.floor(
+            (Date.now()-sessionStart)/60000
+        )+"m";
 }
 
-function detectBrowser(){
+function updateScreen(){
 
-    const ua = navigator.userAgent;
-
-    if(ua.includes("Edg")) return "Edge";
-    if(ua.includes("Chrome")) return "Chrome";
-    if(ua.includes("Firefox")) return "Firefox";
-    if(ua.includes("Safari")) return "Safari";
-
-    return "Browser";
+    document.getElementById("screenSize").textContent=
+        window.innerWidth+"×"+window.innerHeight;
 }
 
-setInterval(updateSystem,1000);
+function updateNetwork(){
 
-updateSystem();
+    document.getElementById("network").textContent=
+        navigator.onLine
+        ? "Online"
+        : "Offline";
+}
 
-window.addEventListener("online",updateSystem);
-window.addEventListener("offline",updateSystem);
+window.addEventListener("resize",updateScreen);
+window.addEventListener("online",updateNetwork);
+window.addEventListener("offline",updateNetwork);
 
 
-/* =========================================================
+/* =========================
+   THEME
+========================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle("light");
+
+    const light=
+        document.body.classList.contains("light");
+
+    localStorage.setItem(
+        "samTheme",
+        light?"light":"dark"
+    );
+
+    document.getElementById("themeBtn").textContent=
+        light?"☀":"☾";
+}
+
+if(localStorage.getItem("samTheme")==="light"){
+    document.body.classList.add("light");
+
+    window.addEventListener("load",()=>{
+        document.getElementById("themeBtn").textContent="☀";
+    });
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function toast(message){
+
+    const el=document.getElementById("toast");
+
+    el.textContent=message;
+
+    el.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(()=>{
+        el.classList.remove("show");
+    },2200);
+}
+
+
+/* =====================================================
    ANIME DATABASE
-========================================================= */
+===================================================== */
 
-const DEFAULT_ANIME = [
+/*
+   These are guaranteed local fallback entries.
+   Notice that every anime has its OWN unique ID.
+*/
+
+const localAnime=[
 
 {
-    id:"default-aot",
-    title:"Attack on Titan",
-    english:"Attack on Titan",
-    native:"進撃の巨人",
-    image:"https://cdn.myanimelist.net/images/anime/10/47347.jpg",
-    score:9.1,
-    year:2013,
-    episodes:25,
-    genres:["Action","Drama"],
-    synopsis:"Humanity fights for survival behind enormous walls.",
-    source:"Local"
+ id:"one-piece",
+ title:"One Piece",
+ score:"9.0",
+ year:"1999",
+ type:"TV",
+ episodes:"1100+",
+ image:"https://cdn.myanimelist.net/images/anime/1244/138851l.jpg",
+ synopsis:"Monkey D. Luffy and his crew travel across the Grand Line in search of the legendary One Piece.",
+ url:"https://myanimelist.net/anime/21/One_Piece"
 },
 
 {
-    id:"default-ds",
-    title:"Demon Slayer",
-    english:"Demon Slayer",
-    native:"鬼滅の刃",
-    image:"https://cdn.myanimelist.net/images/anime/1286/99889.jpg",
-    score:8.5,
-    year:2019,
-    episodes:26,
-    genres:["Action","Fantasy"],
-    synopsis:"Tanjiro begins a dangerous journey after tragedy strikes his family.",
-    source:"Local"
+ id:"naruto-shippuden",
+ title:"Naruto: Shippuden",
+ score:"8.7",
+ year:"2007",
+ type:"TV",
+ episodes:"500",
+ image:"https://cdn.myanimelist.net/images/anime/1565/111305l.jpg",
+ synopsis:"Naruto returns after years of training and continues his journey as a ninja.",
+ url:"https://myanimelist.net/anime/1735/Naruto__Shippuuden"
 },
 
 {
-    id:"default-jjk",
-    title:"Jujutsu Kaisen",
-    english:"Jujutsu Kaisen",
-    native:"呪術廻戦",
-    image:"https://cdn.myanimelist.net/images/anime/1171/109222.jpg",
-    score:8.6,
-    year:2020,
-    episodes:24,
-    genres:["Action","Supernatural"],
-    synopsis:"Yuji Itadori enters the world of cursed energy.",
-    source:"Local"
+ id:"demon-slayer",
+ title:"Demon Slayer",
+ score:"8.6",
+ year:"2019",
+ type:"TV",
+ episodes:"Ongoing",
+ image:"https://cdn.myanimelist.net/images/anime/1286/99889l.jpg",
+ synopsis:"Tanjiro enters the dangerous world of demon hunters after tragedy strikes his family.",
+ url:"https://myanimelist.net/anime/38000/Kimetsu_no_Yaiba"
 },
 
 {
-    id:"default-op",
-    title:"One Piece",
-    english:"One Piece",
-    native:"ONE PIECE",
-    image:"https://cdn.myanimelist.net/images/anime/1244/138851.jpg",
-    score:9.0,
-    year:1999,
-    episodes:0,
-    genres:["Adventure","Action"],
-    synopsis:"Monkey D. Luffy sails toward becoming the Pirate King.",
-    source:"Local"
+ id:"jujutsu-kaisen",
+ title:"Jujutsu Kaisen",
+ score:"8.6",
+ year:"2020",
+ type:"TV",
+ episodes:"Ongoing",
+ image:"https://cdn.myanimelist.net/images/anime/1171/109222l.jpg",
+ synopsis:"Yuji Itadori enters the world of cursed spirits and sorcerers.",
+ url:"https://myanimelist.net/anime/40748/Jujutsu_Kaisen"
 },
 
 {
-    id:"default-naruto",
-    title:"Naruto",
-    english:"Naruto",
-    native:"NARUTO",
-    image:"https://cdn.myanimelist.net/images/anime/13/17405.jpg",
-    score:8.0,
-    year:2002,
-    episodes:220,
-    genres:["Action","Adventure"],
-    synopsis:"A young ninja dreams of becoming Hokage.",
-    source:"Local"
+ id:"attack-on-titan",
+ title:"Attack on Titan",
+ score:"9.0",
+ year:"2013",
+ type:"TV",
+ episodes:"89",
+ image:"https://cdn.myanimelist.net/images/anime/10/47347l.jpg",
+ synopsis:"Humanity fights for survival behind enormous walls.",
+ url:"https://myanimelist.net/anime/16498/Shingeki_no_Kyojin"
 },
 
 {
-    id:"default-hxh",
-    title:"Hunter x Hunter",
-    english:"Hunter x Hunter",
-    native:"HUNTER×HUNTER",
-    image:"https://cdn.myanimelist.net/images/anime/1337/99013.jpg",
-    score:9.0,
-    year:2011,
-    episodes:148,
-    genres:["Adventure","Action"],
-    synopsis:"Gon sets out to become a Hunter and find his father.",
-    source:"Local"
+ id:"bleach",
+ title:"Bleach",
+ score:"8.2",
+ year:"2004",
+ type:"TV",
+ episodes:"366+",
+ image:"https://cdn.myanimelist.net/images/anime/3/40451l.jpg",
+ synopsis:"Ichigo Kurosaki gains the powers of a Soul Reaper and enters a supernatural world.",
+ url:"https://myanimelist.net/anime/269/Bleach"
+},
+
+{
+ id:"solo-leveling",
+ title:"Solo Leveling",
+ score:"8.8",
+ year:"2024",
+ type:"TV",
+ episodes:"25+",
+ image:"https://cdn.myanimelist.net/images/anime/1805/140576l.jpg",
+ synopsis:"Sung Jinwoo rises from the weakest hunter toward unimaginable power.",
+ url:"https://myanimelist.net/anime/52299/Ore_dake_Level_Up_na_Ken"
+},
+
+{
+ id:"death-note",
+ title:"Death Note",
+ score:"8.6",
+ year:"2006",
+ type:"TV",
+ episodes:"37",
+ image:"https://cdn.myanimelist.net/images/anime/1079/138100l.jpg",
+ synopsis:"A mysterious notebook gives its owner extraordinary power.",
+ url:"https://myanimelist.net/anime/1535/Death_Note"
+},
+
+{
+ id:"hunter-x-hunter",
+ title:"Hunter x Hunter",
+ score:"9.0",
+ year:"2011",
+ type:"TV",
+ episodes:"148",
+ image:"https://cdn.myanimelist.net/images/anime/1337/99013l.jpg",
+ synopsis:"Gon begins an adventure to become a Hunter and find his father.",
+ url:"https://myanimelist.net/anime/11061/Hunter_x_Hunter_2011"
+},
+
+{
+ id:"one-punch-man",
+ title:"One Punch Man",
+ score:"8.5",
+ year:"2015",
+ type:"TV",
+ episodes:"24+",
+ image:"https://cdn.myanimelist.net/images/anime/12/76049l.jpg",
+ synopsis:"Saitama defeats enemies with one punch and searches for a worthy challenge.",
+ url:"https://myanimelist.net/anime/30276/One_Punch_Man"
+},
+
+{
+ id:"fullmetal",
+ title:"Fullmetal Alchemist: Brotherhood",
+ score:"9.1",
+ year:"2009",
+ type:"TV",
+ episodes:"64",
+ image:"https://cdn.myanimelist.net/images/anime/1208/94745l.jpg",
+ synopsis:"Two brothers search for a way to restore what they lost.",
+ url:"https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood"
+},
+
+{
+ id:"haikyuu",
+ title:"Haikyuu!!",
+ score:"8.7",
+ year:"2014",
+ type:"TV",
+ episodes:"85+",
+ image:"https://cdn.myanimelist.net/images/anime/7/76014l.jpg",
+ synopsis:"A determined volleyball player dreams of reaching the national stage.",
+ url:"https://myanimelist.net/anime/20583/Haikyuu"
 }
 
 ];
 
-let animeResults = [];
-let currentAnime = [];
-let animeRequestId = 0;
+
+/*
+   Search cache.
+   This means once an anime has been searched successfully,
+   its result can be stored locally.
+*/
+
+let animeCache=
+    JSON.parse(
+        localStorage.getItem("samAnimeCache") || "{}"
+    );
+
+let currentAnime=[];
+let currentAnimeTab="popular";
 
 
-/* =========================================================
-   API HELPERS
-========================================================= */
+function getLocalAnime(){
 
-async function fetchWithTimeout(
-    url,
-    options={},
-    timeout=9000
-){
-
-    const controller =
-        new AbortController();
-
-    const timer =
-        setTimeout(
-            ()=>controller.abort(),
-            timeout
-        );
-
-    try{
-
-        const response =
-            await fetch(
-                url,
-                {
-                    ...options,
-                    signal:controller.signal
-                }
-            );
-
-        if(!response.ok){
-            throw new Error(
-                "HTTP " + response.status
-            );
-        }
-
-        return await response.json();
-
-    }finally{
-
-        clearTimeout(timer);
-    }
+    return localAnime.slice();
 }
 
 
-/* =========================================================
-   JIKAN
-========================================================= */
-
-async function jikanSearch(query){
-
-    const url =
-        "https://api.jikan.moe/v4/anime?q="
-        + encodeURIComponent(query)
-        + "&limit=25&sfw=false";
-
-    try{
-
-        const data =
-            await fetchWithTimeout(url);
-
-        return (data.data || [])
-            .map(normalizeJikan)
-            .filter(Boolean);
-
-    }catch(error){
-
-        return [];
-    }
-}
-
-
-async function jikanTop(filter){
-
-    let url =
-        "https://api.jikan.moe/v4/top/anime?limit=24";
-
-    if(filter === "popular"){
-        url =
-            "https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=24";
-    }
-
-    if(filter === "airing"){
-        url =
-            "https://api.jikan.moe/v4/top/anime?filter=airing&limit=24";
-    }
-
-    try{
-
-        const data =
-            await fetchWithTimeout(url);
-
-        return (data.data || [])
-            .map(normalizeJikan)
-            .filter(Boolean);
-
-    }catch(error){
-
-        return [];
-    }
-}
-
-
-function normalizeJikan(item){
-
-    if(!item) return null;
+function cleanAnime(item){
 
     return {
-
-        id:"jikan-" + item.mal_id,
+        id:
+            item.id ||
+            String(item.mal_id || item.id || Math.random()),
 
         title:
             item.title ||
             item.title_english ||
             "Unknown Anime",
 
-        english:
-            item.title_english ||
-            item.title ||
-            "",
-
-        native:
-            item.title_japanese ||
-            "",
-
-        image:
-            item.images?.jpg?.large_image_url ||
-            item.images?.jpg?.image_url ||
-            "",
-
         score:
-            item.score || 0,
+            item.score ||
+            "N/A",
 
         year:
             item.year ||
-            item.aired?.prop?.from?.year ||
-            "—",
+            (
+                item.aired &&
+                item.aired.from
+                ?
+                new Date(item.aired.from).getFullYear()
+                :
+                "N/A"
+            ),
+
+        type:
+            item.type ||
+            "Anime",
 
         episodes:
-            item.episodes || 0,
+            item.episodes ||
+            "?",
 
-        genres:
-            (item.genres || [])
-                .map(g=>g.name),
+        image:
+            (
+                item.images &&
+                item.images.jpg &&
+                (
+                    item.images.jpg.large_image_url ||
+                    item.images.jpg.image_url
+                )
+            )
+            ||
+            item.image
+            ||
+            "",
 
         synopsis:
             item.synopsis ||
             "No synopsis available.",
 
-        type:
-            item.type || "",
-
-        status:
-            item.status || "",
+        url:
+            item.url ||
+            "#",
 
         trailer:
-            item.trailer?.url || "",
-
-        source:"Jikan"
-
+            item.trailer &&
+            item.trailer.url
+            ?
+            item.trailer.url
+            :
+            ""
     };
 }
 
 
-/* =========================================================
-   KITSU
-========================================================= */
+/*
+   IMPORTANT:
+   We no longer use mal_id as the only identifier.
 
-async function kitsuSearch(query){
+   This fixes the previous bug where Demon Slayer
+   and Solo Leveling could accidentally collide.
+*/
 
-    const url =
-        "https://kitsu.io/api/edge/anime?filter[text]="
-        + encodeURIComponent(query)
-        + "&page[limit]=25";
+function animeKey(anime){
 
-    try{
-
-        const data =
-            await fetchWithTimeout(url);
-
-        return (data.data || [])
-            .map(normalizeKitsu)
-            .filter(Boolean);
-
-    }catch(error){
-
-        return [];
-    }
+    return String(
+        anime.id ||
+        anime.mal_id ||
+        anime.title
+    );
 }
 
 
-function normalizeKitsu(item){
-
-    const a = item?.attributes;
-
-    if(!a) return null;
-
-    return {
-
-        id:"kitsu-" + item.id,
-
-        title:
-            a.titles?.en ||
-            a.titles?.en_jp ||
-            a.titles?.ja_jp ||
-            "Unknown Anime",
-
-        english:
-            a.titles?.en || "",
-
-        native:
-            a.titles?.ja_jp || "",
-
-        image:
-            a.posterImage?.large ||
-            a.posterImage?.medium ||
-            a.posterImage?.small ||
-            "",
-
-        score:
-            a.averageRating
-            ? Number(a.averageRating)/10
-            : 0,
-
-        year:
-            a.startDate
-            ? Number(a.startDate.slice(0,4))
-            : "—",
-
-        episodes:
-            a.episodeCount || 0,
-
-        genres:[],
-
-        synopsis:
-            a.synopsis ||
-            "No synopsis available.",
-
-        type:
-            a.subtype || "",
-
-        status:
-            a.status || "",
-
-        trailer:"",
-
-        source:"Kitsu"
-
-    };
-}
-
-
-/* =========================================================
-   ANILIST FALLBACK
-========================================================= */
-
-async function aniListSearch(query){
-
-    const graphql = `
-        query ($search:String) {
-            Page(page:1, perPage:25) {
-                media(
-                    search:$search,
-                    type:ANIME
-                ) {
-                    id
-                    title {
-                        romaji
-                        english
-                        native
-                    }
-                    coverImage {
-                        extraLarge
-                        large
-                        medium
-                    }
-                    averageScore
-                    episodes
-                    format
-                    description(asHtml:false)
-                    startDate {
-                        year
-                    }
-                    genres
-                    trailer {
-                        id
-                        site
-                    }
-                }
-            }
-        }
-    `;
-
-    try{
-
-        const response =
-            await fetchWithTimeout(
-                "https://graphql.anilist.co",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify({
-                        query:graphql,
-                        variables:{
-                            search:query
-                        }
-                    })
-                },
-                10000
-            );
-
-        return (
-            response?.data?.Page?.media || []
-        ).map(normalizeAniList);
-
-    }catch(error){
-
-        return [];
-    }
-}
-
-
-function normalizeAniList(item){
-
-    return {
-
-        id:"anilist-" + item.id,
-
-        title:
-            item.title?.english ||
-            item.title?.romaji ||
-            item.title?.native ||
-            "Unknown Anime",
-
-        english:
-            item.title?.english || "",
-
-        native:
-            item.title?.native || "",
-
-        image:
-            item.coverImage?.extraLarge ||
-            item.coverImage?.large ||
-            item.coverImage?.medium ||
-            "",
-
-        score:
-            item.averageScore
-            ? item.averageScore/10
-            : 0,
-
-        year:
-            item.startDate?.year || "—",
-
-        episodes:
-            item.episodes || 0,
-
-        genres:
-            item.genres || [],
-
-        synopsis:
-            item.description ||
-            "No synopsis available.",
-
-        type:
-            item.format || "",
-
-        status:"",
-
-        trailer:
-            item.trailer?.site === "youtube"
-            && item.trailer?.id
-                ? "https://www.youtube.com/watch?v="
-                    + item.trailer.id
-                : "",
-
-        source:"AniList"
-
-    };
-}
-
-
-/* =========================================================
-   MERGE RESULTS
-========================================================= */
-
-function normalizeSearchText(text){
-
-    return (text || "")
-        .toLowerCase()
-        .replace(/[^\w\s]/g,"")
-        .replace(/\s+/g," ")
-        .trim();
-}
-
-
-function mergeAnimeResults(
-    ...groups
-){
-
-    const map = new Map();
-
-    groups.flat().forEach(anime=>{
-
-        if(!anime || !anime.title){
-            return;
-        }
-
-        const keys = [
-
-            normalizeSearchText(anime.title),
-
-            normalizeSearchText(anime.english),
-
-            normalizeSearchText(anime.native)
-
-        ].filter(Boolean);
-
-        const key =
-            keys[0] ||
-            anime.id;
-
-        if(!map.has(key)){
-
-            map.set(key,anime);
-
-        }else{
-
-            const old =
-                map.get(key);
-
-            if(
-                (!old.image || old.image.length < 10)
-                && anime.image
-            ){
-                old.image = anime.image;
-            }
-
-            if(
-                (!old.synopsis || old.synopsis.length < 20)
-                && anime.synopsis
-            ){
-                old.synopsis = anime.synopsis;
-            }
-
-            if(
-                (!old.score || old.score === 0)
-                && anime.score
-            ){
-                old.score = anime.score;
-            }
-
-            if(
-                (!old.trailer)
-                && anime.trailer
-            ){
-                old.trailer = anime.trailer;
-            }
-
-            if(
-                anime.genres?.length >
-                old.genres?.length
-            ){
-                old.genres = anime.genres;
-            }
-
-        }
-
-    });
-
-    return Array.from(map.values());
-}
-
-
-/* =========================================================
-   LOCAL MATCH
-========================================================= */
-
-function localAnimeSearch(query){
-
-    const q =
-        normalizeSearchText(query);
-
-    return DEFAULT_ANIME.filter(anime=>{
-
-        return [
-
-            anime.title,
-            anime.english,
-            anime.native
-
-        ].some(title=>
-            normalizeSearchText(title)
-                .includes(q)
-        );
-
-    });
-}
-
-
-/* =========================================================
+/* =========================
    RENDER
-========================================================= */
+========================= */
 
-function renderAnime(
-    list,
-    status="Ready"
-){
+function renderAnime(list){
 
-    currentAnime = list || [];
+    currentAnime=list || [];
 
-    $("animeStatus").textContent =
-        status;
+    const grid=
+        document.getElementById("animeGrid");
 
-    $("animeCount").textContent =
-        currentAnime.length +
-        " result" +
-        (currentAnime.length === 1 ? "" : "s");
+    if(!list || !list.length){
 
-    const grid =
-        $("animeGrid");
-
-    grid.innerHTML = "";
-
-    if(!currentAnime.length){
-
-        grid.innerHTML = `
-            <div class="anime-loading">
-                <div style="font-size:30px">⌕</div>
-                <div>No anime found.</div>
-                <div style="font-size:10px;color:#555">
-                    Try another title.
+        grid.innerHTML=`
+            <div class="empty-anime">
+                <div style="font-size:35px;margin-bottom:10px">
+                    🔎
                 </div>
+                No anime found.
             </div>
         `;
 
         return;
     }
 
-    currentAnime.forEach((anime,index)=>{
+    grid.innerHTML=list.map((anime,index)=>{
 
-        const card =
-            document.createElement("div");
+        const key=animeKey(anime);
 
-        card.className =
-            "anime-card";
+        const saved=isInWatchlist(key);
 
-        const saved =
-            isInWatchlist(anime);
+        const safeTitle=
+            String(anime.title)
+            .replace(/"/g,"&quot;");
 
-        const image =
-            anime.image ||
-            DEFAULT_ANIME[
-                index % DEFAULT_ANIME.length
-            ].image;
+        return `
 
-        card.innerHTML = `
+        <article class="anime-card">
 
-            <button
-                class="watch-btn ${saved ? "saved" : ""}"
-                onclick="event.stopPropagation();toggleWatchlist(${index})"
-                title="Watchlist"
-            >
-                ${saved ? "★" : "+"}
-            </button>
-
-            <img
-                class="anime-poster"
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(anime.title)}"
-                loading="lazy"
-                onerror="this.src='${DEFAULT_ANIME[0].image}'"
+            <div
+                class="anime-poster ${
+                    anime.image ? "" : "no-image"
+                }"
             >
 
-            <div class="anime-card-body">
+                ${
+                    anime.image
+                    ?
+                    `
+                    <img
+                        src="${anime.image}"
+                        alt="${safeTitle}"
+                        loading="lazy"
+                        onerror="
+                            this.style.display='none';
+                            this.parentElement.classList.add('no-image');
+                        "
+                    >
+                    `
+                    :
+                    ""
+                }
 
-                <div class="anime-title">
+                ${
+                    !anime.image
+                    ?
+                    `
+                    <div class="poster-title">
+                        ${escapeHTML(anime.title)}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+                <div class="anime-gradient"></div>
+
+                <div class="score">
+                    ★ ${escapeHTML(anime.score)}
+                </div>
+
+            </div>
+
+            <div class="anime-info">
+
+                <div
+                    class="anime-title"
+                    title="${safeTitle}"
+                >
                     ${escapeHTML(anime.title)}
                 </div>
 
                 <div class="anime-meta">
-                    <span>
-                        ${anime.year || "—"}
-                    </span>
-
-                    <span class="anime-score">
-                        ★ ${anime.score
-                            ? Number(anime.score).toFixed(1)
-                            : "N/A"}
-                    </span>
+                    ${escapeHTML(anime.type)}
+                    •
+                    ${escapeHTML(anime.year)}
+                    •
+                    ${escapeHTML(anime.episodes)} eps
                 </div>
 
-            </div>
-        `;
-
-        card.addEventListener(
-            "click",
-            ()=>openAnimeDetail(anime)
-        );
-
-        grid.appendChild(card);
-
-    });
-}
-
-
-function showAnimeLoading(){
-
-    $("animeGrid").innerHTML = `
-
-        ${Array.from({length:12})
-            .map(()=>`
-
-            <div
-                class="anime-card skeleton"
-                style="height:290px"
-            ></div>
-
-            `).join("")}
-
-    `;
-
-    $("animeStatus").textContent =
-        "Searching anime databases...";
-
-    $("animeCount").textContent =
-        "Searching...";
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-async function searchAnime(
-    saveSearch=true
-){
-
-    const query =
-        $("animeSearch").value.trim();
-
-    if(!query){
-
-        loadAnimeTab("popular");
-
-        return;
-    }
-
-    const request =
-        ++animeRequestId;
-
-    hideSuggestions();
-
-    if(saveSearch){
-        saveRecentSearch(query);
-    }
-
-    const local =
-        localAnimeSearch(query);
-
-    if(local.length){
-
-        renderAnime(
-            local,
-            "Local match found — searching databases..."
-        );
-    }else{
-
-        showAnimeLoading();
-
-    }
-
-    const [
-        jikan,
-        kitsu,
-        aniList
-    ] = await Promise.all([
-
-        jikanSearch(query),
-
-        kitsuSearch(query),
-
-        aniListSearch(query)
-
-    ]);
-
-    if(request !== animeRequestId){
-        return;
-    }
-
-    const merged =
-        mergeAnimeResults(
-            local,
-            jikan,
-            kitsu,
-            aniList
-        );
-
-    if(merged.length){
-
-        animeResults = merged;
-
-        renderAnime(
-            merged,
-            "Search complete"
-        );
-
-    }else if(local.length){
-
-        renderAnime(
-            local,
-            "Using local results"
-        );
-
-    }else{
-
-        renderAnime(
-            [],
-            "No results found"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   TABS
-========================================================= */
-
-async function loadAnimeTab(
-    tab,
-    button=null
-){
-
-    if(button){
-
-        document
-            .querySelectorAll(".tab")
-            .forEach(x=>
-                x.classList.remove("active")
-            );
-
-        button.classList.add("active");
-
-    }
-
-    if(tab === "watchlist"){
-
-        showWatchlist();
-
-        return;
-    }
-
-    $("animeSearch").value = "";
-
-    showAnimeLoading();
-
-    if(tab === "popular"){
-
-        const results =
-            await jikanTop("popular");
-
-        renderAnime(
-            results.length
-                ? results
-                : DEFAULT_ANIME,
-            "Popular anime"
-        );
-
-        return;
-    }
-
-    if(tab === "top"){
-
-        const results =
-            await jikanTop("top");
-
-        renderAnime(
-            results.length
-                ? results
-                : DEFAULT_ANIME,
-            "Top rated anime"
-        );
-
-        return;
-    }
-
-    if(tab === "airing"){
-
-        const results =
-            await jikanTop("airing");
-
-        renderAnime(
-            results.length
-                ? results
-                : DEFAULT_ANIME,
-            "Currently airing"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   SEARCH SUGGESTIONS
-========================================================= */
-
-let suggestionTimer;
-
-$("animeSearch").addEventListener(
-    "input",
-    function(){
-
-        clearTimeout(suggestionTimer);
-
-        const query =
-            this.value.trim();
-
-        if(query.length < 2){
-
-            hideSuggestions();
-
-            return;
-        }
-
-        suggestionTimer =
-            setTimeout(
-                ()=>loadSuggestions(query),
-                450
-            );
-
-    }
-);
-
-
-$("animeSearch").addEventListener(
-    "keydown",
-    function(event){
-
-        if(event.key === "Enter"){
-
-            event.preventDefault();
-
-            searchAnime(true);
-
-        }
-
-        if(event.key === "Escape"){
-
-            hideSuggestions();
-
-        }
-
-    }
-);
-
-
-async function loadSuggestions(query){
-
-    const local =
-        localAnimeSearch(query);
-
-    const results =
-        await jikanSearch(query);
-
-    const merged =
-        mergeAnimeResults(
-            local,
-            results
-        ).slice(0,6);
-
-    const box =
-        $("searchSuggestions");
-
-    if(!merged.length){
-
-        hideSuggestions();
-
-        return;
-    }
-
-    box.innerHTML =
-        merged.map((anime,index)=>`
-
-            <div
-                class="suggestion"
-                onclick="chooseSuggestion(${index})"
-            >
-
-                <img
-                    src="${escapeHTML(
-                        anime.image ||
-                        DEFAULT_ANIME[0].image
-                    )}"
-                    onerror="this.src='${DEFAULT_ANIME[0].image}'"
+                <button
+                    class="anime-btn"
+                    onclick="openAnime('${encodeURIComponent(key)}')"
                 >
-
-                <div class="suggestion-info">
-
-                    <div class="suggestion-title">
-                        ${escapeHTML(anime.title)}
-                    </div>
-
-                    <div class="suggestion-meta">
-                        ${anime.year || "—"}
-                        ·
-                        ${anime.source || "Database"}
-                    </div>
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-    window.suggestionResults =
-        merged;
-
-    box.classList.add("show");
-}
-
-
-function chooseSuggestion(index){
-
-    const anime =
-        window.suggestionResults?.[index];
-
-    if(!anime) return;
-
-    $("animeSearch").value =
-        anime.title;
-
-    hideSuggestions();
-
-    openAnimeDetail(anime);
-}
-
-
-function hideSuggestions(){
-
-    $("searchSuggestions")
-        .classList.remove("show");
-}
-
-
-document.addEventListener(
-    "click",
-    event=>{
-
-        if(
-            !event.target.closest(".search-box")
-        ){
-            hideSuggestions();
-        }
-
-    }
-);
-
-
-/* =========================================================
-   RECENT SEARCHES
-========================================================= */
-
-const RECENT_KEY =
-    "samOSRecentAnimeSearches";
-
-function getRecentSearches(){
-
-    try{
-
-        return JSON.parse(
-            localStorage.getItem(RECENT_KEY)
-        ) || [];
-
-    }catch{
-
-        return [];
-
-    }
-}
-
-
-function saveRecentSearch(query){
-
-    let list =
-        getRecentSearches();
-
-    list =
-        [
-            query,
-            ...list.filter(
-                x=>
-                    x.toLowerCase() !==
-                    query.toLowerCase()
-            )
-        ].slice(0,8);
-
-    localStorage.setItem(
-        RECENT_KEY,
-        JSON.stringify(list)
-    );
-
-    renderRecentSearches();
-}
-
-
-function renderRecentSearches(){
-
-    const list =
-        getRecentSearches();
-
-    const box =
-        $("recentSearches");
-
-    if(!list.length){
-
-        box.innerHTML = "";
-
-        return;
-    }
-
-    box.innerHTML = `
-
-        <span
-            style="
-            color:#555;
-            font-size:9px;
-            padding:7px 3px;
-            "
-        >
-            RECENT:
-        </span>
-
-        ${list.map(query=>`
-
-            <button
-                class="recent-chip"
-                onclick="useRecentSearch(${JSON.stringify(query)})"
-            >
-                ${escapeHTML(query)}
-            </button>
-
-        `).join("")}
-
-    `;
-
-}
-
-
-function useRecentSearch(query){
-
-    $("animeSearch").value =
-        query;
-
-    searchAnime(false);
-
-}
-
-
-/* =========================================================
-   WATCHLIST
-========================================================= */
-
-const WATCH_KEY =
-    "samOSWatchlist";
-
-function getWatchlist(){
-
-    try{
-
-        return JSON.parse(
-            localStorage.getItem(WATCH_KEY)
-        ) || [];
-
-    }catch{
-
-        return [];
-
-    }
-}
-
-
-function isInWatchlist(anime){
-
-    const list =
-        getWatchlist();
-
-    return list.some(
-        item =>
-            normalizeSearchText(item.title) ===
-            normalizeSearchText(anime.title)
-    );
-
-}
-
-
-function toggleWatchlist(index){
-
-    const anime =
-        currentAnime[index];
-
-    if(!anime) return;
-
-    let list =
-        getWatchlist();
-
-    const existing =
-        list.findIndex(
-            item =>
-                normalizeSearchText(item.title) ===
-                normalizeSearchText(anime.title)
-        );
-
-    if(existing >= 0){
-
-        list.splice(existing,1);
-
-        toast(
-            anime.title +
-            " removed from watchlist"
-        );
-
-    }else{
-
-        list.unshift(anime);
-
-        toast(
-            anime.title +
-            " added to watchlist"
-        );
-
-    }
-
-    localStorage.setItem(
-        WATCH_KEY,
-        JSON.stringify(list)
-    );
-
-    renderAnime(
-        currentAnime,
-        $("animeStatus").textContent
-    );
-
-}
-
-
-function showWatchlist(){
-
-    const list =
-        getWatchlist();
-
-    document
-        .querySelectorAll(".tab")
-        .forEach(x=>
-            x.classList.remove("active")
-        );
-
-    const watchTab =
-        document.querySelector(
-            '[data-tab="watchlist"]'
-        );
-
-    watchTab?.classList.add("active");
-
-    $("animeSearch").value = "";
-
-    renderAnime(
-        list,
-        "Your saved watchlist"
-    );
-
-}
-
-
-/* =========================================================
-   ANIME DETAILS
-========================================================= */
-
-function openAnimeDetail(anime){
-
-    const image =
-        anime.image ||
-        DEFAULT_ANIME[0].image;
-
-    const genres =
-        anime.genres?.length
-            ? anime.genres
-                .map(
-                    g=>
-                        `<span class="badge">
-                            ${escapeHTML(g)}
-                        </span>`
-                )
-                .join("")
-            : "";
-
-    const trailer =
-        anime.trailer
-            ? `
-                <a
-                    class="btn primary"
-                    href="${escapeHTML(anime.trailer)}"
-                    target="_blank"
+                    VIEW DETAILS
+                </button>
+
+                <button
+                    class="anime-btn"
+                    onclick="toggleWatchlist('${encodeURIComponent(key)}')"
                 >
-                    Watch Trailer ↗
-                </a>
-              `
-            : "";
-
-    const saved =
-        isInWatchlist(anime);
-
-    $("animeDetail").innerHTML = `
-
-        <img
-            class="detail-poster"
-            src="${escapeHTML(image)}"
-            onerror="this.src='${DEFAULT_ANIME[0].image}'"
-        >
-
-        <div class="detail-content">
-
-            <div
-                style="
-                color:var(--lime);
-                font-size:9px;
-                letter-spacing:2px;
-                margin-bottom:9px;
-                "
-            >
-                ${escapeHTML(
-                    anime.source || "ANIME DATABASE"
-                ).toUpperCase()}
-            </div>
-
-            <h2>
-                ${escapeHTML(anime.title)}
-            </h2>
-
-            ${
-                anime.english &&
-                anime.english !== anime.title
-                ? `
-                    <div
-                        style="
-                        color:#666;
-                        font-size:11px;
-                        "
-                    >
-                        ${escapeHTML(anime.english)}
-                    </div>
-                  `
-                : ""
-            }
-
-            <div class="detail-meta">
-
-                <span class="badge score">
-                    ★ ${
-                        anime.score
-                        ? Number(anime.score).toFixed(1)
-                        : "N/A"
-                    }
-                </span>
-
-                <span class="badge">
-                    ${anime.year || "Unknown year"}
-                </span>
-
-                <span class="badge">
                     ${
-                        anime.episodes
-                        ? anime.episodes + " episodes"
-                        : "Episode count unknown"
+                        saved
+                        ?
+                        "✓ REMOVE WATCHLIST"
+                        :
+                        "+ ADD WATCHLIST"
                     }
-                </span>
-
-                ${
-                    anime.type
-                    ? `
-                        <span class="badge">
-                            ${escapeHTML(anime.type)}
-                        </span>
-                      `
-                    : ""
-                }
-
-            </div>
-
-            <div class="detail-meta">
-                ${genres}
-            </div>
-
-            <p class="detail-description">
-                ${escapeHTML(
-                    anime.synopsis ||
-                    "No description available."
-                )}
-            </p>
-
-            <div class="detail-actions">
-
-                <button
-                    class="btn"
-                    onclick='addAnimeFromDetail(${JSON.stringify(anime)})'
-                >
-                    ${saved
-                        ? "★ In Watchlist"
-                        : "+ Add Watchlist"}
                 </button>
 
-                ${trailer}
-
             </div>
 
-        </div>
-
-    `;
-
-    $("animeModal")
-        .classList.add("show");
-}
-
-
-function addAnimeFromDetail(anime){
-
-    let list =
-        getWatchlist();
-
-    const existing =
-        list.findIndex(
-            item =>
-                normalizeSearchText(item.title) ===
-                normalizeSearchText(anime.title)
-        );
-
-    if(existing >= 0){
-
-        list.splice(existing,1);
-
-        toast("Removed from watchlist");
-
-    }else{
-
-        list.unshift(anime);
-
-        toast("Added to watchlist");
-
-    }
-
-    localStorage.setItem(
-        WATCH_KEY,
-        JSON.stringify(list)
-    );
-
-    openAnimeDetail(anime);
-}
-
-
-function surpriseAnime(){
-
-    const fallback =
-        DEFAULT_ANIME[
-            Math.floor(
-                Math.random() *
-                DEFAULT_ANIME.length
-            )
-        ];
-
-    openAnimeDetail(fallback);
-}
-
-
-function randomAnimeCommand(){
-
-    closeModal("commandModal");
-
-    surpriseAnime();
-}
-
-
-/* =========================================================
-   SENSITIVITY ENGINE
-========================================================= */
-
-function clamp(
-    number,
-    min,
-    max
-){
-
-    return Math.max(
-        min,
-        Math.min(max,number)
-    );
-}
-
-
-function generateSensitivity(){
-
-    const device =
-        $("device").value.trim() ||
-        "Unknown Device";
-
-    const ram =
-        Number($("ram").value) || 4;
-
-    const dpi =
-        Number($("dpi").value) || 411;
-
-    const style =
-        $("style").value;
-
-    const fingers =
-        Number($("fingers").value) || 2;
-
-    let base =
-        85;
-
-    base +=
-        (dpi - 400) * .055;
-
-    base +=
-        (ram - 4) * 1.2;
-
-    base +=
-        (fingers - 2) * 4;
-
-    const styleBoost = {
-
-        balanced:0,
-
-        rush:8,
-
-        drag:11,
-
-        precision:-5
-
-    };
-
-    base +=
-        styleBoost[style] || 0;
-
-    const general =
-        clamp(
-            Math.round(base),
-            60,
-            200
-        );
-
-    const redDot =
-        clamp(
-            Math.round(
-                general * 0.94
-            ),
-            50,
-            200
-        );
-
-    const scope2 =
-        clamp(
-            Math.round(
-                general * 0.87
-            ),
-            45,
-            200
-        );
-
-    const scope4 =
-        clamp(
-            Math.round(
-                general * 0.76
-            ),
-            40,
-            200
-        );
-
-    const sniper =
-        clamp(
-            Math.round(
-                general * 0.54
-            ),
-            25,
-            180
-        );
-
-    const freeLook =
-        clamp(
-            Math.round(
-                general * 0.92
-            ),
-            50,
-            200
-        );
-
-    const values = {
-
-        "General":general,
-
-        "Red Dot":redDot,
-
-        "2× Scope":scope2,
-
-        "4× Scope":scope4,
-
-        "Sniper":sniper,
-
-        "Free Look":freeLook
-
-    };
-
-    $("sensDevice").textContent =
-        device;
-
-    $("sensDpi").textContent =
-        "DPI " + dpi;
-
-    $("sensitivityOutput").innerHTML =
-        Object.entries(values)
-            .map(
-                ([name,value])=>`
-
-                    <div class="sens-value">
-
-                        <div class="sens-name">
-                            ${name}
-                        </div>
-
-                        <div class="sens-number">
-                            ${value}
-                        </div>
-
-                    </div>
-
-                `
-            )
-            .join("");
-
-    window.currentSensitivity = {
-        device,
-        ram,
-        dpi,
-        style,
-        fingers,
-        values
-    };
-
-    return window.currentSensitivity;
-}
-
-
-function copySensitivity(){
-
-    const profile =
-        window.currentSensitivity ||
-        generateSensitivity();
-
-    let text =
-        `SAM.OS SENSITIVITY PROFILE\n\n`;
-
-    text +=
-        `Device: ${profile.device}\n`;
-
-    text +=
-        `RAM: ${profile.ram}GB\n`;
-
-    text +=
-        `DPI: ${profile.dpi}\n`;
-
-    text +=
-        `Style: ${profile.style}\n`;
-
-    text +=
-        `Fingers: ${profile.fingers}\n\n`;
-
-    Object.entries(
-        profile.values
-    ).forEach(
-        ([name,value])=>{
-            text +=
-                `${name}: ${value}\n`;
-        }
-    );
-
-    navigator.clipboard
-        ?.writeText(text)
-        .then(
-            ()=>toast("Sensitivity copied")
-        )
-        .catch(
-            ()=>toast("Copy unavailable")
-        );
-
-}
-
-
-function saveSensitivityProfile(){
-
-    const profile =
-        window.currentSensitivity ||
-        generateSensitivity();
-
-    localStorage.setItem(
-        "samOSSensitivity",
-        JSON.stringify(profile)
-    );
-
-    $("savedProfileStatus").textContent =
-        "✓ Profile saved locally";
-
-    toast("Sensitivity profile saved");
-}
-
-
-function loadSensitivityProfile(){
-
-    try{
-
-        const profile =
-            JSON.parse(
-                localStorage.getItem(
-                    "samOSSensitivity"
-                )
-            );
-
-        if(!profile) return;
-
-        $("device").value =
-            profile.device || "";
-
-        $("ram").value =
-            profile.ram || 4;
-
-        $("dpi").value =
-            profile.dpi || 411;
-
-        $("style").value =
-            profile.style || "balanced";
-
-        $("fingers").value =
-            profile.fingers || 2;
-
-        generateSensitivity();
-
-        $("savedProfileStatus").textContent =
-            "✓ Saved profile loaded";
-
-    }catch{}
-
-}
-
-
-/* =========================================================
-   NOTES
-========================================================= */
-
-const NOTES_KEY =
-    "samOSNotes";
-
-
-function getNotes(){
-
-    try{
-
-        return JSON.parse(
-            localStorage.getItem(NOTES_KEY)
-        ) || [];
-
-    }catch{
-
-        return [];
-
-    }
-}
-
-
-function saveNote(){
-
-    const input =
-        $("noteInput");
-
-    const text =
-        input.value.trim();
-
-    if(!text){
-
-        toast("Write something first");
-
-        return;
-    }
-
-    const notes =
-        getNotes();
-
-    notes.unshift({
-
-        id:Date.now(),
-
-        text,
-
-        date:
-            new Date()
-                .toLocaleString()
-
-    });
-
-    localStorage.setItem(
-        NOTES_KEY,
-        JSON.stringify(notes)
-    );
-
-    input.value = "";
-
-    renderNotes();
-
-    toast("Note saved");
-
-}
-
-
-function deleteNote(id){
-
-    const notes =
-        getNotes()
-            .filter(note=>note.id !== id);
-
-    localStorage.setItem(
-        NOTES_KEY,
-        JSON.stringify(notes)
-    );
-
-    renderNotes();
-
-    toast("Note deleted");
-}
-
-
-function renderNotes(){
-
-    const notes =
-        getNotes();
-
-    const box =
-        $("notesList");
-
-    if(!notes.length){
-
-        box.innerHTML = `
-
-            <div
-                style="
-                color:#555;
-                font-size:11px;
-                padding:20px 0;
-                "
-            >
-                No saved notes yet.
-            </div>
+        </article>
 
         `;
 
-        return;
-    }
-
-    box.innerHTML =
-        notes.map(note=>`
-
-            <div class="note">
-
-                <div>
-
-                    <div class="note-text">
-                        ${escapeHTML(note.text)}
-                    </div>
-
-                    <div class="note-time">
-                        ${escapeHTML(note.date)}
-                    </div>
-
-                </div>
-
-                <button
-                    class="icon-btn"
-                    onclick="deleteNote(${note.id})"
-                >
-                    ×
-                </button>
-
-            </div>
-
-        `).join("");
-
+    }).join("");
 }
 
-
-/* =========================================================
-   COMMAND SEARCH
-========================================================= */
-
-$("commandInput").addEventListener(
-    "input",
-    function(){
-
-        const q =
-            this.value
-                .toLowerCase()
-                .trim();
-
-        document
-            .querySelectorAll(".command-item")
-            .forEach(item=>{
-
-                item.style.display =
-                    !q ||
-                    item.textContent
-                        .toLowerCase()
-                        .includes(q)
-                        ? "block"
-                        : "none";
-
-            });
-
-    }
-);
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
 
 function escapeHTML(value){
 
@@ -4260,80 +2870,1800 @@ function escapeHTML(value){
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
-
 }
 
 
-/* =========================================================
-   NAVIGATION ACTIVE STATE
-========================================================= */
+/* =========================
+   API
+========================= */
 
-const sections =
-    document.querySelectorAll(
-        "main section[id]"
-    );
+async function fetchJikan(url){
 
-const navItems =
-    document.querySelectorAll(
-        ".nav-item"
-    );
+    const controller=
+        new AbortController();
 
-const observer =
-    new IntersectionObserver(
-        entries=>{
+    const timeout=
+        setTimeout(
+            ()=>controller.abort(),
+            8000
+        );
 
-            entries.forEach(entry=>{
+    try{
 
-                if(entry.isIntersecting){
-
-                    navItems.forEach(item=>{
-                        item.classList.remove(
-                            "active"
-                        );
-                    });
-
-                    document
-                        .querySelector(
-                            `.nav-item[href="#${entry.target.id}"]`
-                        )
-                        ?.classList.add("active");
-
+        const response=
+            await fetch(
+                url,
+                {
+                    signal:controller.signal
                 }
+            );
 
-            });
+        clearTimeout(timeout);
 
-        },
-        {
-            threshold:.25
+        if(!response.ok){
+            throw new Error(
+                "HTTP "+response.status
+            );
         }
+
+        return await response.json();
+
+    }finally{
+
+        clearTimeout(timeout);
+
+    }
+}
+
+
+/* =========================
+   POPULAR / TOP / AIRING
+========================= */
+
+async function loadAnime(tab){
+
+    currentAnimeTab=tab;
+
+    if(tab==="watchlist"){
+
+        const list=getWatchlist();
+
+        renderAnime(list);
+
+        setAnimeMessage(
+            list.length
+            ?
+            list.length+" saved anime"
+            :
+            "Your watchlist is empty"
+        );
+
+        return;
+    }
+
+    /*
+       Immediately show useful anime.
+    */
+
+    if(tab==="popular"){
+
+        renderAnime(localAnime);
+
+    }else if(tab==="top"){
+
+        renderAnime(
+            localAnime
+                .slice()
+                .sort(
+                    (a,b)=>
+                        parseFloat(b.score)-
+                        parseFloat(a.score)
+                )
+        );
+
+    }else{
+
+        renderAnime(
+            localAnime.slice(0,8)
+        );
+
+    }
+
+    setAnimeMessage("Refreshing anime database...");
+
+    let url;
+
+    if(tab==="top"){
+
+        url=
+            "https://api.jikan.moe/v4/top/anime?limit=24";
+
+    }else if(tab==="airing"){
+
+        url=
+            "https://api.jikan.moe/v4/anime"+
+            "?status=airing"+
+            "&order_by=popularity"+
+            "&sort=asc"+
+            "&limit=24";
+
+    }else{
+
+        url=
+            "https://api.jikan.moe/v4/top/anime"+
+            "?filter=bypopularity"+
+            "&limit=24";
+    }
+
+    try{
+
+        const json=
+            await fetchJikan(url);
+
+        const results=
+            Array.isArray(json.data)
+            ?
+            json.data.map(cleanAnime)
+            :
+            [];
+
+        if(results.length){
+
+            currentAnime=results;
+
+            renderAnime(results);
+
+            setAnimeMessage(
+                results.length+
+                " anime loaded"
+            );
+
+            /*
+               Cache the latest successful result.
+            */
+
+            animeCache[tab]=results;
+
+            localStorage.setItem(
+                "samAnimeCache",
+                JSON.stringify(animeCache)
+            );
+
+        }else{
+
+            setAnimeMessage(
+                "Using local anime database"
+            );
+        }
+
+    }catch(error){
+
+        /*
+           If API fails, do NOT blank the section.
+        */
+
+        const cached=
+            Array.isArray(animeCache[tab])
+            ?
+            animeCache[tab]
+            :
+            [];
+
+        if(cached.length){
+
+            renderAnime(cached);
+
+            setAnimeMessage(
+                "Offline cache • "+
+                cached.length+
+                " anime"
+            );
+
+        }else{
+
+            if(tab==="top"){
+
+                renderAnime(
+                    localAnime
+                        .slice()
+                        .sort(
+                            (a,b)=>
+                                parseFloat(b.score)-
+                                parseFloat(a.score)
+                        )
+                );
+
+            }else{
+
+                renderAnime(localAnime);
+
+            }
+
+            setAnimeMessage(
+                "Local anime database • API unavailable"
+            );
+        }
+    }
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+let searchTimer=null;
+
+document
+    .getElementById("animeSearch")
+    .addEventListener("keydown",e=>{
+
+        if(e.key==="Enter"){
+            searchAnime();
+        }
+
+    });
+
+async function searchAnime(){
+
+    const input=
+        document
+            .getElementById("animeSearch")
+            .value
+            .trim();
+
+    if(!input){
+
+        loadAnime(currentAnimeTab==="watchlist"
+            ? "popular"
+            :
+            currentAnimeTab
+        );
+
+        return;
+    }
+
+    setAnimeMessage(
+        'Searching for "'+
+        input+
+        '"...'
     );
 
-sections.forEach(
-    section=>observer.observe(section)
-);
+    /*
+       First search local data.
+
+       This makes common anime appear immediately.
+    */
+
+    const localResults=
+        localAnime.filter(anime=>
+            anime.title
+                .toLowerCase()
+                .includes(input.toLowerCase())
+        );
+
+    if(localResults.length){
+
+        renderAnime(localResults);
+
+        setAnimeMessage(
+            "Found locally • refreshing..."
+        );
+
+    }else{
+
+        document.getElementById("animeGrid").innerHTML=`
+            <div class="loading-anime">
+                Searching anime database...
+            </div>
+        `;
+
+    }
+
+    /*
+       Search API.
+    */
+
+    try{
+
+        const url=
+            "https://api.jikan.moe/v4/anime"+
+            "?q="+
+            encodeURIComponent(input)+
+            "&limit=24";
+
+        const json=
+            await fetchJikan(url);
+
+        const results=
+            Array.isArray(json.data)
+            ?
+            json.data.map(cleanAnime)
+            :
+            [];
+
+        if(results.length){
+
+            currentAnime=results;
+
+            renderAnime(results);
+
+            setAnimeMessage(
+                results.length+
+                " results found"
+            );
+
+            /*
+               Cache each search.
+            */
+
+            animeCache[
+                "search:"+input.toLowerCase()
+            ]=results;
+
+            localStorage.setItem(
+                "samAnimeCache",
+                JSON.stringify(animeCache)
+            );
+
+        }else{
+
+            setAnimeMessage(
+                "No results found"
+            );
+
+            if(!localResults.length){
+                renderAnime([]);
+            }
+        }
+
+    }catch(error){
+
+        /*
+           API failed.
+
+           Check cache.
+        */
+
+        const cached=
+            animeCache[
+                "search:"+input.toLowerCase()
+            ];
+
+        if(Array.isArray(cached) && cached.length){
+
+            renderAnime(cached);
+
+            setAnimeMessage(
+                "Offline cached results"
+            );
+
+            return;
+        }
+
+        /*
+           Then local fuzzy search.
+        */
+
+        const fuzzy=
+            localAnime.filter(anime=>
+                anime.title
+                    .toLowerCase()
+                    .split(" ")
+                    .some(word=>
+                        word.startsWith(
+                            input.toLowerCase()
+                        )
+                    )
+            );
+
+        if(fuzzy.length){
+
+            renderAnime(fuzzy);
+
+            setAnimeMessage(
+                "Local results • API unavailable"
+            );
+
+        }else{
+
+            renderAnime([]);
+
+            setAnimeMessage(
+                "Search unavailable right now"
+            );
+        }
+    }
+}
 
 
-/* =========================================================
-   CLOSE MODALS
-========================================================= */
+/* =========================
+   TABS
+========================= */
+
+function changeAnimeTab(tab,button){
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(x=>
+            x.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    document
+        .getElementById("animeSearch")
+        .value="";
+
+    loadAnime(tab);
+}
+
+
+function setAnimeMessage(message){
+
+    document.getElementById(
+        "animeMessage"
+    ).textContent=message;
+
+    document.getElementById(
+        "animeStatus"
+    ).textContent=
+        message
+            .split(" ")
+            .slice(0,3)
+            .join(" ")
+            .toUpperCase();
+}
+
+
+/* =========================
+   WATCHLIST
+========================= */
+
+function getWatchlist(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                "samAnimeWatchlist"
+            ) || "[]"
+        );
+
+    }catch{
+
+        return [];
+
+    }
+}
+
+
+function saveWatchlist(list){
+
+    localStorage.setItem(
+        "samAnimeWatchlist",
+        JSON.stringify(list)
+    );
+}
+
+
+function isInWatchlist(key){
+
+    return getWatchlist().some(
+        anime=>
+            animeKey(anime)===String(key)
+    );
+}
+
+
+function findAnimeByKey(key){
+
+    const decoded=
+        decodeURIComponent(key);
+
+    return (
+        currentAnime.find(
+            anime=>
+                animeKey(anime)===decoded
+        )
+        ||
+        localAnime.find(
+            anime=>
+                animeKey(anime)===decoded
+        )
+        ||
+        getWatchlist().find(
+            anime=>
+                animeKey(anime)===decoded
+        )
+    );
+}
+
+
+function toggleWatchlist(encodedKey){
+
+    const key=
+        decodeURIComponent(encodedKey);
+
+    const list=getWatchlist();
+
+    const index=
+        list.findIndex(
+            anime=>
+                animeKey(anime)===key
+        );
+
+    if(index>=0){
+
+        list.splice(index,1);
+
+        toast("Removed from watchlist");
+
+    }else{
+
+        const anime=findAnimeByKey(key);
+
+        if(!anime){
+
+            toast("Anime not found");
+
+            return;
+        }
+
+        list.push(anime);
+
+        toast("Added to watchlist");
+    }
+
+    saveWatchlist(list);
+
+    if(currentAnimeTab==="watchlist"){
+
+        renderAnime(list);
+
+    }else{
+
+        renderAnime(currentAnime);
+
+    }
+}
+
+
+/* =========================
+   ANIME DETAILS
+========================= */
+
+function openAnime(encodedKey){
+
+    const key=
+        decodeURIComponent(encodedKey);
+
+    const anime=findAnimeByKey(key);
+
+    if(!anime) return;
+
+    const saved=isInWatchlist(key);
+
+    document.getElementById(
+        "animeDetail"
+    ).innerHTML=`
+
+        <div class="anime-detail">
+
+            ${
+                anime.image
+                ?
+                `
+                <img
+                    class="anime-detail-poster"
+                    src="${anime.image}"
+                    alt="${escapeHTML(anime.title)}"
+                    onerror="
+                        this.style.display='none';
+                    "
+                >
+                `
+                :
+                `
+                <div
+                    class="anime-detail-poster"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        padding:20px;
+                        text-align:center;
+                        font-weight:900;
+                        font-size:23px;
+                    "
+                >
+                    ${escapeHTML(anime.title)}
+                </div>
+                `
+            }
+
+            <div class="detail-text">
+
+                <div class="badge">
+                    ANIME
+                </div>
+
+                <h2>
+                    ${escapeHTML(anime.title)}
+                </h2>
+
+                <p>
+                    ★ Score:
+                    ${escapeHTML(anime.score)}
+                    <br>
+                    Type:
+                    ${escapeHTML(anime.type)}
+                    <br>
+                    Year:
+                    ${escapeHTML(anime.year)}
+                    <br>
+                    Episodes:
+                    ${escapeHTML(anime.episodes)}
+                </p>
+
+                <p>
+                    ${escapeHTML(anime.synopsis)}
+                </p>
+
+                <div class="card-actions">
+
+                    <button
+                        class="btn"
+                        onclick="
+                            toggleWatchlist(
+                                '${encodeURIComponent(key)}'
+                            );
+                            openAnime(
+                                '${encodeURIComponent(key)}'
+                            );
+                        "
+                    >
+                        ${
+                            saved
+                            ?
+                            "Remove Watchlist"
+                            :
+                            "Add Watchlist"
+                        }
+                    </button>
+
+                    ${
+                        anime.trailer
+                        ?
+                        `
+                        <a
+                            class="btn cyan"
+                            href="${anime.trailer}"
+                            target="_blank"
+                        >
+                            Trailer
+                        </a>
+                        `
+                        :
+                        ""
+                    }
+
+                    ${
+                        anime.url &&
+                        anime.url!=="#"
+                        ?
+                        `
+                        <a
+                            class="btn secondary"
+                            href="${anime.url}"
+                            target="_blank"
+                        >
+                            More Info
+                        </a>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    document
+        .getElementById("animeModal")
+        .classList.add("show");
+}
+
+
+/* =====================================================
+   GAMES
+===================================================== */
+
+const games=[
+
+{
+name:"Subway Surfers",
+icon:"🚆",
+category:"arcade",
+description:"Classic endless runner.",
+url:"https://subwaysurfers.com/"
+},
+
+{
+name:"Shell Shockers",
+icon:"🥚",
+category:"action",
+description:"Fast browser multiplayer game.",
+url:"https://shellshock.io/"
+},
+
+{
+name:"Krunker",
+icon:"🎯",
+category:"action",
+description:"Fast-paced browser FPS.",
+url:"https://krunker.io/"
+},
+
+{
+name:"Agar.io",
+icon:"🔵",
+category:"multiplayer",
+description:"Grow your cell and compete.",
+url:"https://agar.io/"
+},
+
+{
+name:"Slither.io",
+icon:"🐍",
+category:"multiplayer",
+description:"Grow your snake.",
+url:"https://slither.io/"
+},
+
+{
+name:"Tetr.io",
+icon:"🧱",
+category:"arcade",
+description:"Competitive block stacking.",
+url:"https://tetr.io/"
+},
+
+{
+name:"2048",
+icon:"🔢",
+category:"casual",
+description:"Reach the 2048 tile.",
+url:"https://play2048.co/"
+},
+
+{
+name:"Cookie Clicker",
+icon:"🍪",
+category:"casual",
+description:"Build a cookie empire.",
+url:"https://orteil.dashnet.org/cookieclicker/"
+},
+
+{
+name:"Chess.com",
+icon:"♟️",
+category:"multiplayer",
+description:"Play online chess.",
+url:"https://www.chess.com/play"
+},
+
+{
+name:"Lichess",
+icon:"♞",
+category:"multiplayer",
+description:"Free online chess.",
+url:"https://lichess.org/"
+},
+
+{
+name:"GeoGuessr",
+icon:"🌍",
+category:"casual",
+description:"Test your geography skills.",
+url:"https://www.geoguessr.com/"
+},
+
+{
+name:"Roblox",
+icon:"🟥",
+category:"multiplayer",
+description:"Explore community-created experiences.",
+url:"https://www.roblox.com/"
+},
+
+{
+name:"Minecraft",
+icon:"⛏️",
+category:"action",
+description:"Build and explore.",
+url:"https://www.minecraft.net/"
+},
+
+{
+name:"Fortnite",
+icon:"🌀",
+category:"action",
+description:"Explore the official Fortnite platform.",
+url:"https://www.fortnite.com/"
+},
+
+{
+name:"Pokémon",
+icon:"⚡",
+category:"casual",
+description:"Official Pokémon games and content.",
+url:"https://www.pokemon.com/"
+},
+
+{
+name:"CrazyGames",
+icon:"🎮",
+category:"arcade",
+description:"Large browser game platform.",
+url:"https://www.crazygames.com/"
+},
+
+{
+name:"Poki",
+icon:"🕹️",
+category:"arcade",
+description:"Large browser gaming platform.",
+url:"https://poki.com/"
+},
+
+{
+name:"Y8",
+icon:"🎲",
+category:"arcade",
+description:"Online browser game collection.",
+url:"https://www.y8.com/"
+},
+
+{
+name:"Miniclip",
+icon:"🏆",
+category:"arcade",
+description:"Classic online games.",
+url:"https://www.miniclip.com/"
+},
+
+{
+name:"HaxBall",
+icon:"⚽",
+category:"multiplayer",
+description:"Fast multiplayer football.",
+url:"https://www.haxball.com/"
+},
+
+{
+name:"Skribbl.io",
+icon:"✏️",
+category:"multiplayer",
+description:"Draw and guess.",
+url:"https://skribbl.io/"
+},
+
+{
+name:"Gartic Phone",
+icon:"☎️",
+category:"multiplayer",
+description:"Drawing and guessing party game.",
+url:"https://garticphone.com/"
+},
+
+{
+name:"Nitro Type",
+icon:"🏎️",
+category:"multiplayer",
+description:"Race while typing.",
+url:"https://www.nitrotype.com/"
+},
+
+{
+name:"Drift Hunters",
+icon:"🏁",
+category:"action",
+description:"Browser drifting game.",
+url:"https://www.drifthunters.io/"
+},
+
+{
+name:"Moto X3M",
+icon:"🏍️",
+category:"arcade",
+description:"Motorcycle obstacle course.",
+url:"https://www.coolmathgames.com/0-moto-x3m"
+},
+
+{
+name:"Run 3",
+icon:"🏃",
+category:"arcade",
+description:"Run through space tunnels.",
+url:"https://www.coolmathgames.com/0-run-3"
+},
+
+{
+name:"Bloons",
+icon:"🎈",
+category:"casual",
+description:"Tower defense strategy.",
+url:"https://www.bloons.com/"
+},
+
+{
+name:"Little Alchemy 2",
+icon:"🧪",
+category:"casual",
+description:"Combine elements.",
+url:"https://littlealchemy2.com/"
+},
+
+{
+name:"Fireboy & Watergirl",
+icon:"🔥",
+category:"casual",
+description:"Cooperative puzzle platformer.",
+url:"https://www.coolmathgames.com/"
+},
+
+{
+name:"Papa's Pizzeria",
+icon:"🍕",
+category:"casual",
+description:"Restaurant management game.",
+url:"https://www.coolmathgames.com/"
+}
+
+];
+
+
+function renderGames(category="all"){
+
+    const grid=
+        document.getElementById("gamesGrid");
+
+    const list=
+        category==="all"
+        ?
+        games
+        :
+        games.filter(
+            game=>game.category===category
+        );
+
+    grid.innerHTML=list.map(game=>`
+
+        <article
+            class="game-card"
+            style="
+                --game-glow:
+                ${
+                    game.category==="action"
+                    ?
+                    "rgba(255,79,216,.16)"
+                    :
+                    game.category==="multiplayer"
+                    ?
+                    "rgba(57,231,255,.16)"
+                    :
+                    "rgba(184,255,61,.14)"
+                }
+            "
+        >
+
+            <div class="game-icon">
+                ${game.icon}
+            </div>
+
+            <h3>
+                ${escapeHTML(game.name)}
+            </h3>
+
+            <p>
+                ${escapeHTML(game.description)}
+            </p>
+
+            <span class="game-tag">
+                ${game.category.toUpperCase()}
+            </span>
+
+            <a
+                class="game-launch"
+                href="${game.url}"
+                target="_blank"
+                rel="noopener"
+            >
+                LAUNCH ↗
+            </a>
+
+        </article>
+
+    `).join("");
+}
+
+
+function filterGames(category,button){
+
+    document
+        .querySelectorAll(".game-filter")
+        .forEach(x=>
+            x.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    renderGames(category);
+}
+
+
+/* =====================================================
+   SENSITIVITY
+===================================================== */
+
+let currentSensitivity={};
+
+function generateSensitivity(){
+
+    const dpi=
+        parseInt(
+            document.getElementById("dpi").value
+        ) || 411;
+
+    const style=
+        document.getElementById("style").value;
+
+    let base=88;
+
+    if(dpi<350) base-=5;
+    if(dpi>450) base+=3;
+
+    if(style==="Rush") base+=4;
+    if(style==="Headshot") base+=3;
+    if(style==="Sniper") base-=7;
+    if(style==="Drag") base+=2;
+
+    base=
+        Math.max(
+            60,
+            Math.min(100,base)
+        );
+
+    currentSensitivity={
+        General:base,
+        "Red Dot":Math.max(55,base-2),
+        "2x Scope":Math.max(45,base-8),
+        "4x Scope":Math.max(35,base-17),
+        Sniper:Math.max(25,base-29),
+        "Free Look":Math.min(100,base+8)
+    };
+
+    document.getElementById("general").textContent=
+        currentSensitivity.General;
+
+    document.getElementById("redDot").textContent=
+        currentSensitivity["Red Dot"];
+
+    document.getElementById("scope2").textContent=
+        currentSensitivity["2x Scope"];
+
+    document.getElementById("scope4").textContent=
+        currentSensitivity["4x Scope"];
+
+    document.getElementById("sniper").textContent=
+        currentSensitivity.Sniper;
+
+    document.getElementById("freeLook").textContent=
+        currentSensitivity["Free Look"];
+
+    toast("Sensitivity generated");
+}
+
+
+function copySensitivity(){
+
+    if(!currentSensitivity.General){
+        generateSensitivity();
+    }
+
+    const text=`
+Sam.OS Sensitivity
+
+General: ${currentSensitivity.General}
+Red Dot: ${currentSensitivity["Red Dot"]}
+2x Scope: ${currentSensitivity["2x Scope"]}
+4x Scope: ${currentSensitivity["4x Scope"]}
+Sniper: ${currentSensitivity.Sniper}
+Free Look: ${currentSensitivity["Free Look"]}
+`;
+
+    navigator.clipboard
+        .writeText(text)
+        .then(()=>{
+            toast("Sensitivity copied");
+        })
+        .catch(()=>{
+            toast("Copy unavailable");
+        });
+}
+
+
+function saveSensitivity(){
+
+    if(!currentSensitivity.General){
+        generateSensitivity();
+    }
+
+    const profile={
+        device:
+            document.getElementById("device").value ||
+            "Unknown",
+
+        dpi:
+            document.getElementById("dpi").value,
+
+        style:
+            document.getElementById("style").value,
+
+        fingers:
+            document.getElementById("fingers").value,
+
+        values:
+            currentSensitivity,
+
+        date:
+            new Date().toLocaleDateString()
+    };
+
+    const profiles=
+        JSON.parse(
+            localStorage.getItem(
+                "samSensitivityProfiles"
+            ) || "[]"
+        );
+
+    profiles.unshift(profile);
+
+    localStorage.setItem(
+        "samSensitivityProfiles",
+        JSON.stringify(
+            profiles.slice(0,10)
+        )
+    );
+
+    loadProfiles();
+
+    toast("Profile saved");
+}
+
+
+function loadProfiles(){
+
+    const profiles=
+        JSON.parse(
+            localStorage.getItem(
+                "samSensitivityProfiles"
+            ) || "[]"
+        );
+
+    const box=
+        document.getElementById("savedProfiles");
+
+    if(!profiles.length){
+
+        box.textContent=
+            "No saved profiles.";
+
+        return;
+    }
+
+    box.innerHTML=
+        "<strong style='color:var(--text)'>Saved Profiles</strong><br><br>"+
+        profiles.map(profile=>`
+
+            <div style="
+                padding:9px;
+                border:1px solid var(--line);
+                border-radius:9px;
+                margin-bottom:7px;
+            ">
+                ${escapeHTML(profile.device)}
+                • DPI ${escapeHTML(profile.dpi)}
+                • ${escapeHTML(profile.style)}
+            </div>
+
+        `).join("");
+}
+
+
+/* =====================================================
+   NOTES
+===================================================== */
+
+const notesArea=
+    document.getElementById("notesArea");
+
+notesArea.addEventListener("input",()=>{
+
+    localStorage.setItem(
+        "samNotes",
+        notesArea.value
+    );
+
+});
+
+
+function loadNotes(){
+
+    notesArea.value=
+        localStorage.getItem("samNotes") || "";
+}
+
+
+function clearNotes(){
+
+    notesArea.value="";
+
+    localStorage.removeItem("samNotes");
+
+    toast("Notes cleared");
+}
+
+
+/* =====================================================
+   TOOLS
+===================================================== */
+
+function dpiHelper(){
+
+    const dpi=
+        parseInt(
+            document.getElementById("dpi").value
+        ) || 411;
+
+    toast(
+        "Try testing around "+
+        Math.max(300,dpi-20)+
+        "–"+
+        Math.min(600,dpi+20)+
+        " DPI"
+    );
+}
+
+
+let focusInterval;
+
+function focusTimer(){
+
+    clearInterval(focusInterval);
+
+    let seconds=1500;
+
+    toast("25-minute timer started");
+
+    focusInterval=
+        setInterval(()=>{
+
+            seconds--;
+
+            if(seconds<=0){
+
+                clearInterval(
+                    focusInterval
+                );
+
+                toast(
+                    "Focus session complete!"
+                );
+            }
+
+        },1000);
+}
+
+
+function showStorage(){
+
+    const notes=
+        localStorage.getItem("samNotes") || "";
+
+    const profiles=
+        JSON.parse(
+            localStorage.getItem(
+                "samSensitivityProfiles"
+            ) || "[]"
+        );
+
+    const watchlist=
+        getWatchlist();
+
+    toast(
+        "Notes: "+
+        notes.length+
+        " chars • Profiles: "+
+        profiles.length+
+        " • Anime: "+
+        watchlist.length
+    );
+}
+
+
+/* =====================================================
+   SNAKE
+===================================================== */
+
+const snakeCanvas=
+    document.getElementById("snakeCanvas");
+
+const snakeCtx=
+    snakeCanvas.getContext("2d");
+
+let snake=[];
+let snakeFood={x:0,y:0};
+let snakeDir={x:1,y:0};
+let snakeTimer=null;
+let snakeScore=0;
+
+
+function resetSnake(){
+
+    clearInterval(snakeTimer);
+
+    snake=[
+        {x:8,y:6},
+        {x:7,y:6},
+        {x:6,y:6}
+    ];
+
+    snakeDir={
+        x:1,
+        y:0
+    };
+
+    snakeScore=0;
+
+    document.getElementById(
+        "snakeScore"
+    ).textContent="0";
+
+    spawnFood();
+
+    drawSnake();
+}
+
+
+function spawnFood(){
+
+    snakeFood={
+        x:
+            Math.floor(
+                Math.random()*20
+            ),
+
+        y:
+            Math.floor(
+                Math.random()*15
+            )
+    };
+}
+
+
+function startSnake(){
+
+    resetSnake();
+
+    snakeTimer=
+        setInterval(
+            updateSnake,
+            120
+        );
+}
+
+
+function updateSnake(){
+
+    const head={
+        x:
+            snake[0].x+
+            snakeDir.x,
+
+        y:
+            snake[0].y+
+            snakeDir.y
+    };
+
+    if(
+        head.x<0 ||
+        head.x>=20 ||
+        head.y<0 ||
+        head.y>=15 ||
+        snake.some(
+            part=>
+                part.x===head.x &&
+                part.y===head.y
+        )
+    ){
+
+        clearInterval(snakeTimer);
+
+        toast("Snake game over");
+
+        return;
+    }
+
+    snake.unshift(head);
+
+    if(
+        head.x===snakeFood.x &&
+        head.y===snakeFood.y
+    ){
+
+        snakeScore++;
+
+        document.getElementById(
+            "snakeScore"
+        ).textContent=
+            snakeScore;
+
+        spawnFood();
+
+    }else{
+
+        snake.pop();
+
+    }
+
+    drawSnake();
+}
+
+
+function drawSnake(){
+
+    snakeCtx.fillStyle="#05070a";
+
+    snakeCtx.fillRect(
+        0,
+        0,
+        snakeCanvas.width,
+        snakeCanvas.height
+    );
+
+    const size=16;
+
+    snakeCtx.fillStyle="#ff5577";
+
+    snakeCtx.fillRect(
+        snakeFood.x*size,
+        snakeFood.y*size,
+        size-1,
+        size-1
+    );
+
+    snake.forEach((part,index)=>{
+
+        snakeCtx.fillStyle=
+            index===0
+            ?
+            "#b8ff3d"
+            :
+            "#58b928";
+
+        snakeCtx.fillRect(
+            part.x*size,
+            part.y*size,
+            size-1,
+            size-1
+        );
+    });
+}
+
 
 document.addEventListener(
     "keydown",
-    event=>{
+    e=>{
 
-        if(event.key === "Escape"){
+        if(
+            e.key==="ArrowUp" &&
+            snakeDir.y!==1
+        ){
+            snakeDir={
+                x:0,
+                y:-1
+            };
+        }
 
-            document
-                .querySelectorAll(".modal.show")
-                .forEach(
-                    modal=>
-                        modal.classList.remove("show")
-                );
+        if(
+            e.key==="ArrowDown" &&
+            snakeDir.y!==-1
+        ){
+            snakeDir={
+                x:0,
+                y:1
+            };
+        }
 
+        if(
+            e.key==="ArrowLeft" &&
+            snakeDir.x!==1
+        ){
+            snakeDir={
+                x:-1,
+                y:0
+            };
+        }
+
+        if(
+            e.key==="ArrowRight" &&
+            snakeDir.x!==-1
+        ){
+            snakeDir={
+                x:1,
+                y:0
+            };
         }
 
     }
 );
+
+
+/* =====================================================
+   REACTION
+===================================================== */
+
+let reactionStart=0;
+let reactionReady=false;
+let reactionTimer=null;
+
+let bestReaction=
+    parseInt(
+        localStorage.getItem(
+            "samBestReaction"
+        ) || "0"
+    );
+
+if(bestReaction){
+
+    document.getElementById(
+        "reactionBest"
+    ).textContent=
+        bestReaction+" ms";
+}
+
+
+function startReaction(){
+
+    const box=
+        document.getElementById(
+            "reactionBox"
+        );
+
+    reactionReady=false;
+
+    box.textContent="WAIT...";
+
+    box.style.background=
+        "#171014";
+
+    clearTimeout(reactionTimer);
+
+    reactionTimer=
+        setTimeout(()=>{
+
+            reactionReady=true;
+
+            reactionStart=
+                performance.now();
+
+            box.textContent=
+                "CLICK NOW!";
+
+            box.style.background=
+                "#102016";
+
+        },
+        1000+
+        Math.random()*3000
+        );
+}
+
+
+function reactionClick(){
+
+    if(!reactionReady){
+
+        return;
+    }
+
+    const time=
+        Math.round(
+            performance.now()-
+            reactionStart
+        );
+
+    reactionReady=false;
+
+    const box=
+        document.getElementById(
+            "reactionBox"
+        );
+
+    box.textContent=
+        time+" ms";
+
+    box.style.background=
+        "#0b1115";
+
+    if(
+        !bestReaction ||
+        time<bestReaction
+    ){
+
+        bestReaction=time;
+
+        localStorage.setItem(
+            "samBestReaction",
+            bestReaction
+        );
+
+        document.getElementById(
+            "reactionBest"
+        ).textContent=
+            bestReaction+" ms";
+
+        toast("New record!");
+
+    }
+}
+
+
+/* =====================================================
+   CPS
+===================================================== */
+
+let cpsClicks=0;
+let cpsRunning=false;
+
+function startCPS(){
+
+    cpsClicks=0;
+
+    cpsRunning=true;
+
+    const box=
+        document.getElementById(
+            "cpsBox"
+        );
+
+    box.textContent="CLICK!";
+
+    const start=
+        Date.now();
+
+    setTimeout(()=>{
+
+        cpsRunning=false;
+
+        const seconds=
+            (Date.now()-start)/1000;
+
+        const cps=
+            (cpsClicks/seconds)
+            .toFixed(1);
+
+        document.getElementById(
+            "cpsValue"
+        ).textContent=cps;
+
+        box.textContent=
+            "DONE — "+
+            cps+
+            " CPS";
+
+    },5000);
+}
+
+
+function cpsClick(){
+
+    if(cpsRunning){
+
+        cpsClicks++;
+    }
+}
+
+
+/* =====================================================
+   COMMAND CENTER
+===================================================== */
+
+const commands=[
+
+["Dashboard","#home"],
+["Anime Center","#anime"],
+["Games Arcade","#games"],
+["Playable Games","#arcade"],
+["Sensitivity Lab","#sensitivity"],
+["Projects","#projects"],
+["Tools","#tools"],
+["Notes","#notes"],
+["Gallery","#gallery"]
+
+];
+
+
+function openCommand(){
+
+    document
+        .getElementById("commandModal")
+        .classList.add("show");
+
+    document
+        .getElementById("commandInput")
+        .focus();
+
+    commandSearch();
+}
+
+
+function commandSearch(){
+
+    const query=
+        document
+            .getElementById("commandInput")
+            .value
+            .toLowerCase();
+
+    const results=
+        commands.filter(
+            command=>
+                command[0]
+                    .toLowerCase()
+                    .includes(query)
+        );
+
+    document.getElementById(
+        "commandResults"
+    ).innerHTML=
+
+        results.map(command=>`
+
+            <a
+                href="${command[1]}"
+                onclick="
+                    closeModal('commandModal')
+                "
+                style="
+                    padding:12px;
+                    border:1px solid var(--line);
+                    border-radius:10px;
+                    color:var(--muted);
+                "
+            >
+                ${command[0]}
+            </a>
+
+        `).join("");
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+function closeModal(id){
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+}
+
 
 document
     .querySelectorAll(".modal")
@@ -4341,14 +4671,13 @@ document
 
         modal.addEventListener(
             "click",
-            event=>{
+            e=>{
 
-                if(event.target === modal){
+                if(e.target===modal){
 
                     modal.classList.remove(
                         "show"
                     );
-
                 }
 
             }
@@ -4357,37 +4686,100 @@ document
     });
 
 
-/* =========================================================
-   STARTUP
-========================================================= */
+/* =====================================================
+   GALLERY
+===================================================== */
+
+function openImage(element){
+
+    const img=
+        element.querySelector("img");
+
+    document.getElementById(
+        "largeImage"
+    ).src=img.src;
+
+    document
+        .getElementById("imageModal")
+        .classList.add("show");
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+const navItems=
+    document.querySelectorAll(
+        ".nav-item"
+    );
 
 window.addEventListener(
-    "load",
+    "scroll",
     ()=>{
 
-        setTimeout(()=>{
+        let current="home";
 
-            $("loaderStatus").textContent =
-                "SYSTEM READY";
+        document
+            .querySelectorAll(
+                "section[id]"
+            )
+            .forEach(section=>{
 
-        },700);
+                if(
+                    window.scrollY >=
+                    section.offsetTop-150
+                ){
 
-        setTimeout(()=>{
+                    current=
+                        section.id;
+                }
 
-            $("loader")
-                .classList.add("hide");
+            });
 
-        },1600);
+        navItems.forEach(item=>{
 
-        renderRecentSearches();
+            item.classList.toggle(
+                "active",
+                item.getAttribute("href")===
+                "#"+current
+            );
 
-        loadAnimeTab("popular");
+        });
 
-        generateSensitivity();
+    }
+);
 
-        loadSensitivityProfile();
 
-        renderNotes();
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            (e.ctrlKey || e.metaKey) &&
+            e.key.toLowerCase()==="k"
+        ){
+
+            e.preventDefault();
+
+            openCommand();
+
+        }
+
+        if(e.key==="Escape"){
+
+            document
+                .querySelectorAll(".modal")
+                .forEach(modal=>
+                    modal.classList.remove(
+                        "show"
+                    )
+                );
+        }
 
     }
 );
