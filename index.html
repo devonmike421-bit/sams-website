@@ -3,2087 +3,3465 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#00f7ff">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.webmanifest">
-
-<title>Sam.OS</title>
+<title>Sam.OS | Creative Portfolio</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
 
 :root{
---bg:#06070b;
---card:#10131c;
---card2:#151923;
---text:#fff;
---muted:#9ca3b0;
---cyan:#00f7ff;
---purple:#7c3cff;
---pink:#ff3cac;
---border:rgba(255,255,255,.1)
+    --bg:#07070a;
+    --card:#111118;
+    --card2:#171720;
+    --text:#fff;
+    --muted:#9999a8;
+    --cyan:#00f7ff;
+    --purple:#7c3cff;
+    --pink:#ff3cac;
+    --border:rgba(255,255,255,.1);
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-cursor:none
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:.4s;
 }
 
 body.light{
---bg:#f4f7fb;
---card:#fff;
---card2:#eef2f7;
---text:#111;
---muted:#555;
---border:rgba(0,0,0,.1)
+    --bg:#f4f6fa;
+    --card:#fff;
+    --card2:#eef1f6;
+    --text:#111;
+    --muted:#555;
+    --border:rgba(0,0,0,.1);
 }
 
-a{color:inherit;text-decoration:none}
-button,input,textarea,select{font:inherit}
-button{cursor:none}
+body.cyber{
+    --bg:#020c0d;
+    --card:#061719;
+    --card2:#092326;
+    --text:#eaffff;
+    --muted:#8ab6b8;
+    --cyan:#00ff9d;
+    --purple:#00b7ff;
+    --pink:#00ffea;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* BACKGROUND */
 
 body::before{
-content:"";
-position:fixed;
-inset:0;
-z-index:-5;
-background:
-linear-gradient(rgba(0,247,255,.025) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,247,255,.025) 1px,transparent 1px);
-background-size:55px 55px;
-animation:gridMove 20s linear infinite
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    top:-200px;
+    left:-180px;
+    background:var(--cyan);
+    opacity:.07;
+    filter:blur(120px);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-1;
 }
 
-@keyframes gridMove{
-from{background-position:0 0}
-to{background-position:55px 55px}
-}
-
-.cursor{
-position:fixed;
-width:14px;
-height:14px;
-border:2px solid var(--cyan);
-border-radius:50%;
-pointer-events:none;
-z-index:999999;
-transform:translate(-50%,-50%);
-transition:.2s
-}
-
-.cursor-dot{
-position:fixed;
-width:4px;
-height:4px;
-background:var(--cyan);
-border-radius:50%;
-pointer-events:none;
-z-index:1000000;
-transform:translate(-50%,-50%)
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    right:-200px;
+    bottom:-220px;
+    background:var(--purple);
+    opacity:.08;
+    filter:blur(120px);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:-1;
 }
 
 /* LOADER */
 
 #loader{
-position:fixed;
-inset:0;
-background:#06070b;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:99998;
-transition:.7s
+    position:fixed;
+    inset:0;
+    background:#07070a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:.7s;
 }
 
 #loader.hide{
-opacity:0;
-visibility:hidden
+    opacity:0;
+    visibility:hidden;
 }
 
-.loader-content{text-align:center}
-.loader-content h1{
-font-size:50px;
-color:var(--cyan);
-text-shadow:0 0 30px var(--cyan)
+.loader-box{
+    text-align:center;
+}
+
+.loader-box h1{
+    color:var(--cyan);
+    font-size:45px;
+    text-shadow:0 0 30px var(--cyan);
+    margin-bottom:25px;
 }
 
 .loader-line{
-width:220px;
-height:4px;
-background:#222;
-margin-top:25px;
-overflow:hidden;
-border-radius:20px
+    width:200px;
+    height:4px;
+    background:#222;
+    border-radius:10px;
+    overflow:hidden;
 }
 
 .loader-line::after{
-content:"";
-display:block;
-width:60%;
-height:100%;
-background:linear-gradient(90deg,var(--cyan),var(--purple));
-animation:load 1.2s infinite
+    content:"";
+    display:block;
+    width:60%;
+    height:100%;
+    background:linear-gradient(90deg,var(--cyan),var(--purple));
+    animation:loading 1.2s infinite;
 }
 
-@keyframes load{
-from{transform:translateX(-220px)}
-to{transform:translateX(350px)}
+@keyframes loading{
+    from{transform:translateX(-200px)}
+    to{transform:translateX(350px)}
 }
 
 /* NAV */
 
 nav{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-z-index:5000;
-padding:16px 6%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(6,7,11,.75);
-backdrop-filter:blur(18px);
-border-bottom:1px solid var(--border)
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:5000;
+    padding:17px 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(7,7,10,.76);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+}
+
+body.light nav{
+    background:rgba(255,255,255,.78);
 }
 
 .logo{
-font-size:24px;
-font-weight:bold;
-color:var(--cyan)
+    font-size:25px;
+    font-weight:bold;
+    color:var(--cyan);
+    letter-spacing:1px;
 }
 
 .nav-links{
-display:flex;
-gap:23px
+    display:flex;
+    gap:25px;
+    align-items:center;
 }
 
 .nav-links a{
-font-size:13px;
-font-weight:bold;
-transition:.3s
+    font-size:14px;
+    font-weight:bold;
+    transition:.3s;
 }
 
-.nav-links a:hover{color:var(--cyan)}
+.nav-links a:hover{
+    color:var(--cyan);
+}
 
 .nav-actions{
-display:flex;
-gap:8px
+    display:flex;
+    gap:10px;
 }
 
-.nav-btn{
-border:1px solid var(--border);
-background:var(--card);
-color:var(--text);
-padding:9px 12px;
-border-radius:9px
+.theme-btn,
+.menu-btn{
+    width:40px;
+    height:40px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    font-size:17px;
 }
 
-.menu{display:none}
+.menu-btn{
+    display:none;
+}
 
 /* HERO */
 
 .hero{
-min-height:100vh;
-padding:150px 8% 90px;
-display:grid;
-grid-template-columns:1.1fr .9fr;
-align-items:center;
-gap:50px
+    min-height:100vh;
+    padding:150px 8% 80px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    align-items:center;
+    gap:60px;
 }
 
 .badge{
-display:inline-block;
-padding:8px 14px;
-border:1px solid rgba(0,247,255,.3);
-color:var(--cyan);
-background:rgba(0,247,255,.06);
-border-radius:30px;
-font-size:12px;
-margin-bottom:20px
+    display:inline-block;
+    padding:8px 14px;
+    border:1px solid rgba(0,247,255,.3);
+    background:rgba(0,247,255,.06);
+    color:var(--cyan);
+    border-radius:30px;
+    font-size:12px;
+    margin-bottom:20px;
 }
 
 .hero h1{
-font-size:clamp(50px,8vw,90px);
-line-height:.95
+    font-size:clamp(50px,7vw,85px);
+    line-height:.95;
+    margin-bottom:20px;
 }
 
-.gradient{
-background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
--webkit-background-clip:text;
-color:transparent
+.gradient-text{
+    background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
 }
 
 .hero h2{
-margin:22px 0;
-color:var(--muted);
-font-size:28px
+    color:var(--muted);
+    font-size:clamp(20px,3vw,30px);
+    margin-bottom:20px;
 }
 
 .hero p{
-max-width:650px;
-color:var(--muted);
-line-height:1.8;
-font-size:17px
+    max-width:620px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:17px;
 }
 
 .hero-buttons{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-margin-top:30px
+    display:flex;
+    gap:15px;
+    margin-top:30px;
+    flex-wrap:wrap;
 }
 
-.btn{
-padding:14px 22px;
-border-radius:10px;
-border:none;
-font-weight:bold;
-transition:.3s
+.primary-btn,
+.secondary-btn{
+    padding:14px 24px;
+    border-radius:10px;
+    font-weight:bold;
+    transition:.3s;
 }
 
-.btn-primary{
-background:var(--cyan);
-color:#001014
+.primary-btn{
+    background:var(--cyan);
+    color:#050505;
 }
 
-.btn-secondary{
-background:transparent;
-border:1px solid var(--border);
-color:var(--text)
+.secondary-btn{
+    border:1px solid var(--border);
+    background:transparent;
 }
 
-.btn:hover{
-transform:translateY(-4px);
-box-shadow:0 10px 30px rgba(0,247,255,.2)
+.primary-btn:hover,
+.secondary-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 30px rgba(0,247,255,.2);
 }
 
-/* PROFILE — LOCKED */
+/* PROFILE - LOCKED STYLE */
 
 .hero-image{
-display:flex;
-justify-content:center;
-position:relative
+    display:flex;
+    justify-content:center;
+    position:relative;
 }
 
-.profile-orbit{
-width:300px;
-height:300px;
-border-radius:50%;
-padding:7px;
-background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink))
-}
-
-.profile-inner{
-width:100%;
-height:100%;
-border-radius:50%;
-background:var(--bg);
-padding:7px
+.profile-ring{
+    width:330px;
+    height:330px;
+    padding:8px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--cyan),var(--purple));
+    animation:float 4s ease-in-out infinite;
 }
 
 .profile-photo{
-width:100%;
-height:100%;
-object-fit:cover;
-border-radius:50%;
-border:8px solid var(--bg);
-display:block;
-animation:profileSpin 6s linear infinite;
-box-shadow:0 0 30px var(--cyan),0 0 70px rgba(124,60,255,.25)
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50%;
+    border:8px solid var(--bg);
+    display:block;
+    animation:profileSpin 6s linear infinite;
+    box-shadow:0 0 30px var(--cyan),0 0 70px rgba(124,60,255,.25);
 }
 
 @keyframes profileSpin{
-from{transform:rotate(0deg)}
-to{transform:rotate(360deg)}
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
 }
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+}
+
+/* FLOATING BUBBLES */
 
 .bubble{
-position:absolute;
-padding:10px 15px;
-border-radius:30px;
-background:var(--card);
-border:1px solid var(--border);
-animation:floatBubble 3s ease-in-out infinite
+    position:absolute;
+    padding:9px 14px;
+    border-radius:30px;
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:0 0 20px rgba(0,247,255,.1);
+    color:var(--cyan);
+    font-size:12px;
+    font-weight:bold;
+    animation:bubbleFloat 3s ease-in-out infinite;
 }
 
-.bubble.one{top:10%;right:0}
-.bubble.two{bottom:12%;left:0;animation-delay:1s}
-.bubble.three{top:48%;right:-20px;animation-delay:2s}
-
-@keyframes floatBubble{
-50%{transform:translateY(-15px)}
+.bubble.one{
+    top:12%;
+    left:5%;
 }
 
-/* GENERAL */
-
-section{padding:100px 8%}
-
-.heading{
-text-align:center;
-margin-bottom:50px
+.bubble.two{
+    top:65%;
+    right:0;
+    animation-delay:1s;
 }
 
-.heading small{
-color:var(--cyan);
-letter-spacing:3px;
-font-weight:bold
+.bubble.three{
+    bottom:5%;
+    left:8%;
+    animation-delay:2s;
 }
 
-.heading h2{
-font-size:clamp(35px,5vw,55px);
-margin-top:10px
+@keyframes bubbleFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
 }
 
-.heading p{
-max-width:650px;
-margin:15px auto;
-color:var(--muted);
-line-height:1.7
+/* SECTIONS */
+
+section{
+    padding:110px 8%;
 }
+
+.section-heading{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.section-heading small{
+    color:var(--cyan);
+    letter-spacing:3px;
+    font-weight:bold;
+}
+
+.section-heading h2{
+    font-size:clamp(35px,5vw,55px);
+    margin-top:10px;
+}
+
+.section-heading p{
+    max-width:650px;
+    margin:15px auto;
+    color:var(--muted);
+    line-height:1.7;
+}
+
+/* STATS */
 
 .stats{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px
+    max-width:1000px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
 }
 
 .stat{
-padding:25px;
-background:var(--card);
-border:1px solid var(--border);
-border-radius:18px;
-text-align:center
+    padding:28px 15px;
+    text-align:center;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    transition:.3s;
+}
+
+.stat:hover{
+    transform:translateY(-7px);
+    border-color:var(--cyan);
 }
 
 .stat strong{
-display:block;
-color:var(--cyan);
-font-size:34px
+    display:block;
+    font-size:34px;
+    color:var(--cyan);
+    margin-bottom:7px;
 }
 
-.stat span{color:var(--muted)}
-
-.grid{
-max-width:1150px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px
+.stat span{
+    color:var(--muted);
+    font-size:14px;
 }
 
-.card{
-background:var(--card);
-border:1px solid var(--border);
-border-radius:20px;
-padding:28px;
-transition:.3s
+/* ABOUT */
+
+.about-grid{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
 }
 
-.card:hover{
-transform:translateY(-8px);
-border-color:rgba(0,247,255,.5);
-box-shadow:0 20px 45px rgba(0,0,0,.25)
+.glass{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:35px;
 }
 
-.card h3{margin:15px 0 10px}
-.card p{color:var(--muted);line-height:1.7}
-.icon{font-size:42px}
+.glass h3{
+    color:var(--cyan);
+    margin-bottom:18px;
+    font-size:25px;
+}
+
+.glass p{
+    color:var(--muted);
+    line-height:1.8;
+    margin-bottom:14px;
+}
+
+.mini-list{
+    list-style:none;
+    margin-top:20px;
+}
+
+.mini-list li{
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+    color:var(--muted);
+}
+
+.mini-list li span{
+    color:var(--text);
+    font-weight:bold;
+}
 
 /* SKILLS */
 
-.skills{
-max-width:900px;
-margin:auto
+.skill{
+    margin-bottom:25px;
 }
 
-.skill{margin-bottom:20px}
-
-.skill-head{
-display:flex;
-justify-content:space-between;
-margin-bottom:7px
+.skill-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
 }
 
-.skill-head span:last-child{color:var(--cyan)}
+.skill-title span:last-child{
+    color:var(--cyan);
+}
 
 .bar{
-height:9px;
-background:#222631;
-border-radius:20px;
-overflow:hidden
+    height:9px;
+    background:#25252d;
+    border-radius:20px;
+    overflow:hidden;
 }
 
 .fill{
-height:100%;
-background:linear-gradient(90deg,var(--cyan),var(--purple))
+    height:100%;
+    background:linear-gradient(90deg,var(--cyan),var(--purple));
+    border-radius:20px;
 }
 
-/* HUB */
+.html{width:85%}
+.css{width:75%}
+.js{width:45%}
+.python{width:30%}
 
-.hub-search{
-max-width:700px;
-margin:0 auto 35px
+/* CONTENT HUB */
+
+.hub{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
 
-.hub-search input,
-.library-controls input,
-.library-controls select,
-.form input,
-.form textarea{
-width:100%;
-padding:15px;
-border-radius:11px;
-border:1px solid var(--border);
-background:var(--card);
-color:var(--text);
-outline:none
+.hub-card{
+    padding:30px;
+    min-height:220px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    transition:.35s;
 }
 
-.hub-grid{
-max-width:1150px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px
+.hub-card:hover{
+    transform:translateY(-8px);
+    border-color:var(--cyan);
+}
+
+.hub-icon{
+    font-size:42px;
+    margin-bottom:18px;
+}
+
+.hub-card h3{
+    margin-bottom:10px;
+}
+
+.hub-card p{
+    color:var(--muted);
+    line-height:1.7;
 }
 
 /* ANIME */
 
-.library-controls{
-max-width:1100px;
-margin:0 auto 30px;
-display:grid;
-grid-template-columns:1.5fr 1fr auto;
-gap:12px
+.anime-section{
+    position:relative;
+}
+
+.anime-toolbar{
+    max-width:1150px;
+    margin:0 auto 25px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.anime-search{
+    flex:1;
+    min-width:230px;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    outline:none;
+}
+
+.anime-search:focus{
+    border-color:var(--cyan);
+}
+
+.anime-btn,
+.anime-select{
+    padding:14px 17px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+}
+
+.anime-btn:hover{
+    border-color:var(--cyan);
+}
+
+.anime-status{
+    max-width:1150px;
+    margin:0 auto 25px;
+    color:var(--muted);
+    min-height:20px;
 }
 
 .anime-grid{
-max-width:1200px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px
+    max-width:1150px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
 }
 
 .anime-card{
-overflow:hidden;
-background:var(--card);
-border:1px solid var(--border);
-border-radius:17px;
-transition:.3s
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
 }
 
 .anime-card:hover{
-transform:translateY(-7px);
-border-color:var(--cyan)
+    transform:translateY(-7px);
+    border-color:var(--cyan);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
 
-.anime-card img{
-width:100%;
-height:300px;
-object-fit:cover;
-display:block
+.anime-poster{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+    display:block;
+    background:linear-gradient(135deg,#111,var(--purple));
 }
 
-.anime-info{padding:15px}
-.anime-info h3{font-size:16px;margin-bottom:8px}
-.anime-info p{
-color:var(--muted);
-font-size:13px;
-line-height:1.5
+.anime-content{
+    padding:17px;
+}
+
+.anime-content h3{
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.anime-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:13px;
+}
+
+.anime-rating{
+    color:#ffd84d;
 }
 
 .anime-actions{
-display:flex;
-gap:7px;
-margin-top:13px
+    display:flex;
+    gap:7px;
 }
 
-.small-btn{
-flex:1;
-padding:9px;
-border-radius:8px;
-border:1px solid var(--border);
-background:var(--card2);
-color:var(--text)
+.anime-actions button{
+    flex:1;
+    padding:9px 6px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:var(--text);
+    font-size:12px;
 }
 
-.small-btn.primary{
-background:var(--cyan);
-color:#001014;
-border:none
+.anime-actions button:hover{
+    border-color:var(--cyan);
+    color:var(--cyan);
 }
 
-.watch-status{
-margin-top:9px;
-padding:8px;
-border-radius:8px;
-background:rgba(0,247,255,.07);
-color:var(--cyan);
-font-size:12px
+.anime-empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px;
+    color:var(--muted);
+    background:var(--card);
+    border-radius:20px;
 }
 
-/* PROFILE DASHBOARD */
-
-.profile-dashboard{
-max-width:900px;
-margin:auto;
-background:var(--card);
-border:1px solid var(--border);
-border-radius:22px;
-padding:35px
+.load-more{
+    display:block;
+    margin:30px auto 0;
+    padding:13px 25px;
+    border-radius:10px;
+    border:1px solid var(--cyan);
+    background:transparent;
+    color:var(--cyan);
 }
 
-.xp-bar{
-height:12px;
-background:#252934;
-border-radius:20px;
-overflow:hidden;
-margin:12px 0 20px
+.load-more:hover{
+    background:var(--cyan);
+    color:#000;
 }
 
-.xp-fill{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,var(--cyan),var(--purple));
-transition:.5s
+/* ANIME MODAL */
+
+#animeModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:20000;
+    background:rgba(0,0,0,.88);
+    backdrop-filter:blur(10px);
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
 
-.profile-stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px
+.anime-modal-box{
+    width:min(850px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:28px;
+    position:relative;
 }
 
-.profile-stat{
-text-align:center;
-padding:18px;
-background:var(--card2);
-border-radius:14px
+.modal-close{
+    position:absolute;
+    top:15px;
+    right:20px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--card2);
+    color:var(--text);
+    font-size:22px;
 }
 
-.profile-stat strong{
-display:block;
-color:var(--cyan);
-font-size:24px
+.anime-detail{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:25px;
 }
 
-/* UPDATES / PROJECTS */
-
-.update-date{
-color:var(--cyan);
-font-size:12px;
-font-weight:bold
+.anime-detail img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    border-radius:15px;
 }
 
-.project-details{
-display:none;
-margin-top:18px;
-padding:15px;
-background:var(--card2);
-border-radius:12px;
-color:var(--muted);
-line-height:1.7
+.anime-detail h2{
+    font-size:32px;
+    margin-bottom:10px;
 }
 
-.project-details.open{display:block}
+.detail-tags{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+.detail-tags span{
+    padding:6px 9px;
+    border-radius:20px;
+    background:rgba(0,247,255,.08);
+    color:var(--cyan);
+    font-size:11px;
+}
+
+.synopsis{
+    color:var(--muted);
+    line-height:1.8;
+}
+
+.review-box{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+}
+
+.review{
+    padding:15px;
+    margin-top:12px;
+    border-radius:12px;
+    background:var(--card2);
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.review strong{
+    color:var(--text);
+}
+
+/* PROJECTS */
+
+.projects{
+    max-width:1150px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.project{
+    padding:32px;
+    min-height:300px;
+    border-radius:22px;
+    background:var(--card);
+    border:1px solid var(--border);
+    transition:.4s;
+}
+
+.project:hover{
+    transform:translateY(-10px);
+    border-color:var(--cyan);
+}
+
+.project-number{
+    color:var(--cyan);
+    font-size:12px;
+    font-weight:bold;
+}
+
+.project-icon{
+    font-size:50px;
+    margin:25px 0 15px;
+}
+
+.project h3{
+    margin-bottom:12px;
+    font-size:24px;
+}
+
+.project p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:20px;
+}
+
+.tags span{
+    padding:6px 9px;
+    border-radius:20px;
+    color:var(--cyan);
+    background:rgba(0,247,255,.08);
+    font-size:11px;
+}
 
 /* GALLERY */
 
-.gallery-controls{
-text-align:center;
-margin-bottom:25px
-}
-
-.gallery-controls button{
-margin:5px;
-padding:10px 16px;
-border-radius:20px;
-border:1px solid var(--border);
-background:var(--card);
-color:var(--text)
-}
-
 .gallery{
-max-width:1150px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px
+    max-width:1150px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
 .gallery-item{
-height:280px;
-overflow:hidden;
-border-radius:18px;
-border:1px solid var(--border);
-position:relative
+    height:280px;
+    overflow:hidden;
+    border-radius:18px;
+    position:relative;
+    cursor:pointer;
+    border:1px solid var(--border);
 }
 
 .gallery-item img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:.5s
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
 }
 
-.gallery-item:hover img{transform:scale(1.08)}
+.gallery-item:hover img{
+    transform:scale(1.1);
+}
 
 .gallery-caption{
-position:absolute;
-bottom:0;
-width:100%;
-padding:25px 15px 15px;
-background:linear-gradient(transparent,rgba(0,0,0,.9));
-color:#fff
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:30px 18px 18px;
+    background:linear-gradient(transparent,rgba(0,0,0,.9));
+}
+
+.gallery-caption span{
+    color:var(--cyan);
+    font-size:12px;
+}
+
+/* SOCIAL */
+
+.social-box{
+    max-width:850px;
+    margin:auto;
+    padding:50px;
+    text-align:center;
+    border-radius:25px;
+    background:linear-gradient(
+        135deg,
+        rgba(0,247,255,.08),
+        rgba(124,60,255,.08)
+    );
+    border:1px solid var(--border);
+}
+
+.social-box h2{
+    font-size:35px;
+    margin-bottom:15px;
+}
+
+.social-box p{
+    color:var(--muted);
+    margin-bottom:25px;
+}
+
+.tiktok{
+    display:inline-block;
+    padding:14px 25px;
+    border-radius:10px;
+    background:var(--text);
+    color:var(--bg);
+    font-weight:bold;
+}
+
+/* CONTACT */
+
+.contact-form{
+    max-width:750px;
+    margin:auto;
+    display:grid;
+    gap:15px;
+}
+
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    padding:16px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    outline:none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+    border-color:var(--cyan);
+}
+
+.contact-form button{
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:var(--cyan);
+    font-weight:bold;
+}
+
+#messageSent{
+    display:none;
+    text-align:center;
+    color:var(--cyan);
+    margin-top:15px;
 }
 
 /* LIGHTBOX */
 
 #lightbox{
-display:none;
-position:fixed;
-inset:0;
-z-index:20000;
-background:rgba(0,0,0,.95);
-justify-content:center;
-align-items:center;
-padding:25px
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    background:rgba(0,0,0,.94);
+    justify-content:center;
+    align-items:center;
+    padding:30px;
 }
 
 #lightbox img{
-max-width:88%;
-max-height:82vh;
-border-radius:15px
+    max-width:90%;
+    max-height:85vh;
+    border-radius:15px;
 }
 
-.lightbox-close{
-position:absolute;
-top:20px;
-right:30px;
-color:#fff;
-font-size:45px
+.close-lightbox{
+    position:absolute;
+    top:20px;
+    right:30px;
+    font-size:45px;
+    color:white;
+    cursor:pointer;
 }
 
-.lightbox-arrow{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-border:none;
-background:rgba(255,255,255,.1);
-color:#fff;
-font-size:35px;
-width:55px;
-height:55px;
-border-radius:50%
+/* TOP */
+
+#top{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid var(--cyan);
+    background:var(--card);
+    color:var(--cyan);
+    opacity:0;
+    visibility:hidden;
+    z-index:4000;
 }
 
-.prev{left:20px}
-.next{right:20px}
-
-/* CONTACT */
-
-.form{
-max-width:750px;
-margin:auto;
-display:grid;
-gap:14px
+#top.show{
+    opacity:1;
+    visibility:visible;
 }
 
-.form textarea{
-min-height:160px;
-resize:vertical
+/* REVEAL */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:.8s;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 /* FOOTER */
 
 footer{
-padding:50px 20px;
-text-align:center;
-border-top:1px solid var(--border);
-color:var(--muted)
+    padding:45px 20px;
+    text-align:center;
+    border-top:1px solid var(--border);
+    color:var(--muted);
 }
 
-footer strong{color:var(--cyan)}
-
-#toast{
-position:fixed;
-right:20px;
-bottom:20px;
-background:var(--card);
-border:1px solid var(--cyan);
-color:var(--text);
-padding:15px 20px;
-border-radius:12px;
-transform:translateY(120px);
-transition:.4s;
-z-index:30000
-}
-
-#toast.show{transform:translateY(0)}
-
-.reveal{
-opacity:0;
-transform:translateY(35px);
-transition:.7s
-}
-
-.reveal.show{
-opacity:1;
-transform:translateY(0)
-}
-
-#top{
-position:fixed;
-right:20px;
-bottom:80px;
-width:45px;
-height:45px;
-border-radius:50%;
-border:1px solid var(--cyan);
-background:var(--card);
-color:var(--cyan);
-opacity:0;
-visibility:hidden;
-z-index:4000
-}
-
-#top.show{
-opacity:1;
-visibility:visible
+footer strong{
+    color:var(--cyan);
 }
 
 /* MOBILE */
 
 @media(max-width:1000px){
-.hero{
-grid-template-columns:1fr;
-text-align:center
+
+    .anime-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .projects{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hub{
+        grid-template-columns:1fr 1fr;
+    }
 }
 
-.hero p{margin:auto}
-.hero-buttons{justify-content:center}
-.hero-image{order:-1}
+@media(max-width:900px){
 
-.anime-grid{grid-template-columns:repeat(3,1fr)}
-.grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
-.stats{grid-template-columns:repeat(2,1fr)}
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .hero p{
+        margin:auto;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+
+    .hero-image{
+        order:-1;
+    }
+
+    .profile-ring{
+        width:240px;
+        height:240px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+    }
+
+    .anime-detail{
+        grid-template-columns:1fr;
+    }
+
+    .anime-detail img{
+        max-width:220px;
+        margin:auto;
+    }
 }
 
 @media(max-width:700px){
 
-body{cursor:auto}
-.cursor,.cursor-dot{display:none}
+    nav{
+        padding:15px 5%;
+    }
 
-nav{padding:14px 5%}
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:70px;
+        left:0;
+        width:100%;
+        flex-direction:column;
+        padding:18px;
+        background:var(--card);
+        border-bottom:1px solid var(--border);
+    }
 
-.nav-links{
-display:none;
-position:absolute;
-top:65px;
-left:0;
-width:100%;
-flex-direction:column;
-padding:18px;
-background:var(--card);
-border-bottom:1px solid var(--border)
+    .nav-links.open{
+        display:flex;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .hero{
+        padding-left:5%;
+        padding-right:5%;
+    }
+
+    section{
+        padding:80px 5%;
+    }
+
+    .anime-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .projects,
+    .hub{
+        grid-template-columns:1fr;
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-item{
+        height:260px;
+    }
 }
 
-.nav-links.open{display:flex}
-.menu{display:block}
+@media(max-width:450px){
 
-.hero{padding:130px 5% 70px}
-section{padding:75px 5%}
+    .anime-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
 
-.profile-orbit{
-width:240px;
-height:240px
-}
+    .anime-poster{
+        height:230px;
+    }
 
-.bubble{display:none}
+    .anime-content{
+        padding:12px;
+    }
 
-.grid,
-.hub-grid,
-.anime-grid,
-.gallery{
-grid-template-columns:1fr
-}
+    .anime-content h3{
+        font-size:14px;
+    }
 
-.library-controls{grid-template-columns:1fr}
-.profile-stats{grid-template-columns:1fr 1fr}
-.gallery-item{height:250px}
+    .anime-actions{
+        flex-direction:column;
+    }
+
+    .bubble{
+        display:none;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="cursor"></div>
-<div class="cursor-dot"></div>
+<!-- LOADER -->
 
 <div id="loader">
-<div class="loader-content">
-<h1>SAM.OS</h1>
-<div class="loader-line"></div>
+    <div class="loader-box">
+        <h1>SAM.OS</h1>
+        <div class="loader-line"></div>
+    </div>
 </div>
-</div>
+
+<!-- NAV -->
 
 <nav>
 
-<a href="#home" class="logo">SAM.OS</a>
+    <a href="#home" class="logo">SAM.OS</a>
 
-<div class="nav-links" id="navLinks">
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#anime">Anime</a>
-<a href="#projects">Projects</a>
-<a href="#gallery">Gallery</a>
-<a href="#profile">Profile</a>
-<a href="#contact">Contact</a>
-</div>
+    <div class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#anime">Anime</a>
+        <a href="#projects">Projects</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+    </div>
 
-<div class="nav-actions">
-<button class="nav-btn" onclick="cycleTheme()">🌌 Theme</button>
-<button class="nav-btn menu" onclick="toggleMenu()">☰</button>
-</div>
+    <div class="nav-actions">
+        <button class="theme-btn" id="theme" onclick="toggleTheme()">🌙</button>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
 
 </nav>
 
+<!-- HERO -->
+
 <header class="hero" id="home">
 
-<div>
+    <div>
 
-<span class="badge">● SAM.OS ONLINE</span>
+        <span class="badge">● SAM.OS ONLINE</span>
 
-<h1>
-Hey, I'm
-<span class="gradient">Sam.</span>
-</h1>
+        <h1>
+            Hi, I'm
+            <span class="gradient-text">Sam.</span>
+        </h1>
 
-<h2 id="typing">Creative Developer</h2>
+        <h2 id="typing">Creative Developer</h2>
 
-<p>
-Welcome to my personal space for anime, gaming,
-coding, creativity and the projects I'm building.
-</p>
+        <p>
+            I'm learning to build websites, create digital projects,
+            explore anime and gaming, and turn ideas into things
+            people can actually interact with.
+        </p>
 
-<div class="hero-buttons">
-<a href="#anime" class="btn btn-primary">Explore Anime</a>
-<a href="#projects" class="btn btn-secondary">My Projects</a>
-</div>
+        <div class="hero-buttons">
 
-</div>
+            <a href="#anime" class="primary-btn">
+                Explore Anime
+            </a>
 
-<div class="hero-image">
+            <a href="#projects" class="secondary-btn">
+                My Projects
+            </a>
 
-<div class="profile-orbit">
-<div class="profile-inner">
+        </div>
 
-<!-- PROFILE PICTURE LOCKED -->
-<img
-class="profile-photo"
-src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
-alt="Sam"
->
+    </div>
 
-</div>
-</div>
+    <div class="hero-image">
 
-<div class="bubble one">🎮 Gaming</div>
-<div class="bubble two">💻 Coding</div>
-<div class="bubble three">🔥 Anime</div>
+        <span class="bubble one">🎮 Gaming</span>
+        <span class="bubble two">🔥 Anime</span>
+        <span class="bubble three">💻 Coding</span>
 
-</div>
+        <div class="profile-ring">
+
+            <img
+                class="profile-photo"
+                src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
+                alt="Sam"
+            >
+
+        </div>
+
+    </div>
 
 </header>
 
+<!-- STATS -->
+
 <section>
 
-<div class="stats reveal">
+    <div class="stats reveal">
 
-<div class="stat">
-<strong id="statAnime">0</strong>
-<span>Anime Saved</span>
-</div>
+        <div class="stat">
+            <strong>70+</strong>
+            <span>Anime Titles</span>
+        </div>
 
-<div class="stat">
-<strong>3</strong>
-<span>Projects</span>
-</div>
+        <div class="stat">
+            <strong>06</strong>
+            <span>Gallery Images</span>
+        </div>
 
-<div class="stat">
-<strong id="statXP">0</strong>
-<span>XP Earned</span>
-</div>
+        <div class="stat">
+            <strong>04</strong>
+            <span>Coding Skills</span>
+        </div>
 
-<div class="stat">
-<strong>∞</strong>
-<span>Ideas</span>
-</div>
+        <div class="stat">
+            <strong>∞</strong>
+            <span>Ideas</span>
+        </div>
 
-</div>
+    </div>
 
 </section>
+
+<!-- ABOUT -->
 
 <section id="about">
 
-<div class="heading reveal">
-<small>ABOUT ME</small>
-<h2>A little about <span class="gradient">me</span></h2>
-<p>
-I'm learning technology while building things
-around the stuff I actually enjoy.
-</p>
-</div>
+    <div class="section-heading reveal">
 
-<div class="grid reveal">
+        <small>ABOUT ME</small>
 
-<div class="card">
-<div class="icon">👋</div>
-<h3>Who I Am</h3>
-<p>
-I'm interested in web development, anime,
-gaming, editing and creative projects.
-</p>
-</div>
+        <h2>
+            A little about <span class="gradient-text">me</span>
+        </h2>
 
-<div class="card">
-<div class="icon">🚀</div>
-<h3>What I'm Doing</h3>
-<p>
-Learning HTML, CSS, JavaScript and Python
-while building projects of my own.
-</p>
-</div>
+        <p>
+            I'm learning how websites and software are built while
+            creating projects of my own.
+        </p>
 
-<div class="card">
-<div class="icon">🎯</div>
-<h3>My Goal</h3>
-<p>
-Keep learning, create better projects and
-turn my skills into something useful.
-</p>
-</div>
+    </div>
 
-</div>
+    <div class="about-grid reveal">
+
+        <div class="glass">
+
+            <h3>Who I Am</h3>
+
+            <p>
+                I'm interested in technology, gaming, anime,
+                editing and creative projects.
+            </p>
+
+            <p>
+                This website is part of my journey into coding
+                and web development.
+            </p>
+
+            <ul class="mini-list">
+
+                <li>
+                    <span>Interest:</span> Web Development
+                </li>
+
+                <li>
+                    <span>Creative:</span> Video & Digital Editing
+                </li>
+
+                <li>
+                    <span>Learning:</span> Programming
+                </li>
+
+                <li>
+                    <span>Goal:</span> Build Better Projects
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="glass">
+
+            <h3>My Skills</h3>
+
+            <div class="skill">
+
+                <div class="skill-title">
+                    <span>HTML</span>
+                    <span>85%</span>
+                </div>
+
+                <div class="bar">
+                    <div class="fill html"></div>
+                </div>
+
+            </div>
+
+            <div class="skill">
+
+                <div class="skill-title">
+                    <span>CSS</span>
+                    <span>75%</span>
+                </div>
+
+                <div class="bar">
+                    <div class="fill css"></div>
+                </div>
+
+            </div>
+
+            <div class="skill">
+
+                <div class="skill-title">
+                    <span>JavaScript</span>
+                    <span>45%</span>
+                </div>
+
+                <div class="bar">
+                    <div class="fill js"></div>
+                </div>
+
+            </div>
+
+            <div class="skill">
+
+                <div class="skill-title">
+                    <span>Python</span>
+                    <span>30%</span>
+                </div>
+
+                <div class="bar">
+                    <div class="fill python"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
+
+<!-- CONTENT HUB -->
 
 <section>
 
-<div class="heading reveal">
-<small>SKILLS</small>
-<h2>What I'm <span class="gradient">Learning</span></h2>
-</div>
+    <div class="section-heading reveal">
 
-<div class="skills reveal">
+        <small>CONTENT HUB</small>
 
-<div class="skill">
-<div class="skill-head">
-<span>HTML</span><span>85%</span>
-</div>
-<div class="bar"><div class="fill" style="width:85%"></div></div>
-</div>
+        <h2>
+            What I'm <span class="gradient-text">into</span>
+        </h2>
 
-<div class="skill">
-<div class="skill-head">
-<span>CSS</span><span>75%</span>
-</div>
-<div class="bar"><div class="fill" style="width:75%"></div></div>
-</div>
+    </div>
 
-<div class="skill">
-<div class="skill-head">
-<span>JavaScript</span><span>45%</span>
-</div>
-<div class="bar"><div class="fill" style="width:45%"></div></div>
-</div>
+    <div class="hub reveal">
 
-<div class="skill">
-<div class="skill-head">
-<span>Python</span><span>30%</span>
-</div>
-<div class="bar"><div class="fill" style="width:30%"></div></div>
-</div>
+        <div class="hub-card">
 
-</div>
-</section>
+            <div class="hub-icon">🔥</div>
 
-<section>
+            <h3>Anime</h3>
 
-<div class="heading reveal">
-<small>CONTENT HUB</small>
-<h2>Welcome to <span class="gradient">Sam's World</span></h2>
-<p>
-Anime, projects, gallery and everything else
-I'm building in one place.
-</p>
-</div>
+            <p>
+                Explore a large collection of anime with
+                search, genres, ratings and details.
+            </p>
 
-<div class="hub-search reveal">
-<input
-id="hubSearch"
-type="text"
-placeholder="Search Sam's Hub..."
-oninput="searchHub()"
->
-</div>
+        </div>
 
-<div class="hub-grid reveal" id="hubGrid">
+        <div class="hub-card">
 
-<div class="card hub-card" data-name="anime" onclick="location.href='#anime'">
-<div class="icon">🔥</div>
-<h3>Anime Universe</h3>
-<p>Discover anime and build your watchlist.</p>
-</div>
+            <div class="hub-icon">🎮</div>
 
-<div class="card hub-card" data-name="gaming" onclick="showToast('Gaming section ready.')">
-<div class="icon">🎮</div>
-<h3>Gaming</h3>
-<p>My gaming interests and future gaming projects.</p>
-</div>
+            <h3>Gaming</h3>
 
-<div class="card hub-card" data-name="coding" onclick="location.href='#projects'">
-<div class="icon">💻</div>
-<h3>Coding Lab</h3>
-<p>Projects from my coding journey.</p>
-</div>
+            <p>
+                Gaming is one of my main interests and
+                a big part of my creative world.
+            </p>
 
-<div class="card hub-card" data-name="gallery" onclick="location.href='#gallery'">
-<div class="icon">🖼️</div>
-<h3>Gallery</h3>
-<p>My collection of pictures and creative content.</p>
-</div>
+        </div>
 
-<div class="card hub-card" data-name="profile" onclick="location.href='#profile'">
-<div class="icon">👤</div>
-<h3>My Profile</h3>
-<p>XP, favorites and activity.</p>
-</div>
+        <div class="hub-card">
 
-<div class="card hub-card" data-name="updates" onclick="location.href='#updates'">
-<div class="icon">📰</div>
-<h3>Updates</h3>
-<p>What's new around Sam's website.</p>
-</div>
+            <div class="hub-icon">💻</div>
 
-</div>
-</section>
+            <h3>Coding</h3>
 
-<section id="anime">
+            <p>
+                Learning web development and programming
+                one project at a time.
+            </p>
 
-<div class="heading reveal">
-<small>ANIME UNIVERSE</small>
-<h2>Discover <span class="gradient">Anime</span></h2>
-<p>
-Search anime, save favorites and build your watchlist.
-</p>
-</div>
+        </div>
 
-<div class="library-controls reveal">
-
-<input
-id="animeSearch"
-type="text"
-placeholder="Search anime..."
-oninput="filterAnime()"
->
-
-<select id="animeGenre" onchange="filterAnime()">
-<option value="all">All Genres</option>
-</select>
-
-<button class="btn btn-primary" onclick="randomAnime()">
-🎲 Random
-</button>
-
-</div>
-
-<div id="animeStatus"
-style="text-align:center;color:var(--muted);margin-bottom:25px">
-Loading anime...
-</div>
-
-<div class="anime-grid reveal" id="animeGrid"></div>
+    </div>
 
 </section>
 
-<section id="profile">
+<!-- ANIME -->
 
-<div class="heading reveal">
-<small>YOUR PROFILE</small>
-<h2>Sam.OS <span class="gradient">Dashboard</span></h2>
-<p>Your activity is saved locally in this browser.</p>
-</div>
+<section id="anime" class="anime-section">
 
-<div class="profile-dashboard reveal">
+    <div class="section-heading reveal">
 
-<h3>Explorer Level <span id="level">1</span></h3>
+        <small>ANIME LIBRARY</small>
 
-<p style="color:var(--muted);margin-top:8px">
-<span id="xp">0</span> XP
-</p>
+        <h2>
+            Explore <span class="gradient-text">Anime</span>
+        </h2>
 
-<div class="xp-bar">
-<div class="xp-fill" id="xpFill"></div>
-</div>
+        <p>
+            Search through the built-in anime library.
+            The library does not need an anime API to display.
+        </p>
 
-<div class="profile-stats">
+    </div>
 
-<div class="profile-stat">
-<strong id="dashFavorites">0</strong>
-Favorites
-</div>
+    <div class="anime-toolbar">
 
-<div class="profile-stat">
-<strong id="dashWatched">0</strong>
-Watched
-</div>
+        <input
+            id="animeSearch"
+            class="anime-search"
+            type="text"
+            placeholder="Search anime..."
+        >
 
-<div class="profile-stat">
-<strong id="dashVisits">1</strong>
-Visits
-</div>
+        <button class="anime-btn" onclick="searchAnime()">
+            🔎 Search
+        </button>
 
-<div class="profile-stat">
-<strong id="dashAchievements">0</strong>
-Achievements
-</div>
+        <select id="genreFilter" class="anime-select" onchange="filterAnime()">
+            <option value="all">All Genres</option>
+        </select>
 
-</div>
-</div>
+        <select id="sortAnime" class="anime-select" onchange="sortAnime()">
+            <option value="popular">Popular</option>
+            <option value="rating">Rating</option>
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
+        </select>
+
+        <button class="anime-btn" onclick="showRandomAnime()">
+            🎲 Random
+        </button>
+
+    </div>
+
+    <div id="animeStatus" class="anime-status"></div>
+
+    <div id="animeGrid" class="anime-grid"></div>
+
+    <button
+        id="loadMore"
+        class="load-more"
+        onclick="loadMoreAnime()"
+    >
+        Load More Anime
+    </button>
 
 </section>
 
-<section id="updates">
-
-<div class="heading reveal">
-<small>UPDATES</small>
-<h2>What's <span class="gradient">New</span></h2>
-</div>
-
-<div class="grid reveal">
-
-<div class="card">
-<span style="color:var(--cyan)">LATEST</span>
-<h3>Anime Library</h3>
-<p>
-Anime search, genres, favorites and watchlist features.
-</p>
-</div>
-
-<div class="card">
-<span style="color:var(--cyan)">PROJECT</span>
-<h3>Sam.OS Website</h3>
-<p>
-The website continues to evolve while I learn coding.
-</p>
-</div>
-
-<div class="card">
-<span style="color:var(--cyan)">COMING</span>
-<h3>More Projects</h3>
-<p>
-More experiments will appear here as I build them.
-</p>
-</div>
-
-</div>
-</section>
+<!-- PROJECTS -->
 
 <section id="projects">
 
-<div class="heading reveal">
-<small>MY WORK</small>
-<h2>Things I've <span class="gradient">Built</span></h2>
-</div>
+    <div class="section-heading reveal">
 
-<div class="grid reveal">
+        <small>MY WORK</small>
 
-<div class="card">
-<div class="icon">🌐</div>
-<h3>Sam.OS Website</h3>
-<p>
-My futuristic personal website built with HTML,
-CSS and JavaScript.
-</p>
+        <h2>
+            Featured <span class="gradient-text">Projects</span>
+        </h2>
 
-<button
-class="small-btn primary"
-onclick="toggleProject('project1')"
-style="margin-top:18px">
-View Details
-</button>
+        <p>
+            A few things I'm building and learning from.
+        </p>
 
-<div id="project1" class="project-details">
-Built while learning web development.
-Features themes, animations, anime discovery,
-gallery features and interactive tools.
-</div>
-</div>
+    </div>
 
-<div class="card">
-<div class="icon">🎬</div>
-<h3>Creative Editing</h3>
-<p>
-Anime and gaming edits created while learning
-digital editing.
-</p>
+    <div class="projects reveal">
 
-<button
-class="small-btn primary"
-onclick="toggleProject('project2')"
-style="margin-top:18px">
-View Details
-</button>
+        <article class="project">
 
-<div id="project2" class="project-details">
-A creative area for future edits, videos
-and media experiments.
-</div>
-</div>
+            <span class="project-number">PROJECT 01</span>
 
-<div class="card">
-<div class="icon">🐍</div>
-<h3>Python Learning</h3>
-<p>
-Learning programming fundamentals and building
-small programs.
-</p>
+            <div class="project-icon">🌐</div>
 
-<button
-class="small-btn primary"
-onclick="toggleProject('project3')"
-style="margin-top:18px">
-View Details
-</button>
+            <h3>Sam.OS Website</h3>
 
-<div id="project3" class="project-details">
-My Python learning journey from basic syntax
-to larger programming projects.
-</div>
-</div>
+            <p>
+                A futuristic personal portfolio built while
+                learning modern web development.
+            </p>
 
-</div>
+            <div class="tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+            </div>
+
+        </article>
+
+        <article class="project">
+
+            <span class="project-number">PROJECT 02</span>
+
+            <div class="project-icon">🎬</div>
+
+            <h3>Creative Editing</h3>
+
+            <p>
+                Anime and gaming edits created for social media
+                and creative practice.
+            </p>
+
+            <div class="tags">
+                <span>CapCut</span>
+                <span>Editing</span>
+                <span>Creative</span>
+            </div>
+
+        </article>
+
+        <article class="project">
+
+            <span class="project-number">PROJECT 03</span>
+
+            <div class="project-icon">🐍</div>
+
+            <h3>Python Learning</h3>
+
+            <p>
+                Learning programming fundamentals and building
+                small programs step by step.
+            </p>
+
+            <div class="tags">
+                <span>Python</span>
+                <span>Programming</span>
+                <span>Learning</span>
+            </div>
+
+        </article>
+
+    </div>
+
 </section>
+
+<!-- GALLERY -->
 
 <section id="gallery">
 
-<div class="heading reveal">
-<small>GALLERY</small>
-<h2>My <span class="gradient">Collection</span></h2>
-</div>
+    <div class="section-heading reveal">
 
-<div class="gallery-controls reveal">
-<button onclick="filterGallery('all')">All</button>
-<button onclick="filterGallery('photo')">Photos</button>
-<button onclick="filterGallery('creative')">Creative</button>
-</div>
+        <small>GALLERY</small>
 
-<div class="gallery reveal">
+        <h2>
+            My <span class="gradient-text">Collection</span>
+        </h2>
 
-<div class="gallery-item" data-category="photo" onclick="openImage(0)">
-<img src="Images/0ade78ee923bea5adbacb213aace47a9.webp" alt="Gallery 1">
-<div class="gallery-caption">01 — Collection</div>
-</div>
+        <p>
+            Click any image to open it.
+        </p>
 
-<div class="gallery-item" data-category="creative" onclick="openImage(1)">
-<img src="Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp" alt="Gallery 2">
-<div class="gallery-caption">02 — Favorite</div>
-</div>
+    </div>
 
-<div class="gallery-item" data-category="photo" onclick="openImage(2)">
-<img src="Images/567c0a6538e6d9e803a86eb3f76f9e01.webp" alt="Gallery 3">
-<div class="gallery-caption">03 — Creative Shot</div>
-</div>
+    <div class="gallery reveal">
 
-<div class="gallery-item" data-category="creative" onclick="openImage(3)">
-<img src="Images/765c809a7d1f74a923fa2bdaba239340.webp" alt="Gallery 4">
-<div class="gallery-caption">04 — Gallery</div>
-</div>
+        <div class="gallery-item"
+            onclick="openImage('Images/0ade78ee923bea5adbacb213aace47a9.webp')">
 
-<div class="gallery-item" data-category="photo" onclick="openImage(4)">
-<img src="Images/823a8aaef9bbe559ed29e27efa7c873d.webp" alt="Gallery 5">
-<div class="gallery-caption">05 — Another Shot</div>
-</div>
+            <img
+                src="Images/0ade78ee923bea5adbacb213aace47a9.webp"
+                alt="Gallery image 1"
+            >
 
-<div class="gallery-item" data-category="creative" onclick="openImage(5)">
-<img src="Images/01398c7404dbbdd9b3f78540ca744470.webp" alt="Gallery 6">
-<div class="gallery-caption">06 — Final Shot</div>
-</div>
+            <div class="gallery-caption">
+                <span>01</span>
+                <h3>Collection</h3>
+            </div>
 
-</div>
+        </div>
+
+        <div class="gallery-item"
+            onclick="openImage('Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp')">
+
+            <img
+                src="Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp"
+                alt="Gallery image 2"
+            >
+
+            <div class="gallery-caption">
+                <span>02</span>
+                <h3>Favorite</h3>
+            </div>
+
+        </div>
+
+        <div class="gallery-item"
+            onclick="openImage('Images/567c0a6538e6d9e803a86eb3f76f9e01.webp')">
+
+            <img
+                src="Images/567c0a6538e6d9e803a86eb3f76f9e01.webp"
+                alt="Gallery image 3"
+            >
+
+            <div class="gallery-caption">
+                <span>03</span>
+                <h3>Creative Shot</h3>
+            </div>
+
+        </div>
+
+        <div class="gallery-item"
+            onclick="openImage('Images/765c809a7d1f74a923fa2bdaba239340.webp')">
+
+            <img
+                src="Images/765c809a7d1f74a923fa2bdaba239340.webp"
+                alt="Gallery image 4"
+            >
+
+            <div class="gallery-caption">
+                <span>04</span>
+                <h3>Gallery</h3>
+            </div>
+
+        </div>
+
+        <div class="gallery-item"
+            onclick="openImage('Images/823a8aaef9bbe559ed29e27efa7c873d.webp')">
+
+            <img
+                src="Images/823a8aaef9bbe559ed29e27efa7c873d.webp"
+                alt="Gallery image 5"
+            >
+
+            <div class="gallery-caption">
+                <span>05</span>
+                <h3>Another Shot</h3>
+            </div>
+
+        </div>
+
+        <div class="gallery-item"
+            onclick="openImage('Images/01398c7404dbbdd9b3f78540ca744470.webp')">
+
+            <img
+                src="Images/01398c7404dbbdd9b3f78540ca744470.webp"
+                alt="Gallery image 6"
+            >
+
+            <div class="gallery-caption">
+                <span>06</span>
+                <h3>Final Shot</h3>
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
+
+<!-- SOCIAL -->
 
 <section>
 
-<div class="card reveal" style="max-width:800px;margin:auto;text-align:center">
+    <div class="social-box reveal">
 
-<div class="icon">🎵</div>
-<h2>Find Me Online</h2>
+        <h2>Find Me Online</h2>
 
-<p style="margin:15px 0 25px">
-Follow my anime, gaming and creative content.
-</p>
+        <p>
+            Follow my creative journey on TikTok.
+        </p>
 
-<a
-href="https://www.tiktok.com/@mikedevon"
-target="_blank"
-rel="noopener noreferrer"
-class="btn btn-primary">
-TikTok @mikedevon
-</a>
+        <a
+            class="tiktok"
+            href="https://www.tiktok.com/@mikedevon"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            🎵 @mikedevon
+        </a>
 
-</div>
+    </div>
+
 </section>
+
+<!-- CONTACT -->
 
 <section id="contact">
 
-<div class="heading reveal">
-<small>CONTACT</small>
-<h2>Let's <span class="gradient">Connect</span></h2>
-<p>Send a message through the website.</p>
-</div>
+    <div class="section-heading reveal">
 
-<form class="form reveal" onsubmit="sendMessage(event)">
+        <small>CONTACT</small>
 
-<input id="contactName" type="text" placeholder="Your name" required>
+        <h2>
+            Let's <span class="gradient-text">Connect</span>
+        </h2>
 
-<input id="contactEmail" type="email" placeholder="Your email" required>
+        <p>
+            Send a message through the demo form.
+        </p>
 
-<textarea id="contactMessage" placeholder="Your message" required></textarea>
+    </div>
 
-<button class="btn btn-primary" type="submit">
-Send Message 🚀
-</button>
+    <form
+        class="contact-form reveal"
+        onsubmit="sendMessage(event)"
+    >
 
-</form>
+        <input
+            type="text"
+            id="name"
+            placeholder="Your name"
+            required
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Your email"
+            required
+        >
+
+        <textarea
+            id="message"
+            rows="6"
+            placeholder="Your message"
+            required
+        ></textarea>
+
+        <button type="submit">
+            Send Message 🚀
+        </button>
+
+    </form>
+
+    <div id="messageSent">
+        ✓ Demo message submitted successfully.
+    </div>
 
 </section>
 
+<!-- FOOTER -->
+
 <footer>
 
-<p>
-Built by <strong>Sam</strong> while learning web development.
-</p>
+    <p>
+        Built by <strong>Sam</strong> while learning web development.
+    </p>
 
-<p style="margin-top:10px">
-© 2026 Sam.OS — All rights reserved.
-</p>
+    <p style="margin-top:10px;">
+        © 2026 Sam.OS. All rights reserved.
+    </p>
 
 </footer>
 
-<div id="lightbox" onclick="closeImage()">
+<!-- ANIME MODAL -->
 
-<span class="lightbox-close">×</span>
+<div id="animeModal">
 
-<button class="lightbox-arrow prev"
-onclick="previousImage(event)">‹</button>
+    <div class="anime-modal-box">
 
-<img id="lightboxImage" src="" alt="Preview">
+        <button
+            class="modal-close"
+            onclick="closeAnimeModal()"
+        >
+            ×
+        </button>
 
-<button class="lightbox-arrow next"
-onclick="nextImage(event)">›</button>
+        <div id="animeDetails"></div>
+
+    </div>
 
 </div>
+
+<!-- IMAGE LIGHTBOX -->
+
+<div id="lightbox" onclick="closeImage()">
+
+    <span class="close-lightbox">×</span>
+
+    <img id="lightboxImage" src="" alt="Preview">
+
+</div>
+
+<!-- TOP BUTTON -->
 
 <button id="top" onclick="goTop()">↑</button>
 
-<div id="toast"></div>
-
 <script>
 
-/* LOADER */
+/* =========================
+   LOADER
+========================= */
 
-window.addEventListener("load",()=>{
-setTimeout(()=>{
-document.getElementById("loader").classList.add("hide");
-},800);
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document
+            .getElementById("loader")
+            .classList
+            .add("hide");
+
+    },700);
+
 });
 
 
-/* CURSOR */
-
-const cursor=document.querySelector(".cursor");
-const dot=document.querySelector(".cursor-dot");
-
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px";
-cursor.style.top=e.clientY+"px";
-dot.style.left=e.clientX+"px";
-dot.style.top=e.clientY+"px";
-});
-
-
-/* MENU */
+/* =========================
+   MOBILE MENU
+========================= */
 
 function toggleMenu(){
-document.getElementById("navLinks").classList.toggle("open");
+
+    document
+        .getElementById("navLinks")
+        .classList
+        .toggle("open");
+
+}
+
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(function(link){
+
+        link.addEventListener("click",function(){
+
+            document
+                .getElementById("navLinks")
+                .classList
+                .remove("open");
+
+        });
+
+    });
+
+
+/* =========================
+   THEME
+========================= */
+
+const themes=["dark","light","cyber"];
+let themeIndex=0;
+
+function toggleTheme(){
+
+    document.body.classList.remove("light","cyber");
+
+    themeIndex++;
+
+    if(themeIndex>=themes.length){
+        themeIndex=0;
+    }
+
+    const current=themes[themeIndex];
+
+    if(current==="light"){
+        document.body.classList.add("light");
+        document.getElementById("theme").textContent="☀️";
+    }
+    else if(current==="cyber"){
+        document.body.classList.add("cyber");
+        document.getElementById("theme").textContent="⚡";
+    }
+    else{
+        document.getElementById("theme").textContent="🌙";
+    }
+
 }
 
 
-/* TYPING */
+/* =========================
+   TYPING EFFECT
+========================= */
 
 const titles=[
-"Creative Developer",
-"Anime Enthusiast",
-"Gaming Enthusiast",
-"Future Software Engineer",
-"Learning Every Day"
+    "Creative Developer",
+    "Future Software Engineer",
+    "Anime & Gaming Enthusiast",
+    "Content Creator",
+    "Learning Every Day"
 ];
 
-let ti=0,ci=0,del=false;
+let titleIndex=0;
+let characterIndex=0;
+let deleting=false;
 
-function typeText(){
+function typingEffect(){
 
-const el=document.getElementById("typing");
-const word=titles[ti];
+    const element=document.getElementById("typing");
+    const word=titles[titleIndex];
 
-if(!del){
-el.textContent=word.substring(0,ci+1);
-ci++;
+    if(!deleting){
 
-if(ci===word.length){
-del=true;
-setTimeout(typeText,1200);
-return;
-}
+        element.textContent=
+            word.substring(0,characterIndex+1);
 
-}else{
+        characterIndex++;
 
-el.textContent=word.substring(0,ci-1);
-ci--;
+        if(characterIndex===word.length){
 
-if(ci===0){
-del=false;
-ti=(ti+1)%titles.length;
-}
+            deleting=true;
 
-}
+            setTimeout(typingEffect,1300);
 
-setTimeout(typeText,del?45:80);
-}
+            return;
+        }
 
-typeText();
+    }else{
 
+        element.textContent=
+            word.substring(0,characterIndex-1);
 
-/* THEMES */
+        characterIndex--;
 
-const themes=["dark","pink","light","cyan"];
-let themeIndex=Number(localStorage.getItem("samTheme"))||0;
+        if(characterIndex===0){
 
-function applyTheme(){
+            deleting=false;
+            titleIndex++;
 
-document.body.classList.remove("light");
+            if(titleIndex===titles.length){
+                titleIndex=0;
+            }
 
-if(themes[themeIndex]==="light"){
-document.body.classList.add("light");
-}
+        }
 
-if(themes[themeIndex]==="pink"){
-document.documentElement.style.setProperty("--cyan","#ff3cac");
-document.documentElement.style.setProperty("--purple","#7c3cff");
-}else{
-document.documentElement.style.setProperty("--cyan","#00f7ff");
-document.documentElement.style.setProperty("--purple","#7c3cff");
-}
+    }
+
+    setTimeout(
+        typingEffect,
+        deleting ? 45 : 80
+    );
 
 }
 
-applyTheme();
+typingEffect();
 
-function cycleTheme(){
 
-themeIndex=(themeIndex+1)%themes.length;
+/* =========================================================
+   STATIC ANIME LIBRARY
+   =========================================================
+   
+   IMPORTANT:
+   These cards do NOT need Jikan to appear.
+   Images use AniList's public image proxy directly.
+   The website itself does not wait for an anime API.
+========================================================= */
 
-localStorage.setItem("samTheme",themeIndex);
+const animeDatabase=[
 
-applyTheme();
+{
+ id:20,
+ title:"Naruto",
+ year:2002,
+ rating:8.0,
+ genres:["Action","Adventure","Shounen"],
+ desc:"Naruto Uzumaki dreams of becoming Hokage while proving himself to everyone around him.",
+ image:"https://img.anili.st/media/20"
+},
 
-showToast("Theme changed.");
+{
+ id:21,
+ title:"One Piece",
+ year:1999,
+ rating:9.0,
+ genres:["Action","Adventure","Fantasy"],
+ desc:"Monkey D. Luffy and his crew travel across the Grand Line searching for the legendary One Piece.",
+ image:"https://img.anili.st/media/21"
+},
+
+{
+ id:269,
+ title:"Bleach",
+ year:2004,
+ rating:8.2,
+ genres:["Action","Supernatural","Shounen"],
+ desc:"Ichigo Kurosaki becomes a Soul Reaper and is pulled into battles involving spirits and powerful enemies.",
+ image:"https://img.anili.st/media/269"
+},
+
+{
+ id:113415,
+ title:"Jujutsu Kaisen",
+ year:2020,
+ rating:8.7,
+ genres:["Action","Supernatural","Shounen"],
+ desc:"Yuji Itadori enters the dangerous world of cursed energy after becoming involved with a cursed object.",
+ image:"https://img.anili.st/media/113415"
+},
+
+{
+ id:101922,
+ title:"Demon Slayer",
+ year:2019,
+ rating:8.6,
+ genres:["Action","Fantasy","Shounen"],
+ desc:"Tanjiro Kamado joins the Demon Slayer Corps after tragedy strikes his family.",
+ image:"https://img.anili.st/media/101922"
+},
+
+{
+ id:16498,
+ title:"Attack on Titan",
+ year:2013,
+ rating:9.0,
+ genres:["Action","Drama","Fantasy"],
+ desc:"Humanity fights for survival against mysterious Titans outside the walls.",
+ image:"https://img.anili.st/media/16498"
+},
+
+{
+ id:5114,
+ title:"Fullmetal Alchemist: Brotherhood",
+ year:2009,
+ rating:9.1,
+ genres:["Action","Adventure","Fantasy"],
+ desc:"Two brothers search for the Philosopher's Stone after a forbidden experiment changes their lives.",
+ image:"https://img.anili.st/media/5114"
+},
+
+{
+ id:11061,
+ title:"Hunter x Hunter",
+ year:2011,
+ rating:9.0,
+ genres:["Action","Adventure","Fantasy"],
+ desc:"Gon Freecss becomes a Hunter while searching for his missing father.",
+ image:"https://img.anili.st/media/11061"
+},
+
+{
+ id:1535,
+ title:"Death Note",
+ year:2006,
+ rating:8.6,
+ genres:["Mystery","Psychological","Supernatural"],
+ desc:"A student discovers a mysterious notebook capable of killing anyone whose name is written inside.",
+ image:"https://img.anili.st/media/1535"
+},
+
+{
+ id:21087,
+ title:"One Punch Man",
+ year:2015,
+ rating:8.5,
+ genres:["Action","Comedy","Superhero"],
+ desc:"Saitama becomes unbelievably strong after training and struggles to find an opponent who can challenge him.",
+ image:"https://img.anili.st/media/21087"
+},
+
+{
+ id:127230,
+ title:"Chainsaw Man",
+ year:2022,
+ rating:8.5,
+ genres:["Action","Fantasy","Horror"],
+ desc:"Denji's life changes when he merges with his chainsaw devil companion.",
+ image:"https://img.anili.st/media/127230"
+},
+
+{
+ id:151807,
+ title:"Solo Leveling",
+ year:2024,
+ rating:8.8,
+ genres:["Action","Fantasy","Adventure"],
+ desc:"Sung Jinwoo receives a mysterious system that allows him to become stronger beyond ordinary limits.",
+ image:"https://img.anili.st/media/151807"
+},
+
+{
+ id:130003,
+ title:"Blue Lock",
+ year:2022,
+ rating:8.2,
+ genres:["Sports","Shounen","Drama"],
+ desc:"Young football players compete in an intense program designed to create Japan's ultimate striker.",
+ image:"https://img.anili.st/media/130003"
+},
+
+{
+ id:20464,
+ title:"Haikyuu!!",
+ year:2014,
+ rating:8.7,
+ genres:["Sports","Comedy","Drama"],
+ desc:"Hinata Shoyo works toward becoming an elite volleyball player despite his small stature.",
+ image:"https://img.anili.st/media/20464"
+},
+
+{
+ id:97940,
+ title:"Black Clover",
+ year:2017,
+ rating:8.2,
+ genres:["Action","Fantasy","Magic"],
+ desc:"Asta dreams of becoming the Wizard King despite being born without magical ability.",
+ image:"https://img.anili.st/media/97940"
+},
+
+{
+ id:101348,
+ title:"Vinland Saga",
+ year:2019,
+ rating:8.8,
+ genres:["Action","Adventure","Historical"],
+ desc:"Thorfinn grows up surrounded by war while searching for the meaning behind his father's legacy.",
+ image:"https://img.anili.st/media/101348"
+},
+
+{
+ id:154587,
+ title:"Frieren: Beyond Journey's End",
+ year:2023,
+ rating:9.1,
+ genres:["Adventure","Fantasy","Drama"],
+ desc:"An immortal elf mage begins a new journey long after defeating the Demon King.",
+ image:"https://img.anili.st/media/154587"
+},
+
+{
+ id:140960,
+ title:"Spy x Family",
+ year:2022,
+ rating:8.5,
+ genres:["Comedy","Action","Family"],
+ desc:"A spy, an assassin and a telepath form a fake family with unexpected results.",
+ image:"https://img.anili.st/media/140960"
+},
+
+{
+ id:105333,
+ title:"Dr. Stone",
+ year:2019,
+ rating:8.1,
+ genres:["Adventure","Sci-Fi","Comedy"],
+ desc:"Senku attempts to rebuild civilization using science after humanity is mysteriously petrified.",
+ image:"https://img.anili.st/media/105333"
+},
+
+{
+ id:21507,
+ title:"Mob Psycho 100",
+ year:2016,
+ rating:8.6,
+ genres:["Action","Comedy","Supernatural"],
+ desc:"A powerful psychic tries to live an ordinary life while controlling his emotions.",
+ image:"https://img.anili.st/media/21507"
+},
+
+{
+ id:114236,
+ title:"Fire Force",
+ year:2019,
+ rating:7.7,
+ genres:["Action","Supernatural","Shounen"],
+ desc:"Special firefighters battle mysterious human combustion and uncover a larger conspiracy.",
+ image:"https://img.anili.st/media/114236"
+},
+
+{
+ id:2904,
+ title:"Code Geass",
+ year:2006,
+ rating:8.9,
+ genres:["Action","Drama","Mecha"],
+ desc:"Lelouch gains a mysterious power and begins a rebellion against an oppressive empire.",
+ image:"https://img.anili.st/media/2904"
+},
+
+{
+ id:9253,
+ title:"Steins;Gate",
+ year:2011,
+ rating:9.0,
+ genres:["Sci-Fi","Thriller","Drama"],
+ desc:"A group of friends accidentally discovers a way to alter the past.",
+ image:"https://img.anili.st/media/9253"
+},
+
+{
+ id:20665,
+ title:"Your Lie in April",
+ year:2014,
+ rating:8.6,
+ genres:["Drama","Romance","Music"],
+ desc:"A young pianist rediscovers music after meeting a free-spirited violinist.",
+ image:"https://img.anili.st/media/20665"
+},
+
+{
+ id:21355,
+ title:"Re:ZERO",
+ year:2016,
+ rating:8.2,
+ genres:["Fantasy","Drama","Psychological"],
+ desc:"Subaru discovers that he can return to a previous point in time after dying.",
+ image:"https://img.anili.st/media/21355"
+},
+
+{
+ id:11757,
+ title:"Sword Art Online",
+ year:2012,
+ rating:7.5,
+ genres:["Action","Adventure","Fantasy"],
+ desc:"Players become trapped inside a virtual reality game where death has serious consequences.",
+ image:"https://img.anili.st/media/11757"
+},
+
+{
+ id:14719,
+ title:"JoJo's Bizarre Adventure",
+ year:2012,
+ rating:8.5,
+ genres:["Action","Adventure","Supernatural"],
+ desc:"The Joestar family faces supernatural enemies across generations.",
+ image:"https://img.anili.st/media/14719"
+},
+
+{
+ id:101291,
+ title:"The Promised Neverland",
+ year:2019,
+ rating:8.5,
+ genres:["Mystery","Thriller","Psychological"],
+ desc:"Children living in a seemingly perfect orphanage discover a terrifying secret.",
+ image:"https://img.anili.st/media/101291"
+},
+
+{
+ id:113538,
+ title:"The Rising of the Shield Hero",
+ year:2019,
+ rating:7.9,
+ genres:["Action","Adventure","Fantasy"],
+ desc:"Naofumi is summoned to another world and must become its Shield Hero.",
+ image:"https://img.anili.st/media/113538"
+},
+
+{
+ id:106479,
+ title:"Kaguya-sama: Love is War",
+ year:2019,
+ rating:8.4,
+ genres:["Comedy","Romance","School"],
+ desc:"Two brilliant students try to make each other confess their feelings first.",
+ image:"https://img.anili.st/media/106479"
+},
+
+{
+ id:142074,
+ title:"Mashle: Magic and Muscles",
+ year:2023,
+ rating:7.9,
+ genres:["Action","Comedy","Magic"],
+ desc:"A boy without magic relies entirely on physical strength in a magical world.",
+ image:"https://img.anili.st/media/142074"
+},
+
+{
+ id:117193,
+ title:"The Eminence in Shadow",
+ year:2022,
+ rating:8.1,
+ genres:["Action","Comedy","Fantasy"],
+ desc:"A boy living out his dream of becoming a mysterious mastermind gets exactly what he wanted.",
+ image:"https://img.anili.st/media/117193"
+},
+
+{
+ id:97938,
+ title:"My Hero Academia",
+ year:2016,
+ rating:8.0,
+ genres:["Action","Superhero","School"],
+ desc:"Izuku Midoriya dreams of becoming a hero despite being born without a Quirk.",
+ image:"https://img.anili.st/media/97938"
+},
+
+{
+ id:21459,
+ title:"My Hero Academia: Season 2",
+ year:2017,
+ rating:8.1,
+ genres:["Action","Superhero","School"],
+ desc:"Class 1-A continues its training while facing increasingly powerful challenges.",
+ image:"https://img.anili.st/media/21459"
+},
+
+{
+ id:98659,
+ title:"That Time I Got Reincarnated as a Slime",
+ year:2018,
+ rating:8.1,
+ genres:["Fantasy","Adventure","Comedy"],
+ desc:"A man reincarnates as a powerful slime in a fantasy world.",
+ image:"https://img.anili.st/media/98659"
+},
+
+{
+ id:112151,
+ title:"The Quintessential Quintuplets",
+ year:2019,
+ rating:8.0,
+ genres:["Romance","Comedy","School"],
+ desc:"A talented tutor is hired to teach five sisters who struggle with academics.",
+ image:"https://img.anili.st/media/112151"
+},
+
+{
+ id:106625,
+ title:"That Time I Got Reincarnated as a Slime Season 2",
+ year:2021,
+ rating:8.1,
+ genres:["Fantasy","Adventure","Action"],
+ desc:"Rimuru continues building his nation while confronting powerful enemies.",
+ image:"https://img.anili.st/media/106625"
+},
+
+{
+ id:20958,
+ title:"Konosuba",
+ year:2016,
+ rating:8.1,
+ genres:["Comedy","Fantasy","Adventure"],
+ desc:"A reincarnated boy forms an extremely chaotic party in a fantasy world.",
+ image:"https://img.anili.st/media/20958"
+},
+
+{
+ id:21470,
+ title:"Erased",
+ year:2016,
+ rating:8.3,
+ genres:["Mystery","Thriller","Drama"],
+ desc:"A young man gains the ability to return to the past and prevent tragedies.",
+ image:"https://img.anili.st/media/21470"
+},
+
+{
+ id:20656,
+ title:"Food Wars!",
+ year:2015,
+ rating:8.2,
+ genres:["Comedy","School","Cooking"],
+ desc:"An ambitious young chef enters an elite culinary academy.",
+ image:"https://img.anili.st/media/20656"
+},
+
+{
+ id:21519,
+ title:"Kuroko's Basketball",
+ year:2012,
+ rating:8.1,
+ genres:["Sports","Comedy","School"],
+ desc:"A mysterious basketball player joins a team and faces the strongest players in Japan.",
+ image:"https://img.anili.st/media/21519"
+},
+
+{
+ id:20992,
+ title:"Assassination Classroom",
+ year:2015,
+ rating:8.1,
+ genres:["Action","Comedy","School"],
+ desc:"A class of students is tasked with assassinating their extraordinary teacher.",
+ image:"https://img.anili.st/media/20992"
+},
+
+{
+ id:20457,
+ title:"Dragon Ball Super",
+ year:2015,
+ rating:7.4,
+ genres:["Action","Adventure","Martial Arts"],
+ desc:"Goku and his friends face new warriors and threats across the universe.",
+ image:"https://img.anili.st/media/20457"
+},
+
+{
+ id:813,
+ title:"Dragon Ball Z",
+ year:1989,
+ rating:8.5,
+ genres:["Action","Adventure","Martial Arts"],
+ desc:"Goku and the Z Fighters defend Earth from increasingly powerful enemies.",
+ image:"https://img.anili.st/media/813"
+},
+
+{
+ id:100166,
+ title:"Demon Slayer: Entertainment District Arc",
+ year:2021,
+ rating:8.7,
+ genres:["Action","Fantasy","Shounen"],
+ desc:"Tanjiro and his allies investigate disappearances in a dangerous entertainment district.",
+ image:"https://img.anili.st/media/100166"
+},
+
+{
+ id:155405,
+ title:"Kaiju No. 8",
+ year:2024,
+ rating:8.3,
+ genres:["Action","Sci-Fi","Shounen"],
+ desc:"Kafka Hibino gains the ability to transform into a powerful kaiju.",
+ image:"https://img.anili.st/media/155405"
+},
+
+{
+ id:144685,
+ title:"Oshi no Ko",
+ year:2023,
+ rating:8.4,
+ genres:["Drama","Mystery","Supernatural"],
+ desc:"The entertainment industry hides dark secrets behind the world of idols.",
+ image:"https://img.anili.st/media/144685"
+},
+
+{
+ id:151799,
+ title:"Wind Breaker",
+ year:2024,
+ rating:8.0,
+ genres:["Action","School","Drama"],
+ desc:"A fighter enters a school known for its strongest students and learns what strength really means.",
+ image:"https://img.anili.st/media/151799"
+},
+
+{
+ id:156892,
+ title:"Delicious in Dungeon",
+ year:2024,
+ rating:8.5,
+ genres:["Adventure","Fantasy","Comedy"],
+ desc:"Adventurers explore a dungeon and cook monsters to survive.",
+ image:"https://img.anili.st/media/156892"
+},
+
+{
+ id:154965,
+ title:"The Apothecary Diaries",
+ year:2023,
+ rating:8.8,
+ genres:["Mystery","Drama","Historical"],
+ desc:"A clever young woman uses her knowledge of medicine to solve mysteries inside the imperial palace.",
+ image:"https://img.anili.st/media/154965"
+},
+
+{
+ id:127720,
+ title:"Ranking of Kings",
+ year:2021,
+ rating:8.6,
+ genres:["Adventure","Fantasy","Drama"],
+ desc:"A young prince who cannot hear or speak sets out to prove himself.",
+ image:"https://img.anili.st/media/127720"
+},
+
+{
+ id:101921,
+ title:"Demon Slayer",
+ year:2019,
+ rating:8.6,
+ genres:["Action","Fantasy","Adventure"],
+ desc:"Tanjiro travels with Nezuko while searching for a way to restore her humanity.",
+ image:"https://img.anili.st/media/101921"
+},
+
+{
+ id:100876,
+ title:"Beastars",
+ year:2019,
+ rating:7.8,
+ genres:["Drama","Mystery","Psychological"],
+ desc:"A world of anthropomorphic animals struggles with fear, prejudice and identity.",
+ image:"https://img.anili.st/media/100876"
+},
+
+{
+ id:11981,
+ title:"Magi: The Labyrinth of Magic",
+ year:2012,
+ rating:8.0,
+ genres:["Adventure","Fantasy","Action"],
+ desc:"Young adventurers explore mysterious dungeons and uncover the secrets of a magical world.",
+ image:"https://img.anili.st/media/11981"
+},
+
+{
+ id:20630,
+ title:"Psycho-Pass",
+ year:2012,
+ rating:8.3,
+ genres:["Sci-Fi","Thriller","Psychological"],
+ desc:"Law enforcement officers operate in a future society where people's criminal potential is measured.",
+ image:"https://img.anili.st/media/20630"
+},
+
+{
+ id:101280,
+ title:"The God of High School",
+ year:2020,
+ rating:7.2,
+ genres:["Action","Martial Arts","Supernatural"],
+ desc:"Martial artists from across Korea compete in a mysterious tournament.",
+ image:"https://img.anili.st/media/101280"
+},
+
+{
+ id:106759,
+ title:"Tower of God",
+ year:2020,
+ rating:7.6,
+ genres:["Action","Fantasy","Adventure"],
+ desc:"A mysterious tower promises to grant any wish to those who reach its top.",
+ image:"https://img.anili.st/media/106759"
+},
+
+{
+ id:97937,
+ title:"Overlord",
+ year:2015,
+ rating:8.0,
+ genres:["Fantasy","Action","Adventure"],
+ desc:"A player remains inside a game after its servers shut down and becomes its powerful ruler.",
+ image:"https://img.anili.st/media/97937"
+},
+
+{
+ id:100388,
+ title:"The Devil is a Part-Timer!",
+ year:2013,
+ rating:7.7,
+ genres:["Comedy","Fantasy","Supernatural"],
+ desc:"A powerful demon lord is forced to work at a fast-food restaurant in modern Tokyo.",
+ image:"https://img.anili.st/media/100388"
+},
+
+{
+ id:21234,
+ title:"Re:Creators",
+ year:2017,
+ rating:7.6,
+ genres:["Action","Fantasy","Meta"],
+ desc:"Fictional characters arrive in the real world and confront their creators.",
+ image:"https://img.anili.st/media/21234"
+},
+
+{
+ id:21202,
+ title:"Akame ga Kill!",
+ year:2014,
+ rating:7.8,
+ genres:["Action","Fantasy","Drama"],
+ desc:"Tatsumi joins a group of assassins fighting a corrupt empire.",
+ image:"https://img.anili.st/media/21202"
+},
+
+{
+ id:20812,
+ title:"Tokyo Ghoul",
+ year:2014,
+ rating:7.8,
+ genres:["Action","Horror","Supernatural"],
+ desc:"Ken Kaneki becomes caught between the human world and the world of ghouls.",
+ image:"https://img.anili.st/media/20812"
+},
+
+{
+ id:20605,
+ title:"Tokyo Ghoul √A",
+ year:2015,
+ rating:7.2,
+ genres:["Action","Horror","Supernatural"],
+ desc:"Kaneki struggles with his identity while becoming more deeply involved with the ghoul world.",
+ image:"https://img.anili.st/media/20605"
+},
+
+{
+ id:101759,
+ title:"The Ancient Magus' Bride",
+ year:2017,
+ rating:8.0,
+ genres:["Fantasy","Drama","Romance"],
+ desc:"A young woman enters a mysterious magical world after being taken in by a powerful mage.",
+ image:"https://img.anili.st/media/101759"
+},
+
+{
+ id:105398,
+ title:"The Disastrous Life of Saiki K.",
+ year:2016,
+ rating:8.4,
+ genres:["Comedy","Supernatural","School"],
+ desc:"A psychic teenager just wants to live a normal life despite having extraordinary powers.",
+ image:"https://img.anili.st/media/105398"
+},
+
+{
+ id:20923,
+ title:"Durarara!!",
+ year:2010,
+ rating:8.1,
+ genres:["Action","Mystery","Supernatural"],
+ desc:"A strange collection of people become connected through the streets of Ikebukuro.",
+ image:"https://img.anili.st/media/20923"
+},
+
+{
+ id:101921,
+ title:"Demon Slayer: Mugen Train",
+ year:2021,
+ rating:8.7,
+ genres:["Action","Fantasy","Drama"],
+ desc:"Tanjiro and his friends join Flame Hashira Kyojuro Rengoku aboard a mysterious train.",
+ image:"https://img.anili.st/media/101921"
+},
+
+{
+ id:97921,
+ title:"Made in Abyss",
+ year:2017,
+ rating:8.7,
+ genres:["Adventure","Fantasy","Mystery"],
+ desc:"A young girl descends into a mysterious abyss while searching for her mother.",
+ image:"https://img.anili.st/media/97921"
+},
+
+{
+ id:101759,
+ title:"The Ancient Magus Bride",
+ year:2017,
+ rating:8.0,
+ genres:["Fantasy","Drama","Magic"],
+ desc:"A girl begins a new life surrounded by mysterious magic and supernatural creatures.",
+ image:"https://img.anili.st/media/101759"
+},
+
+{
+ id:20613,
+ title:"JoJo's Bizarre Adventure: Stardust Crusaders",
+ year:2014,
+ rating:8.4,
+ genres:["Action","Adventure","Supernatural"],
+ desc:"Jotaro Kujo and his allies travel across the world to defeat a powerful enemy.",
+ image:"https://img.anili.st/media/20613"
+},
+
+{
+ id:21247,
+ title:"Noragami",
+ year:2014,
+ rating:8.0,
+ genres:["Action","Supernatural","Comedy"],
+ desc:"A minor god dreams of becoming famous while helping humans with supernatural problems.",
+ image:"https://img.anili.st/media/21247"
+},
+
+{
+ id:20996,
+ title:"Parasyte",
+ year:2014,
+ rating:8.4,
+ genres:["Action","Horror","Sci-Fi"],
+ desc:"A teenager becomes host to an alien parasite and fights to survive.",
+ image:"https://img.anili.st/media/20996"
+},
+
+{
+ id:97943,
+ title:"Darling in the Franxx",
+ year:2018,
+ rating:7.3,
+ genres:["Action","Sci-Fi","Romance"],
+ desc:"Young pilots fight mysterious creatures while living in a controlled futuristic society.",
+ image:"https://img.anili.st/media/97943"
+},
+
+{
+ id:101759,
+ title:"The Ancient Magus' Bride",
+ year:2017,
+ rating:8.0,
+ genres:["Fantasy","Magic","Drama"],
+ desc:"A young girl discovers a hidden world of magic and supernatural beings.",
+ image:"https://img.anili.st/media/101759"
+},
+
+{
+ id:101386,
+ title:"Komi Can't Communicate",
+ year:2021,
+ rating:7.9,
+ genres:["Comedy","Romance","School"],
+ desc:"Komi wants to make one hundred friends despite struggling to communicate.",
+ image:"https://img.anili.st/media/101386"
+},
+
+{
+ id:112641,
+ title:"Classroom of the Elite",
+ year:2017,
+ rating:8.0,
+ genres:["Psychological","School","Drama"],
+ desc:"Students compete inside an elite school where everything is decided through strategy and competition.",
+ image:"https://img.anili.st/media/112641"
+},
+
+{
+ id:108725,
+ title:"Don't Toy with Me, Miss Nagatoro",
+ year:2021,
+ rating:7.3,
+ genres:["Comedy","Romance","School"],
+ desc:"A shy student becomes the target of playful teasing from Nagatoro.",
+ image:"https://img.anili.st/media/108725"
+},
+
+{
+ id:20606,
+ title:"No Game No Life",
+ year:2014,
+ rating:8.0,
+ genres:["Fantasy","Game","Comedy"],
+ desc:"Two legendary gamers are transported to a world where conflicts are settled through games.",
+ image:"https://img.anili.st/media/20606"
+},
+
+{
+ id:20954,
+ title:"Devilman Crybaby",
+ year:2018,
+ rating:7.7,
+ genres:["Action","Horror","Drama"],
+ desc:"A sensitive teenager gains demonic powers and becomes involved in a terrifying conflict.",
+ image:"https://img.anili.st/media/20954"
+},
+
+{
+ id:97878,
+ title:"Violet Evergarden",
+ year:2018,
+ rating:8.7,
+ genres:["Drama","Fantasy","Slice of Life"],
+ desc:"A former soldier learns to understand emotions while working as a letter writer.",
+ image:"https://img.anili.st/media/97878"
+},
+
+{
+ id:98461,
+ title:"A Silent Voice",
+ year:2016,
+ rating:8.9,
+ genres:["Drama","Romance","School"],
+ desc:"A former bully attempts to reconnect with a girl he once mistreated.",
+ image:"https://img.anili.st/media/98461"
 }
 
-
-/* XP */
-
-let xp=Number(localStorage.getItem("samXP"))||0;
-
-let favorites=
-JSON.parse(localStorage.getItem("samFavorites")||"[]");
-
-let watched=
-JSON.parse(localStorage.getItem("samWatched")||"[]");
-
-let visits=
-Number(localStorage.getItem("samVisits"))||0;
-
-visits++;
-
-localStorage.setItem("samVisits",visits);
-
-function addXP(amount){
-
-xp+=amount;
-
-localStorage.setItem("samXP",xp);
-
-updateDashboard();
-
-}
-
-function updateDashboard(){
-
-const level=Math.floor(xp/100)+1;
-const progress=xp%100;
-
-document.getElementById("xp").textContent=xp;
-document.getElementById("level").textContent=level;
-document.getElementById("xpFill").style.width=progress+"%";
-
-document.getElementById("dashFavorites").textContent=favorites.length;
-document.getElementById("dashWatched").textContent=watched.length;
-document.getElementById("dashVisits").textContent=visits;
-
-document.getElementById("statXP").textContent=xp;
-document.getElementById("statAnime").textContent=favorites.length;
-
-let achievements=0;
-
-if(xp>=50) achievements++;
-if(xp>=100) achievements++;
-if(favorites.length>=5) achievements++;
-if(watched.length>=5) achievements++;
-
-document.getElementById("dashAchievements").textContent=achievements;
-
-}
-
-updateDashboard();
+];
 
 
-/* HUB SEARCH */
+/* REMOVE DUPLICATE TITLES */
 
-function searchHub(){
+const uniqueAnime=[];
 
-const query=
-document.getElementById("hubSearch").value.toLowerCase();
+animeDatabase.forEach(function(anime){
 
-document.querySelectorAll(".hub-card").forEach(card=>{
-card.style.display=
-card.dataset.name.includes(query)?"":"none";
+    if(!uniqueAnime.some(function(item){
+        return item.title===anime.title;
+    })){
+        uniqueAnime.push(anime);
+    }
+
 });
 
-}
+
+let animeList=[...uniqueAnime];
+
+let displayedAnime=[];
+let currentLimit=24;
 
 
-/* ANIME */
+/* =========================
+   IMAGE FALLBACK
+========================= */
 
-let animeList=[];
+function imageError(img){
 
-const fallbackAnime=[
-"Demon Slayer",
-"Naruto",
-"One Piece",
-"Jujutsu Kaisen",
-"Dragon Ball",
-"Bleach",
-"Death Note",
-"Hunter x Hunter",
-"Attack on Titan",
-"My Hero Academia",
-"One Punch Man",
-"Haikyuu!!"
-];
+    img.onerror=null;
 
-async function loadAnime(){
-
-const status=document.getElementById("animeStatus");
-
-try{
-
-const response=
-await fetch("https://api.jikan.moe/v4/top/anime?limit=24");
-
-if(!response.ok) throw new Error();
-
-const result=await response.json();
-
-animeList=result.data.map(anime=>({
-
-id:anime.mal_id,
-title:anime.title,
-image:
-anime.images?.webp?.large_image_url||
-anime.images?.jpg?.large_image_url,
-genres:anime.genres?.map(g=>g.name)||[],
-score:anime.score||"N/A"
-
-}));
-
-status.textContent=animeList.length+" anime loaded.";
-
-}catch(error){
-
-animeList=fallbackAnime.map((title,index)=>({
-
-id:"fallback-"+index,
-title:title,
-image:
-"https://placehold.co/600x900/10131c/00f7ff?text="+
-encodeURIComponent(title),
-genres:["Anime"],
-score:"N/A"
-
-}));
-
-status.textContent="Anime library ready.";
+    img.src=
+        "https://placehold.co/600x850/111118/00f7ff?text="+
+        encodeURIComponent(
+            img.dataset.title || "Anime"
+        );
 
 }
 
-buildGenres();
-renderAnime(animeList);
 
-}
-
-loadAnime();
-
+/* =========================
+   BUILD GENRES
+========================= */
 
 function buildGenres(){
 
-const select=document.getElementById("animeGenre");
+    const select=
+        document.getElementById("genreFilter");
 
-const genres=new Set();
+    const genres=new Set();
 
-animeList.forEach(anime=>{
-anime.genres.forEach(g=>genres.add(g));
-});
+    uniqueAnime.forEach(function(anime){
 
-[...genres].sort().forEach(genre=>{
+        anime.genres.forEach(function(genre){
+            genres.add(genre);
+        });
 
-const option=document.createElement("option");
+    });
 
-option.value=genre;
-option.textContent=genre;
+    [...genres]
+        .sort()
+        .forEach(function(genre){
 
-select.appendChild(option);
+            const option=
+                document.createElement("option");
 
-});
+            option.value=genre;
+            option.textContent=genre;
+
+            select.appendChild(option);
+
+        });
 
 }
 
+
+/* =========================
+   RENDER ANIME
+========================= */
 
 function renderAnime(list){
 
-const grid=document.getElementById("animeGrid");
+    const grid=
+        document.getElementById("animeGrid");
 
-grid.innerHTML="";
+    grid.innerHTML="";
 
-if(!list.length){
+    if(!list.length){
 
-grid.innerHTML=
-"<p style='grid-column:1/-1;text-align:center;color:var(--muted)'>No anime found.</p>";
+        grid.innerHTML=`
+            <div class="anime-empty">
+                <h3>No anime found</h3>
+                <p style="margin-top:10px;">
+                    Try another title, spelling or genre.
+                </p>
+            </div>
+        `;
 
-return;
+        return;
+    }
+
+    const visible=list.slice(0,currentLimit);
+
+    visible.forEach(function(anime,index){
+
+        const card=
+            document.createElement("article");
+
+        card.className="anime-card";
+
+        card.innerHTML=`
+
+            <img
+                class="anime-poster"
+                src="${anime.image}"
+                data-title="${escapeHTML(anime.title)}"
+                alt="${escapeHTML(anime.title)} poster"
+                onerror="imageError(this)"
+            >
+
+            <div class="anime-content">
+
+                <h3>${escapeHTML(anime.title)}</h3>
+
+                <div class="anime-meta">
+
+                    <span>
+                        ${anime.year}
+                    </span>
+
+                    <span class="anime-rating">
+                        ★ ${anime.rating}
+                    </span>
+
+                </div>
+
+                <div class="anime-actions">
+
+                    <button onclick="openAnimeDetails(${uniqueAnime.indexOf(anime)})">
+                        Info
+                    </button>
+
+                    <button onclick="watchAnime('${encodeURIComponent(anime.title)}')">
+                        Watch
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+    const button=
+        document.getElementById("loadMore");
+
+    button.style.display=
+        list.length>currentLimit
+        ? "block"
+        : "none";
+
+    document.getElementById("animeStatus").textContent=
+        "Showing "+Math.min(currentLimit,list.length)+
+        " of "+list.length+" anime.";
 
 }
 
-list.forEach(anime=>{
 
-const saved=favorites.some(
-item=>String(item.id)===String(anime.id)
-);
+/* =========================
+   ESCAPE HTML
+========================= */
 
-const isWatched=watched.some(
-item=>String(item.id)===String(anime.id)
-);
+function escapeHTML(value){
 
-const card=document.createElement("article");
-
-card.className="anime-card";
-
-card.innerHTML=`
-
-<img src="${anime.image}" alt="${anime.title}" loading="lazy">
-
-<div class="anime-info">
-
-<h3>${anime.title}</h3>
-
-<p>${anime.genres.slice(0,3).join(" • ")}</p>
-
-<p style="margin-top:7px">⭐ ${anime.score}</p>
-
-<div class="anime-actions">
-
-<button
-class="small-btn primary"
-onclick="watchAnime('${escapeJS(anime.title)}')">
-▶ Watch
-</button>
-
-<button
-class="small-btn"
-onclick="saveAnime('${anime.id}')">
-${saved?"❤️":"♡"}
-</button>
-
-</div>
-
-<button
-class="small-btn"
-style="width:100%;margin-top:7px"
-onclick="toggleWatched('${anime.id}')">
-${isWatched?"✓ Watched":"＋ Watchlist"}
-</button>
-
-</div>
-`;
-
-grid.appendChild(card);
-
-});
-
-updateDashboard();
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
 
-function escapeJS(value){
-return String(value)
-.replace(/\\/g,"\\\\")
-.replace(/'/g,"\\'");
-}
-
+/* =========================
+   FILTER
+========================= */
 
 function filterAnime(){
 
-const query=
-document.getElementById("animeSearch").value.toLowerCase();
+    const genre=
+        document.getElementById("genreFilter").value;
 
-const genre=
-document.getElementById("animeGenre").value;
+    const query=
+        document
+            .getElementById("animeSearch")
+            .value
+            .trim()
+            .toLowerCase();
 
-const filtered=animeList.filter(anime=>{
+    animeList=
+        uniqueAnime.filter(function(anime){
 
-const nameMatch=
-anime.title.toLowerCase().includes(query);
+            const matchesGenre=
+                genre==="all" ||
+                anime.genres.includes(genre);
 
-const genreMatch=
-genre==="all"||anime.genres.includes(genre);
+            const matchesSearch=
+                !query ||
+                anime.title.toLowerCase().includes(query) ||
+                anime.genres.some(function(g){
+                    return g.toLowerCase().includes(query);
+                });
 
-return nameMatch&&genreMatch;
+            return matchesGenre && matchesSearch;
 
-});
+        });
 
-renderAnime(filtered);
+    currentLimit=24;
 
-}
-
-
-function randomAnime(){
-
-if(!animeList.length)return;
-
-const anime=
-animeList[Math.floor(Math.random()*animeList.length)];
-
-document.getElementById("animeSearch").value=anime.title;
-
-renderAnime([anime]);
-
-document.getElementById("anime").scrollIntoView({
-behavior:"smooth"
-});
-
-addXP(5);
+    sortCurrent();
 
 }
 
 
-function saveAnime(id){
+/* =========================
+   SEARCH
+========================= */
 
-const anime=
-animeList.find(item=>String(item.id)===String(id));
+function searchAnime(){
 
-if(!anime)return;
+    filterAnime();
 
-const index=
-favorites.findIndex(item=>String(item.id)===String(id));
-
-if(index===-1){
-
-favorites.push(anime);
-addXP(10);
-showToast("❤️ Added to favorites.");
-
-}else{
-
-favorites.splice(index,1);
-showToast("Removed from favorites.");
+    document
+        .getElementById("anime")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
 
 }
 
-localStorage.setItem(
-"samFavorites",
-JSON.stringify(favorites)
-);
+document
+    .getElementById("animeSearch")
+    .addEventListener("keydown",function(event){
 
-filterAnime();
+        if(event.key==="Enter"){
+            searchAnime();
+        }
+
+    });
+
+
+/* =========================
+   SORT
+========================= */
+
+function sortAnime(){
+
+    sortCurrent();
+
+}
+
+function sortCurrent(){
+
+    const sort=
+        document.getElementById("sortAnime").value;
+
+    animeList.sort(function(a,b){
+
+        if(sort==="rating"){
+            return b.rating-a.rating;
+        }
+
+        if(sort==="az"){
+            return a.title.localeCompare(b.title);
+        }
+
+        if(sort==="za"){
+            return b.title.localeCompare(a.title);
+        }
+
+        return b.rating-a.rating;
+
+    });
+
+    displayedAnime=animeList;
+
+    renderAnime(animeList);
 
 }
 
 
-function toggleWatched(id){
+/* =========================
+   LOAD MORE
+========================= */
 
-const anime=
-animeList.find(item=>String(item.id)===String(id));
+function loadMoreAnime(){
 
-if(!anime)return;
+    currentLimit+=24;
 
-const index=
-watched.findIndex(item=>String(item.id)===String(id));
-
-if(index===-1){
-
-watched.push(anime);
-addXP(10);
-showToast("Added to watchlist.");
-
-}else{
-
-watched.splice(index,1);
-showToast("Removed from watchlist.");
-
-}
-
-localStorage.setItem(
-"samWatched",
-JSON.stringify(watched)
-);
-
-filterAnime();
+    renderAnime(animeList);
 
 }
 
 
-/* WATCH */
+/* =========================
+   RANDOM ANIME
+========================= */
+
+function showRandomAnime(){
+
+    if(!uniqueAnime.length) return;
+
+    const anime=
+        uniqueAnime[
+            Math.floor(
+                Math.random()*uniqueAnime.length
+            )
+        ];
+
+    openAnimeDetails(
+        uniqueAnime.indexOf(anime)
+    );
+
+}
+
+
+/* =========================
+   ANIME DETAILS + REVIEWS
+========================= */
+
+function openAnimeDetails(index){
+
+    const anime=uniqueAnime[index];
+
+    if(!anime) return;
+
+    const modal=
+        document.getElementById("animeModal");
+
+    const details=
+        document.getElementById("animeDetails");
+
+    details.innerHTML=`
+
+        <div class="anime-detail">
+
+            <img
+                src="${anime.image}"
+                data-title="${escapeHTML(anime.title)}"
+                onerror="imageError(this)"
+                alt="${escapeHTML(anime.title)}"
+            >
+
+            <div>
+
+                <h2>${escapeHTML(anime.title)}</h2>
+
+                <div style="color:#ffd84d;margin:8px 0;">
+                    ★ ${anime.rating}/10
+                </div>
+
+                <p style="color:var(--muted);">
+                    Released: ${anime.year}
+                </p>
+
+                <div class="detail-tags">
+
+                    ${anime.genres.map(function(g){
+                        return `<span>${escapeHTML(g)}</span>`;
+                    }).join("")}
+
+                </div>
+
+                <p class="synopsis">
+                    ${escapeHTML(anime.desc)}
+                </p>
+
+                <div style="margin-top:20px;">
+
+                    <button
+                        class="anime-btn"
+                        onclick="watchAnime('${encodeURIComponent(anime.title)}')"
+                    >
+                        ▶ Find Where to Watch
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="review-box">
+
+            <h3>⭐ Community Review</h3>
+
+            <div class="review">
+                <strong>Sam.OS Rating:</strong>
+                ${anime.rating}/10
+                <br>
+                A great pick if you enjoy
+                ${anime.genres.join(", ").toLowerCase()}.
+            </div>
+
+            <div class="review">
+                <strong>Quick Review:</strong>
+                ${escapeHTML(anime.desc)}
+            </div>
+
+            <div class="review">
+                <strong>Verdict:</strong>
+                ${anime.rating>=8.5
+                    ? "🔥 Highly recommended."
+                    : anime.rating>=8
+                    ? "👍 Definitely worth checking out."
+                    : "👀 Worth exploring if you like the genre."
+                }
+            </div>
+
+        </div>
+    `;
+
+    modal.style.display="flex";
+
+}
+
+function closeAnimeModal(){
+
+    document
+        .getElementById("animeModal")
+        .style.display="none";
+
+}
+
+document
+    .getElementById("animeModal")
+    .addEventListener("click",function(event){
+
+        if(event.target===this){
+            closeAnimeModal();
+        }
+
+    });
+
+
+/* =========================
+   WATCH SEARCH
+========================= */
 
 function watchAnime(title){
 
-addXP(5);
+    const searchTitle=
+        decodeURIComponent(title);
 
-window.open(
-"https://www.justwatch.com/ng/search?q="+
-encodeURIComponent(title),
-"_blank"
-);
+    const url=
+        "https://www.google.com/search?q="+
+        encodeURIComponent(
+            searchTitle+
+            " watch anime legal streaming"
+        );
 
-}
-
-
-/* PROJECTS */
-
-function toggleProject(id){
-
-document.getElementById(id).classList.toggle("open");
-
-addXP(2);
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
 
 }
 
 
-/* GALLERY */
+/* =========================
+   ESCAPE MODALS
+========================= */
 
-const galleryImages=[
-"Images/0ade78ee923bea5adbacb213aace47a9.webp",
-"Images/1e4901bbd3ef7a7e8ba1f53ba1e389d9.webp",
-"Images/567c0a6538e6d9e803a86eb3f76f9e01.webp",
-"Images/765c809a7d1f74a923fa2bdaba239340.webp",
-"Images/823a8aaef9bbe559ed29e27efa7c873d.webp",
-"Images/01398c7404dbbdd9b3f78540ca744470.webp"
-];
+document.addEventListener("keydown",function(event){
 
-let currentImage=0;
+    if(event.key==="Escape"){
 
-function openImage(index){
+        closeAnimeModal();
+        closeImage();
 
-currentImage=index;
+    }
 
-document.getElementById("lightboxImage").src=
-galleryImages[index];
+});
 
-document.getElementById("lightbox").style.display="flex";
+
+/* =========================
+   GALLERY
+========================= */
+
+function openImage(image){
+
+    document
+        .getElementById("lightboxImage")
+        .src=image;
+
+    document
+        .getElementById("lightbox")
+        .style
+        .display="flex";
 
 }
 
 function closeImage(){
-document.getElementById("lightbox").style.display="none";
-}
 
-function nextImage(e){
-
-e.stopPropagation();
-
-currentImage=
-(currentImage+1)%galleryImages.length;
-
-document.getElementById("lightboxImage").src=
-galleryImages[currentImage];
-
-}
-
-function previousImage(e){
-
-e.stopPropagation();
-
-currentImage--;
-
-if(currentImage<0)
-currentImage=galleryImages.length-1;
-
-document.getElementById("lightboxImage").src=
-galleryImages[currentImage];
-
-}
-
-document.addEventListener("keydown",e=>{
-
-if(e.key==="Escape")closeImage();
-
-if(e.key==="ArrowRight")
-nextImage({stopPropagation:()=>{}});
-
-if(e.key==="ArrowLeft")
-previousImage({stopPropagation:()=>{}});
-
-});
-
-
-function filterGallery(category){
-
-document.querySelectorAll(".gallery-item").forEach(item=>{
-
-item.style.display=
-category==="all"||
-item.dataset.category===category
-?"block":"none";
-
-});
+    document
+        .getElementById("lightbox")
+        .style
+        .display="none";
 
 }
 
 
-/* CONTACT */
+/* =========================
+   CONTACT DEMO
+========================= */
 
-function sendMessage(e){
+function sendMessage(event){
 
-e.preventDefault();
+    event.preventDefault();
 
-const name=document.getElementById("contactName").value;
-const email=document.getElementById("contactEmail").value;
-const message=document.getElementById("contactMessage").value;
+    document
+        .getElementById("messageSent")
+        .style
+        .display="block";
 
-const text=
-"Hello Sam!\n\n"+
-"Name: "+name+
-"\nEmail: "+email+
-"\n\nMessage:\n"+message;
+    document
+        .getElementById("name")
+        .value="";
 
-window.open(
-"https://wa.me/?text="+
-encodeURIComponent(text),
-"_blank"
-);
+    document
+        .getElementById("email")
+        .value="";
 
-addXP(10);
-
-showToast("Message prepared for WhatsApp.");
-
-e.target.reset();
+    document
+        .getElementById("message")
+        .value="";
 
 }
 
 
-/* TOAST */
+/* =========================
+   SCROLL REVEAL
+========================= */
 
-let toastTimer;
+const observer=
+    new IntersectionObserver(
+        function(entries){
 
-function showToast(message){
+            entries.forEach(function(entry){
 
-const toast=document.getElementById("toast");
+                if(entry.isIntersecting){
 
-toast.textContent=message;
+                    entry.target
+                        .classList
+                        .add("show");
 
-toast.classList.add("show");
+                }
 
-clearTimeout(toastTimer);
+            });
 
-toastTimer=setTimeout(()=>{
-toast.classList.remove("show");
-},2500);
+        },
+        {
+            threshold:.12
+        }
+    );
 
-}
+document
+    .querySelectorAll(".reveal")
+    .forEach(function(element){
 
+        observer.observe(element);
 
-/* REVEAL */
-
-const observer=new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting)
-entry.target.classList.add("show");
-
-});
-
-},{threshold:.1});
-
-document.querySelectorAll(".reveal").forEach(el=>{
-observer.observe(el);
-});
+    });
 
 
-/* TOP */
+/* =========================
+   BACK TO TOP
+========================= */
 
-window.addEventListener("scroll",()=>{
+window.addEventListener("scroll",function(){
 
-const top=document.getElementById("top");
+    const top=
+        document.getElementById("top");
 
-if(window.scrollY>500)
-top.classList.add("show");
-else
-top.classList.remove("show");
+    if(window.scrollY>500){
+        top.classList.add("show");
+    }else{
+        top.classList.remove("show");
+    }
 
 });
 
 function goTop(){
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
 
-/* PWA SERVICE WORKER */
+/* =========================
+   START ANIME
+========================= */
 
-if(
-"serviceWorker" in navigator &&
-location.protocol!=="file:"
-){
+buildGenres();
 
-navigator.serviceWorker.register("./sw.js")
-.catch(()=>{});
+animeList=[...uniqueAnime];
 
-}
+sortCurrent();
 
 </script>
 
